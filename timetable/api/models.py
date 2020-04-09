@@ -5,3 +5,6 @@ class Elder(models.Model):
     name = models.TextField()
     phone = models.CharField(max_length=12)
     mail = models.EmailField()
+
+    def __str__(self):
+        return self.name
