@@ -75,3 +75,14 @@ class Session(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     date = models.DateField()
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+
+
+class Timetable(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    subgroup = models.PositiveIntegerField()
+    cabinet = models.ForeignKey(Cabinet, on_delete=models.CASCADE)
+    time = models.TimeField()
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    day = models.PositiveSmallIntegerField(choices=WEEKDAY)
+    even_week = models.BooleanField()
