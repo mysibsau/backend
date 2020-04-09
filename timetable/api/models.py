@@ -26,8 +26,8 @@ class Elder(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = u"Старосты"
-        verbose_name_plural = u"Старосты"
+        verbose_name = u'Старосты'
+        verbose_name_plural = u'Старосты'
 
 
 class Group(models.Model):
@@ -39,8 +39,8 @@ class Group(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = u"Группы"
-        verbose_name_plural = u"Группы"
+        verbose_name = u'Группы'
+        verbose_name_plural = u'Группы'
 
 
 class Subject(models.Model):
@@ -51,8 +51,8 @@ class Subject(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = u"Предметы"
-        verbose_name_plural = u"Предметы"
+        verbose_name = u'Предметы'
+        verbose_name_plural = u'Предметы'
 
 
 class Cabinet(models.Model):
@@ -62,8 +62,8 @@ class Cabinet(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = u"Кабинеты"
-        verbose_name_plural = u"Кабинеты"
+        verbose_name = u'Кабинеты'
+        verbose_name_plural = u'Кабинеты'
 
 
 class Teacher(models.Model):
@@ -76,8 +76,8 @@ class Teacher(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = u"Преподаватели"
-        verbose_name_plural = u"Преподаватели"
+        verbose_name = u'Преподаватели'
+        verbose_name_plural = u'Преподаватели'
 
 
 class Event(models.Model):
@@ -90,8 +90,8 @@ class Event(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = u"Мероприятия"
-        verbose_name_plural = u"Мероприятия"
+        verbose_name = u'Мероприятия'
+        verbose_name_plural = u'Мероприятия'
 
 
 class AbstraсtTimetable(models.Model):
@@ -107,8 +107,8 @@ class AbstraсtTimetable(models.Model):
 
 class Consultation(AbstraсtTimetable):
     class Meta:
-        verbose_name = u"Консультации"
-        verbose_name_plural = u"Консультации"
+        verbose_name = u'Консультации'
+        verbose_name_plural = u'Консультации'
 
 
 class Session(AbstraсtTimetable):
@@ -119,8 +119,8 @@ class Session(AbstraсtTimetable):
     date = models.DateField()
 
     class Meta:
-        verbose_name = u"Сессии"
-        verbose_name_plural = u"Сессии"
+        verbose_name = u'Сессии'
+        verbose_name_plural = u'Сессии'
 
 
 class Timetable(AbstraсtTimetable):
@@ -129,5 +129,5 @@ class Timetable(AbstraсtTimetable):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = u"Пары"
-        verbose_name_plural = u"Пары"
+        verbose_name = u'Пары'
+        verbose_name_plural = u'Пары'
