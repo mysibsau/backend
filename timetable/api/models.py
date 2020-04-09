@@ -26,7 +26,7 @@ class Elder(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = u'Старосты'
+        verbose_name = u'Староста'
         verbose_name_plural = u'Старосты'
 
 
@@ -40,7 +40,7 @@ class Group(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = u'Группы'
+        verbose_name = u'Группа'
         verbose_name_plural = u'Группы'
 
 
@@ -52,7 +52,7 @@ class Subject(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = u'Предметы'
+        verbose_name = u'Предмет'
         verbose_name_plural = u'Предметы'
 
 
@@ -63,7 +63,7 @@ class Cabinet(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = u'Аудитории'
+        verbose_name = u'Аудитория'
         verbose_name_plural = u'Аудитории'
 
 
@@ -77,21 +77,21 @@ class Teacher(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = u'Преподаватели'
+        verbose_name = u'Преподаватель'
         verbose_name_plural = u'Преподаватели'
 
 
 class Event(models.Model):
     title = models.TextField(verbose_name='название')
     address = models.TextField(verbose_name='адресс')
-    time = models.TimeField(verbose_name='время')
+    time = models.CharField(max_length=11, verbose_name='время')
     date = models.DateField(verbose_name='дата')
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = u'Мероприятия'
+        verbose_name = u'Мероприятие'
         verbose_name_plural = u'Мероприятия'
 
 
@@ -103,7 +103,7 @@ class AbstraсtTimetable(models.Model):
     day = models.PositiveSmallIntegerField(
         choices=WEEKDAY, verbose_name='день недели')
     even_week = models.BooleanField(verbose_name='четная неделя')
-    time = models.TextField(verbose_name='время')
+    time = models.CharField(max_length=11, verbose_name='время')
 
     class Meta:
         abstract = True
@@ -111,7 +111,7 @@ class AbstraсtTimetable(models.Model):
 
 class Consultation(AbstraсtTimetable):
     class Meta:
-        verbose_name = u'Консультации'
+        verbose_name = u'Консультация'
         verbose_name_plural = u'Консультации'
 
 
@@ -123,7 +123,7 @@ class Session(AbstraсtTimetable):
     date = models.DateField()
 
     class Meta:
-        verbose_name = u'Сессии'
+        verbose_name = u'Сессия'
         verbose_name_plural = u'Сессии'
 
 
@@ -135,5 +135,5 @@ class Timetable(AbstraсtTimetable):
         Subject, on_delete=models.CASCADE, verbose_name='предмет')
 
     class Meta:
-        verbose_name = u'Ленты'
+        verbose_name = u'Лента'
         verbose_name_plural = u'Ленты'
