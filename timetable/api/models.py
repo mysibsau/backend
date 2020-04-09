@@ -94,40 +94,37 @@ class Event(models.Model):
         verbose_name_plural = u"Мероприятия"
 
 
-class Consultation(models.Model):
+class AbstraсtTimetable(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     cabinet = models.ForeignKey(Cabinet, on_delete=models.CASCADE)
     day = models.PositiveSmallIntegerField(choices=WEEKDAY)
     even_week = models.BooleanField()
-    time = models.TimeField()
+    time = models.TextField()
 
+    class Meta:
+        abstract = True
+
+
+class Consultation(AbstraсtTimetable):
     class Meta:
         verbose_name = u"Консультации"
         verbose_name_plural = u"Консультации"
 
 
-class Session(models.Model):
+class Session(AbstraсtTimetable):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    cabinet = models.ForeignKey(Cabinet, on_delete=models.CASCADE)
-    time = models.TimeField()
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     date = models.DateField()
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = u"Сессии"
         verbose_name_plural = u"Сессии"
 
 
-class Timetable(models.Model):
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+class Timetable(AbstraсtTimetable):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     subgroup = models.PositiveIntegerField()
-    cabinet = models.ForeignKey(Cabinet, on_delete=models.CASCADE)
-    time = models.TimeField()
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    day = models.PositiveSmallIntegerField(choices=WEEKDAY)
-    even_week = models.BooleanField()
 
     class Meta:
         verbose_name = u"Пары"
