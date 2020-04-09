@@ -1,5 +1,21 @@
 from django.db import models
 
+WEEKDAY = (
+    (1, 'Понедельник'),
+    (2, 'Вторник'),
+    (3, 'Среда'),
+    (4, 'Четверг'),
+    (5, 'Пятница'),
+    (6, 'Суббота'),
+    (7, 'Воскресенье'),
+)
+
+TYPES = (
+        (1, 'Лекция'),
+        (2, 'Лабораторная работа')
+        (3, 'Практика')
+)
+
 
 class Elder(models.Model):
     name = models.TextField()
@@ -20,11 +36,6 @@ class Group(models.Model):
 
 
 class Subject(models.Model):
-    TYPES = (
-        (1, 'Лекция'),
-        (2, 'Лабораторная работа')
-        (3, 'Практика')
-    )
     title = models.TextField()
     view = models.PositiveSmallIntegerField(choices=TYPES)
 
@@ -47,3 +58,14 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Consultation(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    cabinet = models.ForeignKey(Cabinet, on_delete=models.CASCADE)
+    day = models.PositiveSmallIntegerField(choices=WEEKDAY)
+    even_week = models.BooleanField()
+    time = models.TimeField()
+
+    def __str__(self):
+        return self.teacher
