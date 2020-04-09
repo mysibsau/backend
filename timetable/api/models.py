@@ -17,3 +17,16 @@ class Group(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Subject(models.Model):
+    TYPES = (
+        (1, 'Лекция'),
+        (2, 'Лабораторная работа')
+        (3, 'Практика')
+    )
+    title = models.TextField()
+    view = models.PositiveSmallIntegerField(choices=TYPES)
+
+    def __str__(self):
+        return self.title
