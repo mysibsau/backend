@@ -112,6 +112,8 @@ class Consultation(AbstraсtTimetable):
 
 
 class Session(AbstraсtTimetable):
+    day = None
+    even_week = None
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     date = models.DateField()
