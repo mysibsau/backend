@@ -18,9 +18,9 @@ TYPES = (
 
 
 class Elder(models.Model):
-    name = models.TextField()
-    phone = models.CharField(max_length=12)
-    mail = models.EmailField()
+    name = models.TextField(verbose_name='ФИО')
+    phone = models.CharField(max_length=12, verbose_name='телефон')
+    mail = models.EmailField(verbose_name='почта')
 
     def __str__(self):
         return self.name
@@ -31,9 +31,10 @@ class Elder(models.Model):
 
 
 class Group(models.Model):
-    title = models.CharField(max_length=15)
-    mail = models.EmailField()
-    elder = models.OneToOneField(Elder, on_delete=models.CASCADE)
+    title = models.CharField(max_length=15, verbose_name='название')
+    mail = models.EmailField(verbose_name='почта')
+    elder = models.OneToOneField(
+        Elder, on_delete=models.CASCADE, verbose_name='староста')
 
     def __str__(self):
         return self.title
@@ -44,8 +45,8 @@ class Group(models.Model):
 
 
 class Subject(models.Model):
-    title = models.TextField()
-    view = models.PositiveSmallIntegerField(choices=TYPES)
+    title = models.TextField(verbose_name='название')
+    view = models.PositiveSmallIntegerField(choices=TYPES, verbose_name='тип')
 
     def __str__(self):
         return self.title
@@ -56,21 +57,21 @@ class Subject(models.Model):
 
 
 class Cabinet(models.Model):
-    title = models.CharField(max_length=10)
+    title = models.CharField(max_length=10, verbose_name='название')
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = u'Кабинеты'
-        verbose_name_plural = u'Кабинеты'
+        verbose_name = u'Аудитории'
+        verbose_name_plural = u'Аудитории'
 
 
 class Teacher(models.Model):
-    name = models.TextField()
-    phone = models.CharField(max_length=12)
-    mail = models.EmailField()
-    department = models.TextField()
+    name = models.TextField(verbose_name='ФИО')
+    phone = models.CharField(max_length=12, verbose_name='телефон')
+    mail = models.EmailField(verbose_name='почта')
+    department = models.TextField(verbose_name='кафедра')
 
     def __str__(self):
         return self.name
@@ -81,10 +82,10 @@ class Teacher(models.Model):
 
 
 class Event(models.Model):
-    title = models.TextField()
-    address = models.TextField()
-    time = models.TimeField()
-    date = models.DateField()
+    title = models.TextField(verbose_name='название')
+    address = models.TextField(verbose_name='адресс')
+    time = models.TimeField(verbose_name='время')
+    date = models.DateField(verbose_name='дата')
 
     def __str__(self):
         return self.title
@@ -95,11 +96,14 @@ class Event(models.Model):
 
 
 class AbstraсtTimetable(models.Model):
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    cabinet = models.ForeignKey(Cabinet, on_delete=models.CASCADE)
-    day = models.PositiveSmallIntegerField(choices=WEEKDAY)
-    even_week = models.BooleanField()
-    time = models.TextField()
+    teacher = models.ForeignKey(
+        Teacher, on_delete=models.CASCADE, verbose_name='преподаватель')
+    cabinet = models.ForeignKey(
+        Cabinet, on_delete=models.CASCADE, verbose_name='аудитория')
+    day = models.PositiveSmallIntegerField(
+        choices=WEEKDAY, verbose_name='день недели')
+    even_week = models.BooleanField(verbose_name='четная неделя')
+    time = models.TextField(verbose_name='время')
 
     class Meta:
         abstract = True
@@ -124,10 +128,12 @@ class Session(AbstraсtTimetable):
 
 
 class Timetable(AbstraсtTimetable):
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
-    subgroup = models.PositiveIntegerField()
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, verbose_name='группа')
+    subgroup = models.PositiveIntegerField(verbose_name='подгруппа')
+    subject = models.ForeignKey(
+        Subject, on_delete=models.CASCADE, verbose_name='предмет')
 
     class Meta:
-        verbose_name = u'Пары'
-        verbose_name_plural = u'Пары'
+        verbose_name = u'Ленты'
+        verbose_name_plural = u'Ленты'
