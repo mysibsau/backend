@@ -67,5 +67,11 @@ class Consultation(models.Model):
     even_week = models.BooleanField()
     time = models.TimeField()
 
-    def __str__(self):
-        return self.teacher
+
+class Session(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    cabinet = models.ForeignKey(Cabinet, on_delete=models.CASCADE)
+    time = models.TimeField()
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    date = models.DateField()
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
