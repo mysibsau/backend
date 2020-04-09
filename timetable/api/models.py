@@ -60,6 +60,16 @@ class Teacher(models.Model):
         return self.name
 
 
+class Event(models.Model):
+    title = models.TextField()
+    address = models.TextField()
+    time = models.TimeField()
+    date = models.DateField()
+
+    def __str__(self):
+        return self.title
+
+
 class Consultation(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     cabinet = models.ForeignKey(Cabinet, on_delete=models.CASCADE)
