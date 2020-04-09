@@ -12,7 +12,7 @@ WEEKDAY = (
 
 TYPES = (
         (1, 'Лекция'),
-        (2, 'Лабораторная работа')
+        (2, 'Лабораторная работа'),
         (3, 'Практика')
 )
 
@@ -29,7 +29,7 @@ class Elder(models.Model):
 class Group(models.Model):
     title = models.CharField(max_length=15)
     mail = models.EmailField()
-    elder = models.OneToOneField(Elder)
+    elder = models.OneToOneField(Elder, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
