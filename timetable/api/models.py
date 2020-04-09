@@ -25,6 +25,10 @@ class Elder(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = u"Старосты"
+        verbose_name_plural = u"Старосты"
+
 
 class Group(models.Model):
     title = models.CharField(max_length=15)
@@ -34,6 +38,10 @@ class Group(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = u"Группы"
+        verbose_name_plural = u"Группы"
+
 
 class Subject(models.Model):
     title = models.TextField()
@@ -42,12 +50,20 @@ class Subject(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = u"Предметы"
+        verbose_name_plural = u"Предметы"
+
 
 class Cabinet(models.Model):
     title = models.CharField(max_length=10)
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = u"Кабинеты"
+        verbose_name_plural = u"Кабинеты"
 
 
 class Teacher(models.Model):
@@ -59,6 +75,10 @@ class Teacher(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = u"Преподаватели"
+        verbose_name_plural = u"Преподаватели"
+
 
 class Event(models.Model):
     title = models.TextField()
@@ -69,6 +89,10 @@ class Event(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        verbose_name = u"Мероприятия"
+        verbose_name_plural = u"Мероприятия"
+
 
 class Consultation(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
@@ -76,6 +100,10 @@ class Consultation(models.Model):
     day = models.PositiveSmallIntegerField(choices=WEEKDAY)
     even_week = models.BooleanField()
     time = models.TimeField()
+
+    class Meta:
+        verbose_name = u"Консультации"
+        verbose_name_plural = u"Консультации"
 
 
 class Session(models.Model):
@@ -85,6 +113,10 @@ class Session(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
     date = models.DateField()
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = u"Сессии"
+        verbose_name_plural = u"Сессии"
 
 
 class Timetable(models.Model):
@@ -96,3 +128,7 @@ class Timetable(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     day = models.PositiveSmallIntegerField(choices=WEEKDAY)
     even_week = models.BooleanField()
+
+    class Meta:
+        verbose_name = u"Пары"
+        verbose_name_plural = u"Пары"
