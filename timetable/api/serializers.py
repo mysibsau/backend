@@ -1,8 +1,6 @@
 from rest_framework import serializers
 import api.models as models
 
-# Serializers
-
 
 class ElderSerializers(serializers.ModelSerializer):
     class Meta:
