@@ -37,3 +37,13 @@ class Cabinet(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Teacher(models.Model):
+    name = models.TextField()
+    phone = models.CharField(max_length=12)
+    mail = models.EmailField()
+    department = models.TextField()
+
+    def __str__(self):
+        return self.name
