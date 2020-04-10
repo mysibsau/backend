@@ -118,9 +118,11 @@ class Consultation(AbstraсtTimetable):
 class Session(AbstraсtTimetable):
     day = None
     even_week = None
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
-    date = models.DateField()
+    subject = models.ForeignKey(
+        Subject, on_delete=models.CASCADE, verbose_name='предмет')
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, verbose_name='группа')
+    date = models.DateField(verbose_name='дата')
 
     class Meta:
         verbose_name = u'Сессия'
