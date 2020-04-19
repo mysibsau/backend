@@ -146,7 +146,6 @@ class Subgroup(models.Model):
 
 
 class Lesson(models.Model):
-    even_week = models.BooleanField(verbose_name='четная неделя')
     time = models.CharField(max_length=11, verbose_name='время')
     subgroup = models.ManyToManyField(Subgroup, verbose_name='Подгруппа')
 
@@ -156,6 +155,7 @@ class Lesson(models.Model):
 
 
 class Day(models.Model):
+    even_week = models.BooleanField(verbose_name='четная неделя')
     group = models.ForeignKey(
         Group, on_delete=models.CASCADE, verbose_name='группа')
     day = models.PositiveSmallIntegerField(
