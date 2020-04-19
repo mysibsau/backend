@@ -85,7 +85,7 @@ class Teacher(models.Model):
 class Event(models.Model):
     title = models.TextField(verbose_name='название')
     address = models.TextField(verbose_name='адресс')
-    time = models.TimeField(max_length=11, verbose_name='время')
+    time = models.CharField(max_length=11, verbose_name='время')
     date = models.DateField(verbose_name='дата')
 
     def __str__(self):
@@ -104,7 +104,7 @@ class AbstraсtTimetable(models.Model):
     day = models.PositiveSmallIntegerField(
         choices=WEEKDAY, verbose_name='день недели')
     even_week = models.BooleanField(verbose_name='четная неделя')
-    time = models.TimeField(verbose_name='время')
+    time = models.CharField(max_length=11, verbose_name='время')
 
     class Meta:
         abstract = True
