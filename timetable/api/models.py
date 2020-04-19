@@ -20,8 +20,8 @@ TYPES = (
 
 class Elder(models.Model):
     name = models.TextField(verbose_name='ФИО')
-    phone = models.CharField(max_length=12, verbose_name='телефон')
-    mail = models.EmailField(verbose_name='почта')
+    phone = models.CharField(blank=True, max_length=12, verbose_name='телефон')
+    mail = models.EmailField(blank=True, verbose_name='почта')
 
     def __str__(self):
         return self.name
@@ -33,9 +33,9 @@ class Elder(models.Model):
 
 class Group(models.Model):
     title = models.CharField(max_length=15, verbose_name='название')
-    mail = models.EmailField(verbose_name='почта')
+    mail = models.EmailField(blank=True, verbose_name='почта')
     elder = models.OneToOneField(
-        Elder, on_delete=models.CASCADE, verbose_name='староста')
+        Elder, on_delete=models.CASCADE, blank=True, null=True, verbose_name='староста')
 
     def __str__(self):
         return self.title
@@ -70,9 +70,9 @@ class Cabinet(models.Model):
 
 class Teacher(models.Model):
     name = models.TextField(verbose_name='ФИО')
-    phone = models.CharField(max_length=12, verbose_name='телефон')
-    mail = models.EmailField(verbose_name='почта')
-    department = models.TextField(verbose_name='кафедра')
+    phone = models.CharField(blank=True, max_length=12, verbose_name='телефон')
+    mail = models.EmailField(blank=True, verbose_name='почта')
+    department = models.TextField(blank=True, verbose_name='кафедра')
 
     def __str__(self):
         return self.name
@@ -134,7 +134,7 @@ class Timetable(AbstraсtTimetable):
     group = models.ForeignKey(
         Group, on_delete=models.CASCADE, verbose_name='группа')
     subgroup = ArrayField(
-        models.IntegerField(), verbose_name='подгруппа')
+        models.IntegerField(), blank=True, null=True, verbose_name='подгруппа')
     subject = models.ForeignKey(
         Subject, on_delete=models.CASCADE, verbose_name='предмет')
 
