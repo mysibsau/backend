@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 WEEKDAY = (
@@ -84,7 +85,7 @@ class Teacher(models.Model):
 class Event(models.Model):
     title = models.TextField(verbose_name='название')
     address = models.TextField(verbose_name='адресс')
-    time = models.CharField(max_length=11, verbose_name='время')
+    time = models.TimeField(max_length=11, verbose_name='время')
     date = models.DateField(verbose_name='дата')
 
     def __str__(self):
@@ -103,7 +104,7 @@ class AbstraсtTimetable(models.Model):
     day = models.PositiveSmallIntegerField(
         choices=WEEKDAY, verbose_name='день недели')
     even_week = models.BooleanField(verbose_name='четная неделя')
-    time = models.CharField(max_length=11, verbose_name='время')
+    time = models.TimeField(verbose_name='время')
 
     class Meta:
         abstract = True
@@ -132,9 +133,13 @@ class Session(AbstraсtTimetable):
 class Timetable(AbstraсtTimetable):
     group = models.ForeignKey(
         Group, on_delete=models.CASCADE, verbose_name='группа')
-    subgroup = models.PositiveIntegerField(verbose_name='подгруппа')
+    subgroup = ArrayField(
+        models.IntegerField(), verbose_name='подгруппа')
     subject = models.ForeignKey(
         Subject, on_delete=models.CASCADE, verbose_name='предмет')
+
+    def __str__(self):
+        return f'{self.group} {self.subject} {self.time}'
 
     class Meta:
         verbose_name = u'Лента'
