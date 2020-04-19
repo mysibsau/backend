@@ -23,7 +23,7 @@ class SubjectSerializers(serializers.ModelSerializer):
 class CabinetSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Cabinet
-        fields = '__all__'
+        fields = ('title')
 
 
 class TeacherSerializers(serializers.ModelSerializer):
@@ -50,7 +50,30 @@ class SessionSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class TimetableSerializers(serializers.ModelSerializer):
+class SubgroupSerializers(serializers.ModelSerializer):
+    subject = serializers.StringRelatedField(source='subject.title')
+    type = serializers.IntegerField(source='subject.view')
+    professor = serializers.IntegerField(source='teacher.id')
+    place = serializers.StringRelatedField(source='cabinet.title')
+
     class Meta:
-        model = models.Timetable
-        fields = '__all__'
+        model = models.Subgroup
+        fields = ('subject', 'type', 'professor', 'place')
+
+
+class LessonSerializers(serializers.ModelSerializer):
+    subgroup = SubgroupSerializers(many=True, read_only=True)
+    time = serializers.CharField()
+
+    class Meta:
+        model = models.Lesson
+        fields = ('time', 'subgroup')
+
+
+class TimetableSerializers(serializers.ModelSerializer):
+    day = serializers.IntegerField()
+    lesson = LessonSerializers(many=True, read_only=True)
+
+    class Meta:
+        model = models.Day
+        fields = ('day', 'lesson')

@@ -62,7 +62,7 @@ class SessionView(viewsets.ViewSet):
 
 
 class TimetableView(viewsets.ViewSet):
-    def all(self, request):
-        queryset = models.Timetable.objects.all()
+    def get_timetable_this_group(self, request, title):
+        queryset = models.Day.objects.filter(group=title)
         serializer = serializers.TimetableSerializers(queryset, many=True)
         return Response(serializer.data)

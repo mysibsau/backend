@@ -130,17 +130,34 @@ class Session(AbstraсtTimetable):
         verbose_name_plural = u'Сессии'
 
 
-class Timetable(AbstraсtTimetable):
-    group = models.ForeignKey(
-        Group, on_delete=models.CASCADE, verbose_name='группа')
-    subgroup = ArrayField(
-        models.IntegerField(), blank=True, null=True, verbose_name='подгруппа')
+class Subgroup(models.Model):
+    teacher = models.ForeignKey(
+        Teacher, on_delete=models.CASCADE, verbose_name='преподаватель')
+    cabinet = models.ForeignKey(
+        Cabinet, on_delete=models.CASCADE, verbose_name='аудитория')
     subject = models.ForeignKey(
         Subject, on_delete=models.CASCADE, verbose_name='предмет')
+    subgroup = models.IntegerField(
+        blank=True, null=True, verbose_name='подгруппа')
 
-    def __str__(self):
-        return f'{self.group} {self.subject} {self.time}'
+    class Meta:
+        verbose_name = u'Подгруппа'
+        verbose_name_plural = u'Подгруппы'
+
+
+class Lesson(models.Model):
+    even_week = models.BooleanField(verbose_name='четная неделя')
+    time = models.CharField(max_length=11, verbose_name='время')
+    subgroup = models.ManyToManyField(Subgroup, verbose_name='Подгруппа')
 
     class Meta:
         verbose_name = u'Лента'
         verbose_name_plural = u'Ленты'
+
+
+class Day(models.Model):
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, verbose_name='группа')
+    day = models.PositiveSmallIntegerField(
+        choices=WEEKDAY, verbose_name='день недели')
+    lesson = models.ManyToManyField(Lesson, verbose_name='Лента')
