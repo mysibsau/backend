@@ -1,4 +1,3 @@
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 WEEKDAY = (
@@ -140,6 +139,14 @@ class Subgroup(models.Model):
     subgroup = models.IntegerField(
         blank=True, null=True, verbose_name='подгруппа')
 
+    def to_dict(self):
+        return {
+            'subject': self.subject.title,
+            'type': self.subject.view,
+            'professor': self.teacher.id,
+            'place': str(self.cabinet)
+        }
+
     class Meta:
         verbose_name = u'Подгруппа'
         verbose_name_plural = u'Подгруппы'
@@ -148,6 +155,12 @@ class Subgroup(models.Model):
 class Lesson(models.Model):
     time = models.CharField(max_length=11, verbose_name='время')
     subgroup = models.ManyToManyField(Subgroup, verbose_name='Подгруппа')
+
+    def to_dict(self):
+        return {
+            'time': self.time,
+            'subgroups': [x.to_dict() for x in self.subgroup.all()]
+        }
 
     class Meta:
         verbose_name = u'Лента'

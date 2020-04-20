@@ -70,9 +70,14 @@ class LessonSerializers(serializers.ModelSerializer):
         fields = ('time', 'subgroup')
 
 
-class TimetableSerializers(serializers.ModelSerializer):
+class TimetableSerializers(serializers.Serializer):
     day = serializers.IntegerField()
     lesson = LessonSerializers(many=True, read_only=True)
+
+    def to_representation(self, obj):
+        return {
+            obj.day: [x.to_dict() for x in obj.lesson.all()]
+        }
 
     class Meta:
         model = models.Day
