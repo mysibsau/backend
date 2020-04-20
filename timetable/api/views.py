@@ -63,7 +63,7 @@ class SessionView(viewsets.ViewSet):
 
 class TimetableView(viewsets.ViewSet):
     def get_timetable_this_group(self, request, title, week):
-        queryset = models.Day.objects.filter(group=title)
+        queryset = models.Day.objects.filter(group__title=title)
         queryset = queryset.filter(even_week=(week % 2))
         serializer = serializers.TimetableSerializers(queryset, many=True)
         return Response(serializer.data)
