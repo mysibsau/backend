@@ -147,6 +147,9 @@ class Subgroup(models.Model):
             'place': str(self.cabinet)
         }
 
+    def __str__(self):
+        return self.subject
+
     class Meta:
         verbose_name = u'Подгруппа'
         verbose_name_plural = u'Подгруппы'
