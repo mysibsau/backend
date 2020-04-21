@@ -131,4 +131,4 @@ dmypy.json
 
 # My files
 *.csv
-migrations/
+.vscode/
