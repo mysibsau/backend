@@ -10,6 +10,11 @@ urlpatterns = [
     path('event/', views.EventView.as_view({'get': 'all'})),
     path('consultation/', views.ConsultationView.as_view({'get': 'all'})),
     path('session/', views.SessionView.as_view({'get': 'all'})),
-    path('timetable/<title>/<int:week>',
-         views.TimetableView.as_view({'get': 'get_timetable_this_group'})),
+
+
+    path('timetable/group/<int:id>/<int:week>',
+         views.TimetableView.as_view({'get': 'get_timetable_group'})),
+
+    path('timetable/cabinet/<int:id>',
+        views.TimetableView.as_view({'get': 'get_timetable_cabinet'})),
 ]
