@@ -5,11 +5,15 @@ import api.models as models
 admin.site.register(models.Elder)
 admin.site.register(models.Group)
 admin.site.register(models.Subject)
-admin.site.register(models.Cabinet)
 admin.site.register(models.Teacher)
 admin.site.register(models.Consultation)
 admin.site.register(models.Session)
 admin.site.register(models.Event)
+
+
+@admin.register(models.Cabinet)
+class CabinetAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title')
 
 
 @admin.register(models.Day)

@@ -51,6 +51,7 @@ class SessionSerializers(serializers.ModelSerializer):
 
 
 class SubgroupSerializers(serializers.ModelSerializer):
+    subgroup = serializers.IntegerField()
     subject = serializers.StringRelatedField(source='subject.title')
     type = serializers.IntegerField(source='subject.view')
     professor = serializers.IntegerField(source='teacher.id')
@@ -58,7 +59,7 @@ class SubgroupSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = models.Subgroup
-        fields = ('subject', 'type', 'professor', 'place')
+        fields = ('subgroup', 'subject', 'type', 'professor', 'place')
 
 
 class LessonSerializers(serializers.ModelSerializer):
@@ -70,14 +71,19 @@ class LessonSerializers(serializers.ModelSerializer):
         fields = ('time', 'subgroup')
 
 
-class TimetableSerializers(serializers.Serializer):
+class GroupTimetableSerializers(serializers.Serializer):
     day = serializers.IntegerField()
     lesson = LessonSerializers(many=True, read_only=True)
 
-    def to_representation(self, obj):
-        return {
-            obj.day: [x.to_dict() for x in obj.lesson.all()]
-        }
+    class Meta:
+        model = models.Day
+        fields = ('day', 'lesson')
+
+
+class CabinetTimetableSerializers(serializers.Serializer):
+    group = serializers.StringRelatedField(source='group.title')
+    day = serializers.IntegerField()
+    lesson = LessonSerializers(many=True, read_only=True)
 
     class Meta:
         model = models.Day

@@ -137,20 +137,13 @@ class Subgroup(models.Model):
     subject = models.ForeignKey(
         Subject, on_delete=models.CASCADE, verbose_name='предмет')
     subgroup = models.IntegerField(
-        blank=True, null=True, verbose_name='подгруппа')
-
-    def to_dict(self):
-        return {
-            'subject': self.subject.title,
-            'type': self.subject.view,
-            'professor': self.teacher.id,
-            'place': str(self.cabinet)
-        }
+        default=0, verbose_name='подгруппа')
 
     def __str__(self):
         return str(self.subject)
 
     class Meta:
+        ordering = ['subgroup']
         verbose_name = u'Подгруппа'
         verbose_name_plural = u'Подгруппы'
 
@@ -159,13 +152,8 @@ class Lesson(models.Model):
     time = models.CharField(max_length=11, verbose_name='время')
     subgroup = models.ManyToManyField(Subgroup, verbose_name='Подгруппа')
 
-    def to_dict(self):
-        return {
-            'time': self.time,
-            'subgroups': [x.to_dict() for x in self.subgroup.all()]
-        }
-
     class Meta:
+        ordering = ['time']
         verbose_name = u'Лента'
         verbose_name_plural = u'Ленты'
 

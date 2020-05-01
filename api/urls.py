@@ -13,8 +13,8 @@ urlpatterns = [
 
 
     path('timetable/group/<int:id>/<int:week>',
-         views.TimetableView.as_view({'get': 'get_timetable_group'})),
+         views.TimetableView.as_view({'get': 'group'})),
 
-    path('timetable/cabinet/<int:id>',
-        views.TimetableView.as_view({'get': 'get_timetable_cabinet'})),
+    path('timetable/cabinet/<int:id>/<int:week>',
+         views.TimetableView.as_view({'get': 'cabinet'})),
 ]

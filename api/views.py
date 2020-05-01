@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 import api.models as models
 import api.serializers as serializers
+from copy import deepcopy
 
 
 class ElderView(viewsets.ViewSet):
@@ -62,13 +63,25 @@ class SessionView(viewsets.ViewSet):
 
 
 class TimetableView(viewsets.ViewSet):
-    def get_timetable_group(self, request, id, week):
-        queryset = models.Day.objects.filter(group__id=id)
+    def group(self, request, id, week):
+        queryset = models.Day.objects.filter(group__id=id).distinct()
         queryset = queryset.filter(even_week=(week % 2))
-        serializer = serializers.TimetableSerializers(queryset, many=True)
+        serializer = serializers.GroupTimetableSerializers(
+            queryset, many=True)
         return Response(serializer.data)
 
-    def get_timetable_cabinet(self, request, id):
-        queryset = models.Day.objects.filter(lesson__subgroup__cabinet__id=id)
-        serializer = serializers.TimetableSerializers(queryset, many=True)
+    def cabinet(self, request, id, week):
+        queryset = models.Day.objects.filter(
+            lesson__subgroup__cabinet__id=id).distinct()
+        queryset = queryset.filter(even_week=(week % 2))
+        cabinet = models.Cabinet.objects.get(id=id)
+        serializer = serializers.CabinetTimetableSerializers(
+            queryset, many=True)
+
+        for i_d, day in enumerate(serializer.data):
+            for i_l, lesson in enumerate(day['lesson']):
+                for i_s, sopgroup in enumerate(lesson['subgroup']):
+                    if sopgroup['place'] != str(cabinet):
+                        print()
+                        del serializer.data[i_d]['lesson'][i_l]['subgroup'][i_s]
         return Response(serializer.data)
