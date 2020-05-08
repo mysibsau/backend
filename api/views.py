@@ -65,23 +65,48 @@ class SessionView(viewsets.ViewSet):
 class TimetableView(viewsets.ViewSet):
     def group(self, request, id, week):
         queryset = models.Day.objects.filter(group__id=id).distinct()
-        queryset = queryset.filter(even_week=(week % 2))
+        queryset = queryset.filter(even_week=((week+1) % 2))
         serializer = serializers.GroupTimetableSerializers(
             queryset, many=True)
         return Response(serializer.data)
 
     def cabinet(self, request, id, week):
-        queryset = models.Day.objects.filter(
+        days_queryset = models.Day.objects.filter(
             lesson__subgroup__cabinet__id=id).distinct()
-        queryset = queryset.filter(even_week=(week % 2))
-        cabinet = models.Cabinet.objects.get(id=id)
-        serializer = serializers.CabinetTimetableSerializers(
-            queryset, many=True)
+        days_queryset = days_queryset.filter(even_week=((week+1) % 2))
+        days = serializers.CabinetTimetableSerializers(
+            days_queryset, many=True)
 
-        for i_d, day in enumerate(serializer.data):
-            for i_l, lesson in enumerate(day['lesson']):
-                for i_s, sopgroup in enumerate(lesson['subgroup']):
-                    if sopgroup['place'] != str(cabinet):
-                        print()
-                        del serializer.data[i_d]['lesson'][i_l]['subgroup'][i_s]
-        return Response(serializer.data)
+        cabinet = models.Cabinet.objects.get(id=id)
+
+        # Извините за этот код.
+        # Я не знаю как сделать иначе
+
+        # Массив, который будет возвращаться
+        result = []
+
+        # Пробигаемся по всем дням
+        for day in days.data:
+            print(day)
+            # Временный словарь дня
+            d = {'day': day['day'], 'lesson': []}
+            # Пробигаемся по всем предметам
+            for lesson in day['lesson']:
+                # Врменный словарь пары
+                l = {'time': lesson['time'], 'subgroup': []}
+                # Пробигаемся по всем подгруппам
+                for sopgroup in lesson['subgroup']:
+                    # Если кабинет тот, что нам нужен
+                    if sopgroup['place'] == str(cabinet):
+                        sopgroup.pop('place')
+                        sopgroup['group'] = day['group']
+                        # Добавляем ленту
+                        l['subgroup'].append(sopgroup)
+                # Если подгруппы не пустые
+                if l['subgroup']:
+                    d['lesson'].append(l)
+            # Если ленты не пусты
+            if d['lesson']:
+                result.append(d)
+
+        return Response(result)

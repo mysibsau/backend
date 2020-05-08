@@ -136,8 +136,7 @@ class Subgroup(models.Model):
         Cabinet, on_delete=models.CASCADE, verbose_name='аудитория')
     subject = models.ForeignKey(
         Subject, on_delete=models.CASCADE, verbose_name='предмет')
-    subgroup = models.IntegerField(
-        default=0, verbose_name='подгруппа')
+    subgroup = models.IntegerField(default=0, verbose_name='подгруппа')
 
     def __str__(self):
         return str(self.subject)
@@ -165,3 +164,8 @@ class Day(models.Model):
     day = models.PositiveSmallIntegerField(
         choices=WEEKDAY, verbose_name='день недели')
     lesson = models.ManyToManyField(Lesson, verbose_name='Лента')
+
+    class Meta:
+        ordering = ['day']
+        verbose_name = u'День'
+        verbose_name_plural = u'Дни'
