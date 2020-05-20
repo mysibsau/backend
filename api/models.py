@@ -17,8 +17,8 @@ TYPES = (
 )
 
 
-class Elder(models.Model):
-    name = models.TextField(verbose_name='ФИО')
+class Person(models.Model):
+    name = models.TextField(verbose_name='Название')
     phone = models.CharField(blank=True, max_length=12, verbose_name='телефон')
     mail = models.EmailField(blank=True, verbose_name='почта')
 
@@ -26,22 +26,47 @@ class Elder(models.Model):
         return self.name
 
     class Meta:
+        abstract = True
+
+
+class Elder(Person):
+    class Meta:
         verbose_name = u'Староста'
         verbose_name_plural = u'Старосты'
 
 
-class Group(models.Model):
-    title = models.CharField(max_length=15, verbose_name='название')
-    mail = models.EmailField(blank=True, verbose_name='почта')
+class Group(Person):
+    phone = None
     elder = models.OneToOneField(
-        Elder, on_delete=models.CASCADE, blank=True, null=True, verbose_name='староста')
+        Elder,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        verbose_name='староста'
+        )
+
+    class Meta:
+        verbose_name = u'Группа'
+        verbose_name_plural = u'Группы'
+
+
+class Teacher(Person):
+    department = models.TextField(blank=True, verbose_name='кафедра')
+
+    class Meta:
+        verbose_name = u'Преподаватель'
+        verbose_name_plural = u'Преподаватели'
+
+
+class Cabinet(models.Model):
+    title = models.CharField(max_length=10, verbose_name='название')
 
     def __str__(self):
         return self.title
 
     class Meta:
-        verbose_name = u'Группа'
-        verbose_name_plural = u'Группы'
+        verbose_name = u'Аудитория'
+        verbose_name_plural = u'Аудитории'
 
 
 class Subject(models.Model):
@@ -56,86 +81,14 @@ class Subject(models.Model):
         verbose_name_plural = u'Предметы'
 
 
-class Cabinet(models.Model):
-    title = models.CharField(max_length=10, verbose_name='название')
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = u'Аудитория'
-        verbose_name_plural = u'Аудитории'
-
-
-class Teacher(models.Model):
-    name = models.TextField(verbose_name='ФИО')
-    phone = models.CharField(blank=True, max_length=12, verbose_name='телефон')
-    mail = models.EmailField(blank=True, verbose_name='почта')
-    department = models.TextField(blank=True, verbose_name='кафедра')
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = u'Преподаватель'
-        verbose_name_plural = u'Преподаватели'
-
-
-class Event(models.Model):
-    title = models.TextField(verbose_name='название')
-    address = models.TextField(verbose_name='адресс')
-    time = models.CharField(max_length=11, verbose_name='время')
-    date = models.DateField(verbose_name='дата')
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = u'Мероприятие'
-        verbose_name_plural = u'Мероприятия'
-
-
-class AbstraсtTimetable(models.Model):
-    teacher = models.ForeignKey(
-        Teacher, on_delete=models.CASCADE, verbose_name='преподаватель')
+class Subgroup(models.Model):
+    teacher = models.ManyToManyField(Teacher, verbose_name='преподаватель')
     cabinet = models.ForeignKey(
         Cabinet, on_delete=models.CASCADE, verbose_name='аудитория')
-    day = models.PositiveSmallIntegerField(
-        choices=WEEKDAY, verbose_name='день недели')
-    even_week = models.BooleanField(verbose_name='четная неделя')
-    time = models.CharField(max_length=11, verbose_name='время')
-
-    class Meta:
-        abstract = True
-
-
-class Consultation(AbstraсtTimetable):
-    class Meta:
-        verbose_name = u'Консультация'
-        verbose_name_plural = u'Консультации'
-
-
-class Session(AbstraсtTimetable):
-    day = None
-    even_week = None
     subject = models.ForeignKey(
         Subject, on_delete=models.CASCADE, verbose_name='предмет')
     group = models.ForeignKey(
         Group, on_delete=models.CASCADE, verbose_name='группа')
-    date = models.DateField(verbose_name='дата')
-
-    class Meta:
-        verbose_name = u'Сессия'
-        verbose_name_plural = u'Сессии'
-
-
-class Subgroup(models.Model):
-    teacher = models.ForeignKey(
-        Teacher, on_delete=models.CASCADE, verbose_name='преподаватель')
-    cabinet = models.ForeignKey(
-        Cabinet, on_delete=models.CASCADE, verbose_name='аудитория')
-    subject = models.ForeignKey(
-        Subject, on_delete=models.CASCADE, verbose_name='предмет')
     subgroup = models.IntegerField(default=0, verbose_name='подгруппа')
 
     def __str__(self):
@@ -149,7 +102,7 @@ class Subgroup(models.Model):
 
 class Lesson(models.Model):
     time = models.CharField(max_length=11, verbose_name='время')
-    subgroup = models.ManyToManyField(Subgroup, verbose_name='Подгруппа')
+    subgroup = models.ManyToManyField(Subgroup, verbose_name='пара')
 
     class Meta:
         ordering = ['time']
@@ -157,15 +110,31 @@ class Lesson(models.Model):
         verbose_name_plural = u'Ленты'
 
 
-class Day(models.Model):
+class Timetable(models.Model):
     even_week = models.BooleanField(verbose_name='четная неделя')
-    group = models.ForeignKey(
-        Group, on_delete=models.CASCADE, verbose_name='группа')
     day = models.PositiveSmallIntegerField(
         choices=WEEKDAY, verbose_name='день недели')
     lesson = models.ManyToManyField(Lesson, verbose_name='Лента')
 
     class Meta:
+        abstract = True
+
+
+class TimetableGroup(Timetable):
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, verbose_name='группа')    
+
+    class Meta:
         ordering = ['day']
-        verbose_name = u'День'
-        verbose_name_plural = u'Дни'
+        verbose_name = u'Рассписание группы'
+        verbose_name_plural = u'Рассписание группы'
+
+
+class TimetableCabinet(Timetable):
+    cabinet = models.ForeignKey(
+        Cabinet, on_delete=models.CASCADE, verbose_name='кабинет')
+
+    class Meta:
+        ordering = ['day']
+        verbose_name = u'Рассписание кабинета'
+        verbose_name_plural = u'Рассписание кабинета'
