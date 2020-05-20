@@ -7,14 +7,11 @@ urlpatterns = [
     path('subject/', views.SubjectView.as_view({'get': 'all'})),
     path('cabinet/', views.CabinetView.as_view({'get': 'all'})),
     path('teacher/', views.TeacherView.as_view({'get': 'all'})),
-    path('event/', views.EventView.as_view({'get': 'all'})),
-    path('consultation/', views.ConsultationView.as_view({'get': 'all'})),
-    path('session/', views.SessionView.as_view({'get': 'all'})),
 
 
     path('timetable/group/<int:id>/<int:week>',
-         views.TimetableView.as_view({'get': 'group'})),
+         views.TimetableGroupView.as_view({'get': 'group'})),
 
-    path('timetable/cabinet/<int:id>/<int:week>',
-         views.TimetableView.as_view({'get': 'cabinet'})),
+    #path('timetable/cabinet/<int:id>/<int:week>',
+    #     views.TimetableView.as_view({'get': 'cabinet'})),
 ]
