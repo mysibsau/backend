@@ -19,7 +19,7 @@ TYPES = (
 
 class Group(models.Model):
     name = models.TextField(verbose_name='Название')
-    mail = models.EmailField(blank=True, verbose_name='почта')
+    mail = models.EmailField(blank=True, verbose_name='Почта')
 
     def __str__(self):
         return self.name
@@ -30,8 +30,10 @@ class Group(models.Model):
 
 
 class Professor(models.Model):
-    phone = models.CharField(blank=True, max_length=12, verbose_name='телефон')
-    department = models.TextField(blank=True, verbose_name='кафедра')
+    name = models.TextField(verbose_name='ФИО')
+    mail = models.EmailField(blank=True, verbose_name='Почта')
+    phone = models.CharField(blank=True, max_length=12, verbose_name='Телефон')
+    department = models.TextField(blank=True, verbose_name='Кафедра')
 
     def __str__(self):
         return self.name
@@ -42,7 +44,7 @@ class Professor(models.Model):
 
 
 class Place(models.Model):
-    title = models.CharField(max_length=10, verbose_name='название')
+    title = models.CharField(max_length=10, verbose_name='Название')
 
     def __str__(self):
         return self.title
@@ -53,8 +55,8 @@ class Place(models.Model):
 
 
 class Subject(models.Model):
-    title = models.TextField(verbose_name='название')
-    type = models.PositiveSmallIntegerField(choices=TYPES, verbose_name='тип')
+    title = models.TextField(verbose_name='Название')
+    type = models.PositiveSmallIntegerField(choices=TYPES, verbose_name='Тип')
 
     def __str__(self):
         return self.title
@@ -65,11 +67,11 @@ class Subject(models.Model):
 
 
 class Subgroup(models.Model):
-    professors = models.ManyToManyField(Professor, verbose_name='преподаватель')
-    groups = models.ManyToManyField(Group, verbose_name='группа')
-    place = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name='аудитория')
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, verbose_name='предмет')
-    num = models.IntegerField(default=0, verbose_name='подгруппа')
+    professors = models.ManyToManyField(Professor, verbose_name='Преподаватель')
+    groups = models.ManyToManyField(Group, verbose_name='Группа')
+    place = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name='Аудитория')
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, verbose_name='Предмет')
+    num = models.IntegerField(default=0, verbose_name='Подгруппа')
 
     def __str__(self):
         return str(self.subject)
@@ -81,8 +83,8 @@ class Subgroup(models.Model):
 
 
 class Lesson(models.Model):
-    time = models.CharField(max_length=11, verbose_name='время')
-    subgroup = models.ManyToManyField(Subgroup, verbose_name='пара')
+    time = models.CharField(max_length=11, verbose_name='Время')
+    subgroup = models.ManyToManyField(Subgroup, verbose_name='Предметы')
 
     class Meta:
         ordering = ['time']
@@ -91,10 +93,10 @@ class Lesson(models.Model):
 
 
 class Timetable(models.Model):
-    even_week = models.BooleanField(verbose_name='четная неделя')
+    even_week = models.BooleanField(verbose_name='Четная неделя')
     day = models.PositiveSmallIntegerField(
-        choices=WEEKDAY, verbose_name='день недели')
-    lesson = models.ManyToManyField(Lesson, verbose_name='Лента')
+        choices=WEEKDAY, verbose_name='День недели')
+    lesson = models.ManyToManyField(Lesson, verbose_name='Ленты')
 
     class Meta:
         abstract = True
@@ -102,7 +104,7 @@ class Timetable(models.Model):
 
 class TimetableGroup(Timetable):
     group = models.ForeignKey(
-        Group, on_delete=models.CASCADE, verbose_name='группа')    
+        Group, on_delete=models.CASCADE, verbose_name='Группа')    
 
     class Meta:
         ordering = ['day']
@@ -112,7 +114,7 @@ class TimetableGroup(Timetable):
 
 class TimetablePlace(Timetable):
     place = models.ForeignKey(
-        Place, on_delete=models.CASCADE, verbose_name='кабинет')
+        Place, on_delete=models.CASCADE, verbose_name='Кабинет')
 
     class Meta:
         ordering = ['day']
