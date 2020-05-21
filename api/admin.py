@@ -32,10 +32,14 @@ class PlaceAdmin(admin.ModelAdmin):
 
 @admin.register(models.Subgroup)
 class SubgroupAdmin(admin.ModelAdmin):
-    list_display = ('subject', 'get_professors', 'place', 'num')
-
+    list_display = ('subject', 'get_professors', 'get_groups', 'place', 'num')
+    list_filter = ('professors', 'groups', 'place',)
+    
     def get_professors(self, obj):
         return ", ".join([p.name for p in obj.professors.all()])
+
+    def get_groups(self, obj):
+        return ", ".join([p.name for p in obj.groups.all()])
 
 
 @admin.register(models.Lesson)
