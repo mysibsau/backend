@@ -30,6 +30,7 @@ class SubgroupSerializers(serializers.ModelSerializer):
     subject = serializers.StringRelatedField(source='subject.title')
     professors = ProfessorSerializers(many=True, read_only=True)
     groups = GroupSerializers(many=True, read_only=True)
+    type = serializers.IntegerField(source='subject.type')
     place = serializers.StringRelatedField(source='place.title')
 
     def to_representation(self, instance):
@@ -40,7 +41,7 @@ class SubgroupSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = models.Subgroup
-        fields = ('num', 'groups', 'subject', 'type', 'professors', 'place')
+        fields = ('num', 'subject', 'type', 'place', 'groups', 'professors')
 
 
 class LessonSerializers(serializers.ModelSerializer):
