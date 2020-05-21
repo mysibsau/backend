@@ -5,13 +5,6 @@ import api.models as models
 import api.serializers as serializers
 
 
-class ElderView(viewsets.ViewSet):
-    def all(self, request):
-        queryset = models.Elder.objects.all()
-        serializer = serializers.ElderSerializers(queryset, many=True)
-        return Response(serializer.data)
-
-
 class GroupView(viewsets.ViewSet):
     def all(self, request):
         queryset = models.Group.objects.all()
@@ -19,31 +12,35 @@ class GroupView(viewsets.ViewSet):
         return Response(serializer.data)
 
 
-class SubjectView(viewsets.ViewSet):
+class PlaceView(viewsets.ViewSet):
     def all(self, request):
-        queryset = models.Subject.objects.all()
-        serializer = serializers.SubjectSerializers(queryset, many=True)
+        queryset = models.Place.objects.all()
+        serializer = serializers.PlaceSerializers(queryset, many=True)
         return Response(serializer.data)
 
 
-class CabinetView(viewsets.ViewSet):
+class ProfessorView(viewsets.ViewSet):
     def all(self, request):
-        queryset = models.Cabinet.objects.all()
-        serializer = serializers.CabinetSerializers(queryset, many=True)
+        queryset = models.Professor.objects.all()
+        serializer = serializers.ProfessorSerializers(queryset, many=True)
         return Response(serializer.data)
 
 
-class TeacherView(viewsets.ViewSet):
-    def all(self, request):
-        queryset = models.Teacher.objects.all()
-        serializer = serializers.TeacherSerializers(queryset, many=True)
-        return Response(serializer.data)
-
-
-class TimetableGroupView(viewsets.ViewSet):
+class TimetableView(viewsets.ViewSet):
     def group(self, request, id, week):
         queryset = models.TimetableGroup.objects.filter(group__id=id).distinct()
         queryset = queryset.filter(even_week=((week+1) % 2))
-        serializer = serializers.GroupTimetableSerializers(
-            queryset, many=True)
+        serializer = serializers.GroupTimetableSerializers(queryset, many=True)
+        return Response(serializer.data)
+
+    def place(self, request, title, week):
+        queryset = models.TimetablePlace.objects.filter(Place__title=title).distinct()
+        queryset = queryset.filter(even_week=((week+1) % 2))
+        serializer = serializers.PlaceTimetableSerializers(queryset, many=True)
+        return Response(serializer.data)
+
+    def professor(self, request, title, week):
+        queryset = models.TimetableProfessor.objects.filter(Place__title=title).distinct()
+        queryset = queryset.filter(even_week=((week+1) % 2))
+        serializer = serializers.ProfessorTimetableSerializers(queryset, many=True)
         return Response(serializer.data)
