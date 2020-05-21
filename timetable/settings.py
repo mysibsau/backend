@@ -59,8 +59,8 @@ STATIC_URL = '/static/'
 
 SECRET_KEY = env.str('SECRET_KEY')
 
-LANGUAGE_CODE = 'ru-ru'
-TIME_ZONE = 'Asia/Krasnoyarsk'
+LANGUAGE_CODE = env.str('LANGUAGE_CODE')
+TIME_ZONE = env.str('TIME_ZONE')
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
