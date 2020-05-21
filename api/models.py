@@ -17,7 +17,7 @@ TYPES = (
 )
 
 
-class Person(models.Model):
+class Group(models.Model):
     name = models.TextField(verbose_name='Название')
     mail = models.EmailField(blank=True, verbose_name='почта')
 
@@ -25,18 +25,16 @@ class Person(models.Model):
         return self.name
 
     class Meta:
-
-
-class Group(Person):
-    phone = None
-    class Meta:
         verbose_name = u'Группа'
         verbose_name_plural = u'Группы'
 
 
-class Professor(Person):
+class Professor(models.Model):
     phone = models.CharField(blank=True, max_length=12, verbose_name='телефон')
     department = models.TextField(blank=True, verbose_name='кафедра')
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = u'Преподаватель'
