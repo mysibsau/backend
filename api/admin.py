@@ -2,29 +2,40 @@ from django.contrib import admin
 
 import api.models as models
 
-admin.site.register(models.Elder)
 admin.site.register(models.Group)
 admin.site.register(models.Subject)
-admin.site.register(models.Teacher)
-
-
-@admin.register(models.Cabinet)
-class CabinetAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title')
+admin.site.register(models.Professor)
 
 
 @admin.register(models.TimetableGroup)
-class DayAdmin(admin.ModelAdmin):
+class TimetableGroupAdmin(admin.ModelAdmin):
     list_filter = ('group',)
     list_display = ('group', 'day', 'even_week')
+    
+
+@admin.register(models.TimetablePlace)
+class TimetablePlaceAdmin(admin.ModelAdmin):
+    list_filter = ('place',)
+    list_display = ('place', 'day', 'even_week')
+
+
+@admin.register(models.TimetableProfessor)
+class TimetableProfessorAdmin(admin.ModelAdmin):
+    list_filter = ('professor',)
+    list_display = ('professor', 'day', 'even_week')
+
+
+@admin.register(models.Place)
+class PlaceAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title')
 
 
 @admin.register(models.Subgroup)
 class SubgroupAdmin(admin.ModelAdmin):
-    list_display = ('subject', 'get_teachers', 'cabinet', 'subgroup')
+    list_display = ('subject', 'get_professors', 'place', 'num')
 
-    def get_teachers(self, obj):
-        return ", ".join([s.name for s in obj.teacher.all()])
+    def get_professors(self, obj):
+        return ", ".join([p.name for p in obj.professors.all()])
 
 
 @admin.register(models.Lesson)
