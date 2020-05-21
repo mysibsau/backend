@@ -32,7 +32,7 @@ class PlaceAdmin(admin.ModelAdmin):
 
 @admin.register(models.Subgroup)
 class SubgroupAdmin(admin.ModelAdmin):
-    list_display = ('subject', 'get_professors', 'get_groups', 'place', 'num')
+    list_display = ('subject', 'get_professors', 'get_groups','subject', 'place', 'num')
     list_filter = ('professors', 'groups', 'place',)
     
     def get_professors(self, obj):
