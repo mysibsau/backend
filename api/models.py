@@ -67,8 +67,8 @@ class Subject(models.Model):
 
 
 class Subgroup(models.Model):
-    professors = models.ManyToManyField(Professor, verbose_name='Преподаватель')
-    groups = models.ManyToManyField(Group, verbose_name='Группа')
+    professors = models.ManyToManyField(Professor, verbose_name='Преподаватели')
+    groups = models.ManyToManyField(Group, verbose_name='Группы')
     place = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name='Аудитория')
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, verbose_name='Предмет')
     num = models.IntegerField(default=0, verbose_name='Подгруппа')
