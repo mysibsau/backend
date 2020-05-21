@@ -2,12 +2,6 @@ from rest_framework import serializers
 import api.models as models
 
 
-class ElderSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = models.Elder
-        fields = '__all__'
-
-
 class GroupSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Group
@@ -20,33 +14,33 @@ class SubjectSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CabinetSerializers(serializers.ModelSerializer):
+class PlaceSerializers(serializers.ModelSerializer):
     class Meta:
-        model = models.Cabinet
+        model = models.Place
         fields = ('title',)
 
 
-class TeacherSerializers(serializers.ModelSerializer):
+class ProfessorSerializers(serializers.ModelSerializer):
     class Meta:
-        model = models.Teacher
+        model = models.Professor
         fields = ('id', )
 
 
 class SubgroupSerializers(serializers.ModelSerializer):
-    num = serializers.IntegerField(source='subgroup')
     subject = serializers.StringRelatedField(source='subject.title')
-    type = serializers.IntegerField(source='subject.view')
-    professors = TeacherSerializers(source='teacher', many=True, read_only=True)
-    place = serializers.StringRelatedField(source='cabinet.title')
+    professors = ProfessorSerializers(many=True, read_only=True)
+    groups = GroupSerializers(many=True, read_only=True)
+    place = serializers.StringRelatedField(source='place.title')
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
         ret['professors'] = [i['id'] for i in ret['professors']]
+        ret['groups'] = [i['id'] for i in ret['groups']]
         return ret
 
     class Meta:
         model = models.Subgroup
-        fields = ('num', 'subject', 'type', 'professors', 'place')
+        fields = ('num', 'groups', 'subject', 'type', 'professors', 'place')
 
 
 class LessonSerializers(serializers.ModelSerializer):
@@ -64,4 +58,22 @@ class GroupTimetableSerializers(serializers.Serializer):
 
     class Meta:
         model = models.TimetableGroup
+        fields = ('day', 'lesson')
+
+
+class PlaceTimetableSerializers(serializers.Serializer):
+    day = serializers.IntegerField()
+    lesson = LessonSerializers(many=True, read_only=True)
+
+    class Meta:
+        model = models.TimetablePlace
+        fields = ('day', 'lesson')
+
+
+class ProfessorTimetableSerializers(serializers.Serializer):
+    day = serializers.IntegerField()
+    lesson = LessonSerializers(many=True, read_only=True)
+
+    class Meta:
+        model = models.TimetableProfessor
         fields = ('day', 'lesson')

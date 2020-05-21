@@ -2,16 +2,15 @@ from django.urls import path
 import api.views as views
 
 urlpatterns = [
-    path('elders/', views.ElderView.as_view({'get': 'all'})),
-    path('groups/', views.GroupView.as_view({'get': 'all'})),
-    path('subject/', views.SubjectView.as_view({'get': 'all'})),
-    path('cabinet/', views.CabinetView.as_view({'get': 'all'})),
-    path('teacher/', views.TeacherView.as_view({'get': 'all'})),
+     path('groups/', views.GroupView.as_view({'get': 'all'})),
+     path('place/', views.PlaceView.as_view({'get': 'all'})),
+     path('professor/', views.ProfessorView.as_view({'get': 'all'})),
 
 
-    path('timetable/group/<int:id>/<int:week>',
-         views.TimetableGroupView.as_view({'get': 'group'})),
-
-    #path('timetable/cabinet/<int:id>/<int:week>',
-    #     views.TimetableView.as_view({'get': 'cabinet'})),
+     path('timetable/group/<int:id>/<int:week>',
+          views.TimetableView.as_view({'get': 'group'})),
+     path('timetable/cabinet/<title>/<int:week>',
+          views.TimetableView.as_view({'get': 'cabinet'})),
+     path('timetable/professor/<title>/<int:week>',
+          views.TimetableView.as_view({'get': 'professor'})),
 ]
