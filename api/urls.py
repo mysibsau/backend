@@ -9,8 +9,8 @@ urlpatterns = [
 
      path('timetable/group/<int:id>/<int:week>',
           views.TimetableView.as_view({'get': 'group'})),
-     path('timetable/cabinet/<title>/<int:week>',
-          views.TimetableView.as_view({'get': 'cabinet'})),
-     path('timetable/professor/<title>/<int:week>',
+     path('timetable/place/<title>/<int:week>',
+          views.TimetableView.as_view({'get': 'place'})),
+     path('timetable/professor/<int:id>/<int:week>',
           views.TimetableView.as_view({'get': 'professor'})),
 ]

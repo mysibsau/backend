@@ -34,13 +34,13 @@ class TimetableView(viewsets.ViewSet):
         return Response(serializer.data)
 
     def place(self, request, title, week):
-        queryset = models.TimetablePlace.objects.filter(Place__title=title).distinct()
+        queryset = models.TimetablePlace.objects.filter(place__title=title).distinct()
         queryset = queryset.filter(even_week=((week+1) % 2))
         serializer = serializers.PlaceTimetableSerializers(queryset, many=True)
         return Response(serializer.data)
 
-    def professor(self, request, title, week):
-        queryset = models.TimetableProfessor.objects.filter(Place__title=title).distinct()
+    def professor(self, request, id, week):
+        queryset = models.TimetableProfessor.objects.filter(professor__id=id).distinct()
         queryset = queryset.filter(even_week=((week+1) % 2))
         serializer = serializers.ProfessorTimetableSerializers(queryset, many=True)
         return Response(serializer.data)
