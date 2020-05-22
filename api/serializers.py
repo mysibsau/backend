@@ -23,7 +23,7 @@ class PlaceSerializers(serializers.ModelSerializer):
 class ProfessorSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Professor
-        fields = ('id', )
+        fields = '__all__'
 
 
 class SubgroupSerializers(serializers.ModelSerializer):
