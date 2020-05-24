@@ -59,21 +59,21 @@ class ProfessorModelTest(TestCase):
 class PlaceModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        models.Place.objects.create(title='Н317')
+        models.Place.objects.create(name='Н317')
 
     def test_labels(self):
         place = models.Place.objects.all()[0]
-        title_label = place._meta.get_field('title').verbose_name
-        self.assertEquals(title_label, 'Название')
+        name_label = place._meta.get_field('name').verbose_name
+        self.assertEquals(name_label, 'Название')
 
     def test_title_max_length(self):
         place = models.Place.objects.all()[0]
-        max_length = place._meta.get_field('title').max_length
+        max_length = place._meta.get_field('name').max_length
         self.assertEquals(max_length, 10)
 
-    def test_object_name_is_place_title(self):
+    def test_object_name_is_place_name(self):
         place = models.Place.objects.all()[0]
-        self.assertEquals(place.title, str(place))
+        self.assertEquals(place.name, str(place))
 
 
 class SubjectModelTest(TestCase):
@@ -103,7 +103,7 @@ class SubgroupModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         models.Subgroup.objects.create(
-            place=models.Place.objects.create(title='Н317'),
+            place=models.Place.objects.create(name='Н317'),
             subject=models.Subject.objects.create(title='Физкультура', type=1)
         )
 
@@ -174,7 +174,7 @@ class TimetablePlaceModelTest(TestCase):
         models.TimetablePlace.objects.create(
             even_week=True,
             day=0,
-            place=models.Place.objects.create(title='Н317')
+            place=models.Place.objects.create(name='Н317')
         )
 
     def test_labels(self):

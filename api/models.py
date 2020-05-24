@@ -44,10 +44,10 @@ class Professor(models.Model):
 
 
 class Place(models.Model):
-    title = models.CharField(max_length=10, verbose_name='Название')
+    name = models.CharField(max_length=10, verbose_name='Название')
 
     def __str__(self):
-        return self.title
+        return self.name
 
     class Meta:
         verbose_name = u'Аудитория'

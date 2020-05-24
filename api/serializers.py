@@ -17,7 +17,7 @@ class SubjectSerializers(serializers.ModelSerializer):
 class PlaceSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Place
-        fields = ('title',)
+        fields = ('name',)
 
 
 class ProfessorSerializers(serializers.ModelSerializer):
@@ -31,7 +31,7 @@ class SubgroupSerializers(serializers.ModelSerializer):
     professors = ProfessorSerializers(many=True, read_only=True)
     groups = GroupSerializers(many=True, read_only=True)
     type = serializers.IntegerField(source='subject.type')
-    place = serializers.StringRelatedField(source='place.title')
+    place = serializers.StringRelatedField(source='place.name')
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)

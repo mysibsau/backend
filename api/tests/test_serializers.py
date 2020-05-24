@@ -62,18 +62,18 @@ class ProfessorSerializersTest(TestCase):
 class PlaceSerializersTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        models.Place.objects.create(title='Н317')
+        models.Place.objects.create(name='Н317')
 
     def test_contains_expected_fields(self):
-        fields = ['title',]
+        fields = ['name',]
         place = models.Place.objects.all()[0]
         data = serializers.PlaceSerializers(place).data
         self.assertEquals(set(data.keys()), set(fields))
 
-    def test_title_field_content(self):
+    def test_name_field_content(self):
         place = models.Place.objects.all()[0]
         data = serializers.PlaceSerializers(place).data
-        self.assertEquals(data['title'], 'Н317')
+        self.assertEquals(data['name'], 'Н317')
 
 
 class SubjectSerializersTest(TestCase):
@@ -86,18 +86,18 @@ class SubjectSerializersTest(TestCase):
 
     def test_contains_expected_fields(self):
         fields = ['id', 'title', 'type']
-        place = models.Subject.objects.all()[0]
-        data = serializers.SubjectSerializers(place).data
+        subject = models.Subject.objects.all()[0]
+        data = serializers.SubjectSerializers(subject).data
         self.assertEquals(set(data.keys()), set(fields))
 
     def test_title_field_content(self):
-        place = models.Subject.objects.all()[0]
-        data = serializers.SubjectSerializers(place).data
+        subject = models.Subject.objects.all()[0]
+        data = serializers.SubjectSerializers(subject).data
         self.assertEquals(data['title'], 'Физкультура')
 
     def test_type_field_content(self):
-        place = models.Subject.objects.all()[0]
-        data = serializers.SubjectSerializers(place).data
+        subject = models.Subject.objects.all()[0]
+        data = serializers.SubjectSerializers(subject).data
         self.assertEquals(data['type'], 1)
 
 
@@ -105,7 +105,7 @@ class SubgroupSerializersTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         models.Subgroup.objects.create(
-            place=models.Place.objects.create(title='Н317'),
+            place=models.Place.objects.create(name='Н317'),
             subject=models.Subject.objects.create(title='Физкультура', type=1)
         )
 
@@ -195,7 +195,7 @@ class PlaceTimetableSerializersTest(TestCase):
         models.TimetablePlace.objects.create(
             even_week=True,
             day=0,
-            place=models.Place.objects.create(title='Н317')
+            place=models.Place.objects.create(name='Н317')
         )
 
     def test_contains_expected_fields(self):

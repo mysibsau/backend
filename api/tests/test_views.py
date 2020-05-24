@@ -23,7 +23,7 @@ class GroupViewTest(TestCase):
 class PlaceViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        models.Place.objects.create(title='Н317')
+        models.Place.objects.create(name='Н317')
     
     def test_view_url_exists_at_desired_location(self): 
         resp = self.client.get('/places/')
@@ -38,7 +38,12 @@ class PlaceViewTest(TestCase):
 class ProfessorViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        models.Place.objects.create(title='Н317')
+        models.Professor.objects.create(
+            name='Фамилия Имя Отчество',
+            mail='fio@sibsau.ru',
+            phone='+79631859823',
+            department = 'ИИТК'
+        )
     
     def test_view_url_exists_at_desired_location(self): 
         resp = self.client.get('/professors/')
@@ -75,7 +80,7 @@ class TimetablePlaceViewTest(TestCase):
         models.TimetablePlace.objects.create(
             even_week=True,
             day=0,
-            place=models.Place.objects.create(title='Н317')
+            place=models.Place.objects.create(name='Н317')
         )
     
     def test_view_url_exists_at_desired_location(self):

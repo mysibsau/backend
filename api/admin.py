@@ -27,7 +27,7 @@ class TimetableProfessorAdmin(admin.ModelAdmin):
 
 @admin.register(models.Place)
 class PlaceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title')
+    list_display = ('id', 'name')
 
 
 @admin.register(models.Subgroup)
