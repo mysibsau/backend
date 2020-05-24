@@ -65,7 +65,7 @@ class PlaceSerializersTest(TestCase):
         models.Place.objects.create(name='Н317')
 
     def test_contains_expected_fields(self):
-        fields = ['name',]
+        fields = ['name','id']
         place = models.Place.objects.all()[0]
         data = serializers.PlaceSerializers(place).data
         self.assertEquals(set(data.keys()), set(fields))

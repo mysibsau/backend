@@ -17,7 +17,7 @@ class SubjectSerializers(serializers.ModelSerializer):
 class PlaceSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Place
-        fields = ('name',)
+        fields = '__all__'
 
 
 class ProfessorSerializers(serializers.ModelSerializer):
