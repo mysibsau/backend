@@ -26,11 +26,11 @@ class PlaceViewTest(TestCase):
         models.Place.objects.create(title='Н317')
     
     def test_view_url_exists_at_desired_location(self): 
-        resp = self.client.get('/place/')
+        resp = self.client.get('/places/')
         self.assertEqual(resp.status_code, 200)
 
     def test_response_is_json(self):
-        resp = self.client.get('/place/')
+        resp = self.client.get('/places/')
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.accepted_media_type, 'application/json')
 
@@ -41,11 +41,11 @@ class ProfessorViewTest(TestCase):
         models.Place.objects.create(title='Н317')
     
     def test_view_url_exists_at_desired_location(self): 
-        resp = self.client.get('/professor/')
+        resp = self.client.get('/professors/')
         self.assertEqual(resp.status_code, 200)
 
     def test_response_is_json(self):
-        resp = self.client.get('/professor/')
+        resp = self.client.get('/professors/')
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.accepted_media_type, 'application/json')
 

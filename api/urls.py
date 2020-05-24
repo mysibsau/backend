@@ -3,8 +3,8 @@ import api.views as views
 
 urlpatterns = [
      path('groups/', views.GroupView.as_view({'get': 'all'})),
-     path('place/', views.PlaceView.as_view({'get': 'all'})),
-     path('professor/', views.ProfessorView.as_view({'get': 'all'})),
+     path('places/', views.PlaceView.as_view({'get': 'all'})),
+     path('professors/', views.ProfessorView.as_view({'get': 'all'})),
 
 
      path('timetable/group/<int:id>/<int:week>',
