@@ -33,8 +33,8 @@ class TimetableView(viewsets.ViewSet):
         serializer = serializers.GroupTimetableSerializers(queryset, many=True)
         return Response(serializer.data)
 
-    def place(self, request, title, week):
-        queryset = models.TimetablePlace.objects.filter(place__title=title).distinct()
+    def place(self, request, id, week):
+        queryset = models.TimetablePlace.objects.filter(place__id=id).distinct()
         queryset = queryset.filter(even_week=((week+1) % 2))
         serializer = serializers.PlaceTimetableSerializers(queryset, many=True)
         return Response(serializer.data)

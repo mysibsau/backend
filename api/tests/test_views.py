@@ -79,11 +79,11 @@ class TimetablePlaceViewTest(TestCase):
         )
     
     def test_view_url_exists_at_desired_location(self):
-        resp = self.client.get('/timetable/place/Н317/0')
+        resp = self.client.get('/timetable/place/1/0')
         self.assertEqual(resp.status_code, 200)
 
     def test_response_is_json(self):
-        resp = self.client.get('/timetable/place/Н317/0')
+        resp = self.client.get('/timetable/place/1/0')
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.accepted_media_type, 'application/json')
 
