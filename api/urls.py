@@ -6,11 +6,8 @@ urlpatterns = [
      path('places/', views.PlaceView.as_view({'get': 'all'})),
      path('professors/', views.ProfessorView.as_view({'get': 'all'})),
 
+     path('<who>/hash/', views.HashView.as_view({'get': 'hash'})),
 
-     path('timetable/group/<int:id>/<int:week>',
-          views.TimetableView.as_view({'get': 'group'})),
-     path('timetable/place/<int:id>/<int:week>',
-          views.TimetableView.as_view({'get': 'place'})),
-     path('timetable/professor/<int:id>/<int:week>',
-          views.TimetableView.as_view({'get': 'professor'})),
+     path('timetable/<who>/<int:id>/<int:week>',
+          views.TimetableView.as_view({'get': 'timetable'})),
 ]

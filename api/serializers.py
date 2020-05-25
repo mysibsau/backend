@@ -53,28 +53,10 @@ class LessonSerializers(serializers.ModelSerializer):
         fields = ('time', 'subgroups')
 
 
-class GroupTimetableSerializers(serializers.Serializer):
+class TimetableSerializers(serializers.Serializer):
     day = serializers.IntegerField()
     lesson = LessonSerializers(many=True, read_only=True)
 
     class Meta:
-        model = models.TimetableGroup
-        fields = ('day', 'lesson')
-
-
-class PlaceTimetableSerializers(serializers.Serializer):
-    day = serializers.IntegerField()
-    lesson = LessonSerializers(many=True, read_only=True)
-
-    class Meta:
-        model = models.TimetablePlace
-        fields = ('day', 'lesson')
-
-
-class ProfessorTimetableSerializers(serializers.Serializer):
-    day = serializers.IntegerField()
-    lesson = LessonSerializers(many=True, read_only=True)
-
-    class Meta:
-        model = models.TimetableProfessor
+        model = models.Timetable
         fields = ('day', 'lesson')

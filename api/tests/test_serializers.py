@@ -175,17 +175,17 @@ class GroupTimetableSerializersTest(TestCase):
     def test_contains_expected_fields(self):
         fields = ['day', 'lesson']
         time_table = models.TimetableGroup.objects.all()[0]
-        data = serializers.GroupTimetableSerializers(time_table).data
+        data = serializers.TimetableSerializers(time_table).data
         self.assertEquals(set(data.keys()), set(fields))
 
     def test_day_field_content(self):
         time_table = models.TimetableGroup.objects.all()[0]
-        data = serializers.GroupTimetableSerializers(time_table).data
+        data = serializers.TimetableSerializers(time_table).data
         self.assertEquals(data['day'], 0)
 
     def test_lesson_field_content(self):
         time_table = models.TimetableGroup.objects.all()[0]
-        data = serializers.GroupTimetableSerializers(time_table).data
+        data = serializers.TimetableSerializers(time_table).data
         self.assertEquals(data['lesson'], [])
 
 
@@ -201,17 +201,17 @@ class PlaceTimetableSerializersTest(TestCase):
     def test_contains_expected_fields(self):
         fields = ['day', 'lesson']
         time_table = models.TimetablePlace.objects.all()[0]
-        data = serializers.PlaceTimetableSerializers(time_table).data
+        data = serializers.TimetableSerializers(time_table).data
         self.assertEquals(set(data.keys()), set(fields))
 
     def test_day_field_content(self):
         time_table = models.TimetablePlace.objects.all()[0]
-        data = serializers.PlaceTimetableSerializers(time_table).data
+        data = serializers.TimetableSerializers(time_table).data
         self.assertEquals(data['day'], 0)
 
     def test_lesson_field_content(self):
         time_table = models.TimetablePlace.objects.all()[0]
-        data = serializers.PlaceTimetableSerializers(time_table).data
+        data = serializers.TimetableSerializers(time_table).data
         self.assertEquals(data['lesson'], [])
 
 
@@ -227,15 +227,15 @@ class ProfessorTimetableSerializersTest(TestCase):
     def test_contains_expected_fields(self):
         fields = ['day', 'lesson']
         time_table = models.TimetableProfessor.objects.all()[0]
-        data = serializers.ProfessorTimetableSerializers(time_table).data
+        data = serializers.TimetableSerializers(time_table).data
         self.assertEquals(set(data.keys()), set(fields))
 
     def test_day_field_content(self):
         time_table = models.TimetableProfessor.objects.all()[0]
-        data = serializers.ProfessorTimetableSerializers(time_table).data
+        data = serializers.TimetableSerializers(time_table).data
         self.assertEquals(data['day'], 0)
 
     def test_lesson_field_content(self):
         time_table = models.TimetableProfessor.objects.all()[0]
-        data = serializers.ProfessorTimetableSerializers(time_table).data
+        data = serializers.TimetableSerializers(time_table).data
         self.assertEquals(data['lesson'], [])
