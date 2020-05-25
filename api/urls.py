@@ -1,4 +1,7 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+
 import api.views as views
 
 urlpatterns = [
@@ -10,4 +13,5 @@ urlpatterns = [
 
      path('timetable/<who>/<int:id>/<int:week>',
           views.TimetableView.as_view({'get': 'timetable'})),
-]
+
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -53,9 +53,12 @@ SITE_ROOT = root()
 DEBUG = env.bool('DEBUG', default=False)
 TEMPLATE_DEBUG = DEBUG
 
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+
 DATABASES = {'default': env.db('DATABASE_URL')}
 
-STATIC_URL = '/static/'
+STATIC_URL = env.str('STATIC_URL')
+STATIC_ROOT = env.str('STATIC_ROOT', default=None)
 
 SECRET_KEY = env.str('SECRET_KEY')
 
