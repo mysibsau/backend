@@ -1,6 +1,7 @@
 from django.urls import path
 import api.views as views
 
+
 urlpatterns = [
      path('groups/', views.GroupView.as_view({'get': 'all'})),
      path('places/', views.PlaceView.as_view({'get': 'all'})),
@@ -8,7 +9,7 @@ urlpatterns = [
 
      path('<who>/hash/', views.HashView.as_view({'get': 'hash'})),
 
-     path('timetable/<who>/<int:id>/<int:week>',
+     path('timetable/<who>/<int:obj_id>/<int:week>',
           views.TimetableView.as_view({'get': 'timetable'})),
 
 ]

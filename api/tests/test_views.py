@@ -2,9 +2,10 @@ from django.test import TestCase
 import api.models as models
 from django.urls import reverse
 
+
 class GroupViewTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Group.objects.create(
             name='group',
             mail='group@sibsau.ru'
@@ -22,7 +23,7 @@ class GroupViewTest(TestCase):
 
 class PlaceViewTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Place.objects.create(name='Н317')
     
     def test_view_url_exists_at_desired_location(self): 
@@ -37,12 +38,12 @@ class PlaceViewTest(TestCase):
 
 class ProfessorViewTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Professor.objects.create(
             name='Фамилия Имя Отчество',
             mail='fio@sibsau.ru',
             phone='+79631859823',
-            department = 'ИИТК'
+            department='ИИТК'
         )
     
     def test_view_url_exists_at_desired_location(self): 
@@ -57,7 +58,7 @@ class ProfessorViewTest(TestCase):
 
 class TimetableGroupViewTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.TimetableGroup.objects.create(
             even_week=True,
             day=0,
@@ -76,7 +77,7 @@ class TimetableGroupViewTest(TestCase):
     
 class TimetablePlaceViewTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.TimetablePlace.objects.create(
             even_week=True,
             day=0,
@@ -95,7 +96,7 @@ class TimetablePlaceViewTest(TestCase):
     
 class TimetableProfessorViewTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.TimetableProfessor.objects.create(
             even_week=True,
             day=0,

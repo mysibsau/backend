@@ -2,9 +2,10 @@ from django.test import TestCase
 import api.models as models
 import api.serializers as serializers
 
+
 class GroupSerializersTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Group.objects.create(
             name='БПИ18-01',
             mail='test@sibsau.ru'
@@ -29,12 +30,12 @@ class GroupSerializersTest(TestCase):
 
 class ProfessorSerializersTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Professor.objects.create(
             name='Фамилия Имя Отчество',
             mail='fio@sibsau.ru',
             phone='+79631859823',
-            department = 'ИИТК'
+            department='ИИТК'
         )
 
     def test_contains_expected_fields(self):
@@ -61,11 +62,11 @@ class ProfessorSerializersTest(TestCase):
 
 class PlaceSerializersTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Place.objects.create(name='Н317')
 
     def test_contains_expected_fields(self):
-        fields = ['name','id']
+        fields = ['name', 'id']
         place = models.Place.objects.all()[0]
         data = serializers.PlaceSerializers(place).data
         self.assertEquals(set(data.keys()), set(fields))
@@ -78,7 +79,7 @@ class PlaceSerializersTest(TestCase):
 
 class SubjectSerializersTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Subject.objects.create(
             title='Физкультура',
             type=1
@@ -103,7 +104,7 @@ class SubjectSerializersTest(TestCase):
 
 class SubgroupSerializersTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Subgroup.objects.create(
             place=models.Place.objects.create(name='Н317'),
             subject=models.Subject.objects.create(title='Физкультура', type=1)
@@ -111,39 +112,39 @@ class SubgroupSerializersTest(TestCase):
 
     def test_contains_expected_fields(self):
         fields = ['num', 'subject', 'type', 'place', 'groups', 'professors']
-        supgroup = models.Subgroup.objects.all()[0]
-        data = serializers.SubgroupSerializers(supgroup).data
+        subgroup = models.Subgroup.objects.all()[0]
+        data = serializers.SubgroupSerializers(subgroup).data
         self.assertEquals(set(data.keys()), set(fields))
 
     def test_num_field_content(self):
-        supgroup = models.Subgroup.objects.all()[0]
-        data = serializers.SubgroupSerializers(supgroup).data
+        subgroup = models.Subgroup.objects.all()[0]
+        data = serializers.SubgroupSerializers(subgroup).data
         self.assertEquals(data['num'], 0)
 
     def test_subject_field_content(self):
-        supgroup = models.Subgroup.objects.all()[0]
-        data = serializers.SubgroupSerializers(supgroup).data
+        subgroup = models.Subgroup.objects.all()[0]
+        data = serializers.SubgroupSerializers(subgroup).data
         self.assertEquals(data['subject'], 'Физкультура')
 
     def test_type_field_content(self):
-        supgroup = models.Subgroup.objects.all()[0]
-        data = serializers.SubgroupSerializers(supgroup).data
+        subgroup = models.Subgroup.objects.all()[0]
+        data = serializers.SubgroupSerializers(subgroup).data
         self.assertEquals(data['type'], 1)
 
     def test_groups_field_content(self):
-        supgroup = models.Subgroup.objects.all()[0]
-        data = serializers.SubgroupSerializers(supgroup).data
+        subgroup = models.Subgroup.objects.all()[0]
+        data = serializers.SubgroupSerializers(subgroup).data
         self.assertEquals(data['groups'], [])
 
     def test_professors_field_content(self):
-        supgroup = models.Subgroup.objects.all()[0]
-        data = serializers.SubgroupSerializers(supgroup).data
+        subgroup = models.Subgroup.objects.all()[0]
+        data = serializers.SubgroupSerializers(subgroup).data
         self.assertEquals(data['professors'], [])
 
 
 class LessonSerializersTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Lesson.objects.create(time='13:00-14:30')
 
     def test_contains_expected_fields(self):
@@ -165,7 +166,7 @@ class LessonSerializersTest(TestCase):
 
 class GroupTimetableSerializersTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.TimetableGroup.objects.create(
             even_week=True,
             day=0,
@@ -191,7 +192,7 @@ class GroupTimetableSerializersTest(TestCase):
 
 class PlaceTimetableSerializersTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.TimetablePlace.objects.create(
             even_week=True,
             day=0,
@@ -217,7 +218,7 @@ class PlaceTimetableSerializersTest(TestCase):
 
 class ProfessorTimetableSerializersTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.TimetableProfessor.objects.create(
             even_week=True,
             day=0,

@@ -1,8 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-import api.models as models
-import api.serializers as serializers
 import api.services.getters as getters
 
 
@@ -27,5 +25,5 @@ class ProfessorView(viewsets.ViewSet):
 
 
 class TimetableView(viewsets.ViewSet):
-    def timetable(self, request, who, id, week):
-        return Response(getters.get_timetable(who, id, week))
+    def timetable(self, request, who, obj_id, week):
+        return Response(getters.get_timetable(who, obj_id, week))

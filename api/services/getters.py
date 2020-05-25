@@ -32,31 +32,31 @@ def get_hash(who):
         raise Http404
 
 
-def get_timetable_group_as_json(id, week):
-    queryset = models.TimetableGroup.objects.filter(group__id=id).distinct()
+def get_timetable_group_as_json(obj_id, week):
+    queryset = models.TimetableGroup.objects.filter(group__id=obj_id).distinct()
     queryset = queryset.filter(even_week=((week+1) % 2))
     return serializers.TimetableSerializers(queryset, many=True).data
 
 
-def get_timetable_place_as_json(id, week):
-    queryset = models.TimetablePlace.objects.filter(place__id=id).distinct()
+def get_timetable_place_as_json(obj_id, week):
+    queryset = models.TimetablePlace.objects.filter(place__id=obj_id).distinct()
     queryset = queryset.filter(even_week=((week+1) % 2))
     return serializers.TimetableSerializers(queryset, many=True).data
 
 
-def get_timetable_professor_as_json(id, week):
-    queryset = models.TimetableProfessor.objects.filter(professor__id=id).distinct()
+def get_timetable_professor_as_json(obj_id, week):
+    queryset = models.TimetableProfessor.objects.filter(professor__id=obj_id).distinct()
     queryset = queryset.filter(even_week=((week+1) % 2))
     return serializers.TimetableSerializers(queryset, many=True).data
 
 
-def get_timetable(who, id, week):
+def get_timetable(who, obj_id, week):
     getter = {
             'group': get_timetable_group_as_json,
             'place': get_timetable_place_as_json,
             'professor': get_timetable_professor_as_json,
         }
     if who in getter:
-        return getter[who](id, week)
+        return getter[who](obj_id, week)
     else:
         raise Http404

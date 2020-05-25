@@ -1,9 +1,10 @@
 from django.test import TestCase
 import api.models as models
 
+
 class GroupModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Group.objects.create(
             name='БПИ18-01',
             mail='test@sibsau.ru'
@@ -26,7 +27,7 @@ class GroupModelTest(TestCase):
 
 class ProfessorModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Professor.objects.create(
             name='Фамилия Имя Отчество',
             mail='fio@sibsau.ru',
@@ -58,7 +59,7 @@ class ProfessorModelTest(TestCase):
 
 class PlaceModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Place.objects.create(name='Н317')
 
     def test_labels(self):
@@ -78,7 +79,7 @@ class PlaceModelTest(TestCase):
 
 class SubjectModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Subject.objects.create(
             title='Физкультура',
             type=1
@@ -101,7 +102,7 @@ class SubjectModelTest(TestCase):
 
 class SubgroupModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Subgroup.objects.create(
             place=models.Place.objects.create(name='Н317'),
             subject=models.Subject.objects.create(title='Физкультура', type=1)
@@ -127,7 +128,7 @@ class SubgroupModelTest(TestCase):
 
 class LessonModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.Lesson.objects.create(time='13:00-14:30')
 
     def test_labels(self):
@@ -148,7 +149,7 @@ class LessonModelTest(TestCase):
 
 class TimetableGroupModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.TimetableGroup.objects.create(
             even_week=True,
             day=0,
@@ -162,15 +163,15 @@ class TimetableGroupModelTest(TestCase):
             'lesson': 'Ленты',
             'group': 'Группа',
         }
-        timtable = models.TimetableGroup.objects.all()[0]
+        timetable = models.TimetableGroup.objects.all()[0]
         for label in labels:
-            object_label = timtable._meta.get_field(label).verbose_name
+            object_label = timetable._meta.get_field(label).verbose_name
             self.assertEquals(object_label, labels[label])
 
 
 class TimetablePlaceModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.TimetablePlace.objects.create(
             even_week=True,
             day=0,
@@ -184,15 +185,15 @@ class TimetablePlaceModelTest(TestCase):
             'lesson': 'Ленты',
             'place': 'Кабинет',
         }
-        timtable = models.TimetablePlace.objects.all()[0]
+        timetable = models.TimetablePlace.objects.all()[0]
         for label in labels:
-            object_label = timtable._meta.get_field(label).verbose_name
+            object_label = timetable._meta.get_field(label).verbose_name
             self.assertEquals(object_label, labels[label])
 
 
 class TimetableProfessorModelTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
+    def set_up_test_data(cls):
         models.TimetableProfessor.objects.create(
             even_week=True,
             day=0,
@@ -206,7 +207,7 @@ class TimetableProfessorModelTest(TestCase):
             'lesson': 'Ленты',
             'professor': 'Преподаватель',
         }
-        timtable = models.TimetableProfessor.objects.all()[0]
+        timetable = models.TimetableProfessor.objects.all()[0]
         for label in labels:
-            object_label = timtable._meta.get_field(label).verbose_name
+            object_label = timetable._meta.get_field(label).verbose_name
             self.assertEquals(object_label, labels[label])
