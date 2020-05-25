@@ -59,6 +59,7 @@ DATABASES = {'default': env.db('DATABASE_URL')}
 
 STATIC_URL = env.str('STATIC_URL')
 STATIC_ROOT = env.str('STATIC_ROOT', default=None)
+ADMIN_URL = env.str('ADMIN_URL', default='admin/')
 
 SECRET_KEY = env.str('SECRET_KEY')
 
