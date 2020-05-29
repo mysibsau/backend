@@ -10,6 +10,7 @@ def generate_hash(s):
 
 
 def get_current_week_evenness():
-    soup = Soup(requests.get('https://timetable.pallada.sibsau.ru/timetable/group/5047').text, 'html.parser')
+    URL = 'https://timetable.pallada.sibsau.ru/timetable/group/5047'
+    soup = Soup(requests.get(URL).text, 'html.parser')
     even_week = str(soup.select('#week_2_tab'))
     return 'сегодня' in even_week
