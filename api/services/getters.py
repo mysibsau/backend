@@ -26,10 +26,16 @@ def get_hash(who):
             'places': get_all_places_as_json,
             'professors': get_all_professors_as_json,
         }
-    if who in getter:
-        return utils.genetate_hash(getter[who]())
-    else:
+    if who not in getter:
         raise Http404
+    return utils.generate_hash(str(getter[who]()))
+
+
+def get_current_week_evenness_as_json():
+    current_week_evenness = utils.get_current_week_evenness()
+    return {
+        'evenness': str(current_week_evenness)
+    }
 
 
 def get_timetable_group_as_json(obj_id, week):

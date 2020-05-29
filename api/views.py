@@ -9,6 +9,11 @@ class HashView(viewsets.ViewSet):
         return Response(getters.get_hash(who))
 
 
+class EvennessWeek(viewsets.ViewSet):
+    def evenness(self, requests):
+        return Response(getters.get_current_week_evenness_as_json())
+
+
 class GroupView(viewsets.ViewSet):
     def all(self, request):
         return Response(getters.get_all_groups_as_json())
