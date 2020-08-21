@@ -5,7 +5,7 @@ import api.serializers as serializers
 
 class GroupSerializersTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.Group.objects.create(
             name='БПИ18-01',
             mail='test@sibsau.ru'
@@ -30,7 +30,7 @@ class GroupSerializersTest(TestCase):
 
 class ProfessorSerializersTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.Professor.objects.create(
             name='Фамилия Имя Отчество',
             mail='fio@sibsau.ru',
@@ -62,7 +62,7 @@ class ProfessorSerializersTest(TestCase):
 
 class PlaceSerializersTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.Place.objects.create(name='Н317')
 
     def test_contains_expected_fields(self):
@@ -79,7 +79,7 @@ class PlaceSerializersTest(TestCase):
 
 class SubjectSerializersTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.Subject.objects.create(
             title='Физкультура',
             type=1
@@ -104,7 +104,7 @@ class SubjectSerializersTest(TestCase):
 
 class SubgroupSerializersTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.Subgroup.objects.create(
             place=models.Place.objects.create(name='Н317'),
             subject=models.Subject.objects.create(title='Физкультура', type=1)
@@ -144,7 +144,7 @@ class SubgroupSerializersTest(TestCase):
 
 class LessonSerializersTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.Lesson.objects.create(time='13:00-14:30')
 
     def test_contains_expected_fields(self):
@@ -166,7 +166,7 @@ class LessonSerializersTest(TestCase):
 
 class GroupTimetableSerializersTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.TimetableGroup.objects.create(
             even_week=True,
             day=0,
@@ -192,7 +192,7 @@ class GroupTimetableSerializersTest(TestCase):
 
 class PlaceTimetableSerializersTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.TimetablePlace.objects.create(
             even_week=True,
             day=0,
@@ -218,7 +218,7 @@ class PlaceTimetableSerializersTest(TestCase):
 
 class ProfessorTimetableSerializersTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.TimetableProfessor.objects.create(
             even_week=True,
             day=0,

@@ -5,7 +5,7 @@ from django.urls import reverse
 
 class GroupViewTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.Group.objects.create(
             name='group',
             mail='group@sibsau.ru'
@@ -23,7 +23,7 @@ class GroupViewTest(TestCase):
 
 class PlaceViewTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.Place.objects.create(name='Н317')
     
     def test_view_url_exists_at_desired_location(self): 
@@ -38,7 +38,7 @@ class PlaceViewTest(TestCase):
 
 class ProfessorViewTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.Professor.objects.create(
             name='Фамилия Имя Отчество',
             mail='fio@sibsau.ru',
@@ -58,7 +58,7 @@ class ProfessorViewTest(TestCase):
 
 class TimetableGroupViewTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.TimetableGroup.objects.create(
             even_week=True,
             day=0,
@@ -77,7 +77,7 @@ class TimetableGroupViewTest(TestCase):
     
 class TimetablePlaceViewTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.TimetablePlace.objects.create(
             even_week=True,
             day=0,
@@ -96,7 +96,7 @@ class TimetablePlaceViewTest(TestCase):
     
 class TimetableProfessorViewTest(TestCase):
     @classmethod
-    def set_up_test_data(cls):
+    def setUp(cls):
         models.TimetableProfessor.objects.create(
             even_week=True,
             day=0,
