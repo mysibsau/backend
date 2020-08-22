@@ -1,12 +1,12 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-import api.services.getters as getters
+from api.services import getters
 
 
 class HashView(viewsets.ViewSet):
-    def hash(self, request, who):
-        return Response(getters.get_hash(who))
+    def hash(self, request):
+        return Response(getters.get_hash())
 
 
 class EvennessWeek(viewsets.ViewSet):
@@ -19,16 +19,6 @@ class GroupView(viewsets.ViewSet):
         return Response(getters.get_all_groups_as_json())
 
 
-class PlaceView(viewsets.ViewSet):
-    def all(self, request):
-        return Response(getters.get_all_places_as_json())
-
-
-class ProfessorView(viewsets.ViewSet):
-    def all(self, request):
-        return Response(getters.get_all_professors_as_json())
-
-
 class TimetableView(viewsets.ViewSet):
-    def timetable(self, request, who, obj_id, week):
-        return Response(getters.get_timetable(who, obj_id, week))
+    def timetable(self, request, obj_id, week):
+        return Response(getters.get_timetable(obj_id, week))
