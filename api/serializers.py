@@ -26,16 +26,28 @@ class SubgroupSerializers(serializers.ModelSerializer):
         fields = ('num', 'subject', 'type', 'place', 'groups', 'professors')
 
 '''
+
+class SubgroupSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = models.Subgroup
+        fields = '__all__'
+
+
 class LessonSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Lesson
         fields = '__all__'
 
 
+class DaySerializers(serializers.ModelSerializer):
+    class Meta:
+        model = models.Day
+        fields = '__all__'
+
+
 class TimetableSerializers(serializers.Serializer):
-    # day = serializers.IntegerField()
-    # lesson = LessonSerializers(many=True, read_only=True)
+    group = serializers.StringRelatedField(source='group.name')
 
     class Meta:
         model = models.TimetableGroup
-        fields = '__all__'
+        fields = ('group', 'days')
