@@ -12,7 +12,21 @@ from multiprocessing import Process
 @admin.register(models.TimetableGroup)
 class TimetableGroupAdmin(admin.ModelAdmin):
     list_filter = ('group',)
-    list_display = ('group', 'day', 'even_week')
+    list_display = ('group',)
+    change_list_template = 'admin/load_timetable.html'
+
+    def get_urls(self):
+        urls = super().get_urls()
+        my_urls = [
+            path('import/', self.import_all),
+        ]
+        return my_urls + urls
+
+    def import_all(self, request):
+        Process(
+            target=setters.load_timetable
+        ).start()
+        return HttpResponseRedirect("../")
 
 
 @admin.register(models.Group)
@@ -37,6 +51,12 @@ class Group(admin.ModelAdmin):
 
 @admin.register(models.Lesson)
 class Lesson(admin.ModelAdmin):
-    list_display = ('time', 'name', 'type', 'teacher', 'subgroup', 'place')
+    list_display = ('time', 'get_subgroups')
 
-    
+    def get_subgroups(self, obj):
+        return ', '.join([str(s) for s in obj.subgroups.all()])
+
+
+@admin.register(models.Subgroup)
+class Subgroup(admin.ModelAdmin):
+    list_display = ('num', 'name', 'type', 'teacher', 'place')
