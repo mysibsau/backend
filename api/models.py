@@ -14,19 +14,30 @@ class Group(models.Model):
         verbose_name_plural = u'Группы'
 
 
-class Lesson(models.Model):
+class Subgroup(models.Model):
     TYPES = (
         (1, 'Лекция'),
         (2, 'Лабораторная работа'),
         (3, 'Практика')
     )
-    
-    time = models.CharField(max_length=11, verbose_name='Время')
-    name = models.TextField(verbose_name='Название')
+
+    num = models.IntegerField(verbose_name='Номер подгруппы')
+    name = models.TextField(verbose_name='Название предмета')
     type = models.PositiveSmallIntegerField(choices=TYPES, verbose_name='Тип')
     teacher = models.TextField(verbose_name='Преподавлатель')
-    subgroup = models.IntegerField(verbose_name='Подгруппа')
     place = models.CharField(max_length=7, verbose_name='Кабинет')
+
+    def __str__(self):
+        return f'({self.num}) {self.name}'
+
+    class Meta:
+        verbose_name = u'Подгруппа'
+        verbose_name_plural = u'Подгруппы'
+
+
+class Lesson(models.Model):
+    time = models.CharField(max_length=11, verbose_name='Время')
+    subgroups = models.ManyToManyField(Subgroup, verbose_name='Подгруппы')   
 
     class Meta:
         ordering = ['time']
@@ -34,7 +45,7 @@ class Lesson(models.Model):
         verbose_name_plural = u'Ленты'
 
 
-class TimetableGroup(models.Model):
+class Day(models.Model):
     WEEKDAY = (
         (0, 'Понедельник'),
         (1, 'Вторник'),
@@ -44,16 +55,20 @@ class TimetableGroup(models.Model):
         (5, 'Суббота'),
         (6, 'Воскресенье'),
     )
-
-    group = models.ForeignKey(
-        Group, on_delete=models.CASCADE, verbose_name='Группа')
     even_week = models.BooleanField(verbose_name='Первая неделя')
     day = models.PositiveSmallIntegerField(
         choices=WEEKDAY, verbose_name='День недели')
-    lesson = models.ManyToManyField(Lesson, verbose_name='Ленты')   
+    lessons = models.ManyToManyField(Lesson, verbose_name='Пары')
+
+
+class TimetableGroup(models.Model):
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, verbose_name='Группа')
+    days = models.ManyToManyField(Day, verbose_name='День')
+
+    def __str__(self):
+        return str(self.group)
 
     class Meta:
-        ordering = ['day']
         verbose_name = u'Рассписание группы'
-        verbose_name_plural = u'Рассписание группы'
-
+        verbose_name_plural = u'Рассписание групп'

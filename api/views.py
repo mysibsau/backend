@@ -20,5 +20,5 @@ class GroupView(viewsets.ViewSet):
 
 
 class TimetableView(viewsets.ViewSet):
-    def timetable(self, request, obj_id, week):
-        return Response(getters.get_timetable(obj_id, week))
+    def timetable(self, request, obj_id):
+        return Response(getters.get_timetable(obj_id))
