@@ -30,24 +30,30 @@ class SubgroupSerializers(serializers.ModelSerializer):
 class SubgroupSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Subgroup
-        fields = '__all__'
+        fields = ('num', 'name', 'type', 'teacher', 'place')
 
 
 class LessonSerializers(serializers.ModelSerializer):
+    subgroups = SubgroupSerializers(many=True, read_only=True)
+    
     class Meta:
         model = models.Lesson
-        fields = '__all__'
+        fields = ('time', 'subgroups')
 
 
 class DaySerializers(serializers.ModelSerializer):
+    lessons = LessonSerializers(many=True, read_only=True)
+
     class Meta:
         model = models.Day
-        fields = '__all__'
+        fields = ('day', 'lessons')
 
 
 class TimetableSerializers(serializers.Serializer):
     group = serializers.StringRelatedField(source='group.name')
+    even_week = DaySerializers(many=True, read_only=True)
+    odd_week = DaySerializers(many=True, read_only=True)
 
     class Meta:
         model = models.TimetableGroup
-        fields = ('group', 'days')
+        fields = ('group', 'even_week', 'odd_week')

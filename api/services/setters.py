@@ -39,7 +39,7 @@ def load_timetable():
             for day in time_table[week]:
                 if 'weekend' in time_table[week][day][0]:
                     continue
-                timetable_day = Day(even_week=even_week, day=WEEKDAY[day])
+                timetable_day = Day(day=WEEKDAY[day])
                 timetable_day.save()
                 for lesson in time_table[week][day]:
                     time = lesson['time']
@@ -59,5 +59,8 @@ def load_timetable():
                         timetable_lesson.subgroups.add(subgroup.id)
 
                     timetable_day.lessons.add(timetable_lesson)
-                timetable.days.add(timetable_day.id)
+                if even_week:
+                    timetable.even_week.add(timetable_day.id)
+                else:
+                    timetable.odd_week.add(timetable_day.id)
             even_week = False 
