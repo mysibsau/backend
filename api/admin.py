@@ -51,10 +51,16 @@ class Group(admin.ModelAdmin):
 
 @admin.register(models.Lesson)
 class Lesson(admin.ModelAdmin):
-    list_display = ('time', 'get_subgroups')
+    list_display = ('time', 'get_subgroups', 'get_teachers', 'get_places')
 
     def get_subgroups(self, obj):
         return ', '.join([str(s) for s in obj.subgroups.all()])
+
+    def get_teachers(self, obj):
+        return ', '.join([s.teacher for s in obj.subgroups.all()])
+
+    def get_places(self, obj):
+        return ', '.join([s.place for s in obj.subgroups.all()])
 
 
 @admin.register(models.Subgroup)
