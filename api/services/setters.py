@@ -33,7 +33,7 @@ def load_timetable():
         timetable.save()
         time_table = Parser().get_timetable(group.id_pallada)
 
-        even_week = True
+        even_week = False
 
         for week in time_table:
             for day in time_table[week]:
@@ -63,4 +63,4 @@ def load_timetable():
                     timetable.even_week.add(timetable_day.id)
                 else:
                     timetable.odd_week.add(timetable_day.id)
-            even_week = False 
+            even_week = True 
