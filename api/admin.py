@@ -65,4 +65,4 @@ class Lesson(admin.ModelAdmin):
 
 @admin.register(models.Subgroup)
 class Subgroup(admin.ModelAdmin):
-    list_display = ('num', 'name', 'type', 'teacher', 'place')
+    list_display = ('num', 'name', 'type', 'teacher', 'place', 'address')

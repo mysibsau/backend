@@ -26,6 +26,7 @@ class Subgroup(models.Model):
     type = models.PositiveSmallIntegerField(choices=TYPES, verbose_name='Тип')
     teacher = models.TextField(verbose_name='Преподавлатель')
     place = models.CharField(max_length=7, verbose_name='Кабинет')
+    address = models.TextField(verbose_name='Адрес')
 
     def __str__(self):
         return f'({self.num}) {self.name}'
