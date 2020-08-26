@@ -29,11 +29,6 @@ class Parser:
             if symbol.isdigit():
                 return int(symbol)
 
-    def delete_repeats(self, subjects):
-        if subjects.count( subjects[0] ) == len(subjects):
-            return [subjects[0]]
-        return subjects
-
     def parse_type_of_subject(self, name_subject):
         type_subject = name_subject[ name_subject.find('(') + 1 : name_subject.find(')') ]
         if type_subject not in ['Лекция', 'Практика', 'Лабораторная работа']:
@@ -88,7 +83,7 @@ class Parser:
     def get_subgroups(self, line):
         result = []
         for sub_subject in self.get_subjects(line):
-            subgroup = None
+            subgroup = 0
             if sub_subject.find('i', {'class': 'fa-paperclip'}) is not None:
                 subgroup = self.get_int_subgroup(sub_subject.find_all('li')[-1].text)
             
@@ -113,8 +108,8 @@ class Parser:
             days = self.timetable[f'week_{numb_week}']
             for day in days:
                 day_timetable = self.get_day_timetable(numb_week, day, id)
+
                 if self.is_weekend(day_timetable):
-                    days[day].append({'weekend': 'Отдыхайте'})
                     continue
 
                 for line in day_timetable[0].find_all('div', {'class': 'line'}):
