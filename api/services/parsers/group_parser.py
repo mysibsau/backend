@@ -27,7 +27,7 @@ class GroupParser:
 
 
     def get_groups(self):
-        for group_id in tqdm(range(6000)):
+        for group_id in tqdm(range(15_000)):
             group = self.get_group_by_id(group_id)
             if group:
                 yield group
