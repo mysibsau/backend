@@ -37,8 +37,6 @@ def load_timetable():
 
         for week in time_table:
             for day in time_table[week]:
-                if 'weekend' in time_table[week][day][0]:
-                    continue
                 timetable_day = Day(day=WEEKDAY[day])
                 timetable_day.save()
                 for lesson in time_table[week][day]:
@@ -53,8 +51,16 @@ def load_timetable():
                         num = lesson['subgroups'][num_sub]
                         num = num if num else 0
                         place = lesson['location_in_university'][num_sub]
+                        address = lesson['location_in_city'][num_sub]
 
-                        subgroup = Subgroup(num=num, name=name, type=type_, teacher=teacher, place=place)
+                        subgroup = Subgroup(
+                            num=num, 
+                            name=name, 
+                            type=type_, 
+                            teacher=teacher, 
+                            place=place,
+                            address=address
+                        )
                         subgroup.save()
                         timetable_lesson.subgroups.add(subgroup.id)
 
