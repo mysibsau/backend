@@ -22,13 +22,18 @@ def load_all_groups_from_pallada():
     print('Start get groups')
     groups = GroupParser().get_groups()
     for id_, name in groups:
-        Group(name=name, id_pallada=id_).save()
+        if not len(Group.objects.filter(name=name)):
+            Group(name=name, id_pallada=id_).save()
     print('Stop get groups')
 
 
 def load_timetable():
     groups = Group.objects.all()
     for group in groups:
+        
+        if len(TimetableGroup.objects.filter(group=group)):
+            continue
+
         timetable = TimetableGroup(group=group)
         timetable.save()
         time_table = Parser().get_timetable(group.id_pallada)
