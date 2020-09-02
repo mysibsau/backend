@@ -31,8 +31,7 @@ def load_timetable():
     groups = Group.objects.all()
     for group in groups:
         
-        if len(TimetableGroup.objects.filter(group=group)):
-            continue
+        TimetableGroup.objects.filter(group=group).delete()
 
         timetable = TimetableGroup(group=group)
         timetable.save()
