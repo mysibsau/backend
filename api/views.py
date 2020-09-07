@@ -1,9 +1,15 @@
 from rest_framework import viewsets
+from django.shortcuts import redirect
 from rest_framework.response import Response
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 
 from api.services import getters
+
+
+class RedirectOn(viewsets.ViewSet):
+    def sibsau(self, request):
+        return redirect('https://sibsau.ru/')
 
 
 class HashView(viewsets.ViewSet):

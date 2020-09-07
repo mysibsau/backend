@@ -3,6 +3,8 @@ import api.views as views
 
 
 urlpatterns = [
+     path('', views.RedirectOn.as_view({'get': 'sibsau'})),
+
      path('groups/', views.GroupView.as_view({'get': 'all'})),
      
 
