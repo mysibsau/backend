@@ -3,6 +3,7 @@ from os import path
 
 
 BASE_DIR = path.dirname(path.dirname(path.abspath(__file__)))
+CONN_MAX_AGE = 60
 
 INSTALLED_APPS = [
     'django.contrib.admin',
