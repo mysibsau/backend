@@ -4,10 +4,16 @@ import api.models as models
 from api.services import getters
 
 
-class GroupSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = models.Group
-        fields = '__all__'
+def GroupSerializers(groups):
+    result = []
+    for group in groups:
+        result.append({
+            'id': group.id,
+            'name': group.name,
+            'mail': group.mail,
+            'id_pallada': group.id_pallada
+        })
+    return result
 
 
 class SubgroupSerializers(serializers.ModelSerializer):

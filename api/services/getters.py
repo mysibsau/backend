@@ -7,7 +7,7 @@ from django.http import Http404
 
 def get_all_groups_as_json():
     queryset = models.Group.objects.all()
-    return serializers.GroupSerializers(queryset, many=True).data
+    return serializers.GroupSerializers(queryset)
 
 
 def get_hash():
