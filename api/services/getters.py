@@ -3,6 +3,7 @@ import api.serializers as serializers
 import api.services.utils as utils
 
 from django.http import Http404
+from functools import lru_cache
 
 
 def get_all_groups_as_json():
@@ -10,6 +11,7 @@ def get_all_groups_as_json():
     return serializers.GroupSerializers(queryset)
 
 
+@lru_cache(maxsize=1024)
 def get_hash():
     return utils.generate_hash(str(get_all_groups_as_json()))
 
@@ -24,7 +26,7 @@ def get_current_week_evenness_as_json():
 def get_timetable_group_as_json(obj_id):
     queryset = models.TimetableGroup.objects.filter(group__id=obj_id)
     #queryset = queryset.filter(even_week=((week+1) % 2))
-    return serializers.TimetableSerializers(queryset, many=True).data
+    return serializers.TimetableSerializers(queryset)
 
 
 def get_timetable(obj_id):

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 import api.models as models
 
+from functools import lru_cache
 from api.services import getters
 
 
@@ -16,37 +17,51 @@ def GroupSerializers(groups):
     return result
 
 
-class SubgroupSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = models.Subgroup
-        fields = ('num', 'name', 'type', 'teacher', 'place', 'address')
+@lru_cache(maxsize=1024)
+def SubgroupSerializers(subgroups):
+    result = []
+    for subgroup in subgroups.all():
+        result.append({
+            'num': subgroup.num,
+            'name': subgroup.name,
+            'type': subgroup.type,
+            'teacher': subgroup.teacher,
+            'place': subgroup.place,
+            'address': subgroup.address
+        })
+    return result
 
 
-class LessonSerializers(serializers.ModelSerializer):
-    subgroups = SubgroupSerializers(many=True, read_only=True)
-    
-    class Meta:
-        model = models.Lesson
-        fields = ('time', 'subgroups')
+@lru_cache(maxsize=1024)
+def LessonSerializers(lessons):
+    result = []
+    for lesson in lessons.all():
+        result.append({
+            'time': lesson.time,
+            'subgroups': SubgroupSerializers(lesson.subgroups)
+        })
+    return result
 
 
-class DaySerializers(serializers.ModelSerializer):
-    lessons = LessonSerializers(many=True, read_only=True)
+@lru_cache(maxsize=1024)
+def DaySerializers(days):
+    result = []
+    for day in days.all():
+        result.append({
+            'day': day.day,
+            'lessons': LessonSerializers(day.lessons)
+        })
+    return result
 
-    class Meta:
-        model = models.Day
-        fields = ('day', 'lessons')
 
-
-class TimetableSerializers(serializers.Serializer):
-    group = serializers.StringRelatedField(source='group.name')
-    even_week = DaySerializers(many=True, read_only=True)
-    odd_week = DaySerializers(many=True, read_only=True)
-    hash = serializers.SerializerMethodField('get_hash')
-
-    def get_hash(self, t):
-        return getters.get_hash()['hash']
-
-    class Meta:
-        model = models.TimetableGroup
-        fields = ('group', 'hash', 'even_week', 'odd_week')
+@lru_cache(maxsize=1024)
+def TimetableSerializers(timetables):
+    result = []
+    for timetable in timetables:
+        result.append({
+            'group': timetable.group.name,
+            'even_week': DaySerializers(timetable.even_week),
+            'odd_week': DaySerializers(timetable.odd_week),
+            'hash': getters.get_hash()['hash']
+        })
+    return result
