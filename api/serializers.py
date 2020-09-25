@@ -5,14 +5,14 @@ from functools import lru_cache
 from api.services import getters
 
 
+@lru_cache(maxsize=1024)
 def GroupSerializers(groups):
     result = []
     for group in groups:
         result.append({
             'id': group.id,
             'name': group.name,
-            'mail': group.mail,
-            'id_pallada': group.id_pallada
+            'mail': group.mail
         })
     return result
 
@@ -62,6 +62,6 @@ def TimetableSerializers(timetables):
             'group': timetable.group.name,
             'even_week': DaySerializers(timetable.even_week),
             'odd_week': DaySerializers(timetable.odd_week),
-            'hash': getters.get_hash()['hash']
+            'hash': getters.get_hash()
         })
     return result
