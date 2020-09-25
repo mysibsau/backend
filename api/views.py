@@ -15,7 +15,7 @@ class RedirectOn(viewsets.ViewSet):
 class HashView(viewsets.ViewSet):
     @method_decorator(cache_page(60*60))
     def hash(self, request):
-        return Response(getters.get_hash())
+        return Response({'hash': getters.get_hash()})
 
 
 class EvennessWeek(viewsets.ViewSet):
