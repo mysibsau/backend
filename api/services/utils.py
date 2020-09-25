@@ -4,9 +4,7 @@ from bs4 import BeautifulSoup as Soup
 
 
 def generate_hash(s):
-    return {
-        'hash': md5(s.encode()).hexdigest()[:5]
-    }
+    return md5(s.encode()).hexdigest()[:5]
 
 
 def get_current_week_evenness():
