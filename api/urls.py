@@ -9,7 +9,7 @@ urlpatterns = [
      
 
      path('hash/', views.HashView.as_view({'get': 'hash'})),
-     path('CurrentWeekIsEven/', views.EvennessWeek.as_view({'get': 'evenness'})),
+     path('CurrentWeek/', views.EvennessWeek.as_view({'get': 'evenness'})),
 
      path('timetable/<int:obj_id>',
           views.TimetableView.as_view({'get': 'timetable'})),

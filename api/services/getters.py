@@ -19,7 +19,7 @@ def get_hash():
 def get_current_week_evenness_as_json():
     current_week_evenness = utils.get_current_week_evenness()
     return {
-        'isEven': str(current_week_evenness)
+        'week': current_week_evenness
     }
 
 
