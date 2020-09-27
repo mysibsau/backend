@@ -11,13 +11,14 @@ root = environ.Path(__file__) - 3
 env = environ.Env()
 environ.Env.read_env()
 
-sentry_sdk.init(
-    dsn=env.url('DSN'),
-    integrations=[DjangoIntegration()],
-    traces_sample_rate=1.0,
+if env.bool('SENTRY'):
+    sentry_sdk.init(
+        dsn=env.url('DSN'),
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
 
-    send_default_pii=True
-)
+        send_default_pii=True
+    )
 
 INSTALLED_APPS = [
     'django.contrib.admin',
