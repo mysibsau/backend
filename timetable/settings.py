@@ -1,9 +1,23 @@
 import environ
 from os import path
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 
 BASE_DIR = path.dirname(path.dirname(path.abspath(__file__)))
 CONN_MAX_AGE = 60
+
+root = environ.Path(__file__) - 3
+env = environ.Env()
+environ.Env.read_env()
+
+sentry_sdk.init(
+    dsn=env.url('DSN'),
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,
+
+    send_default_pii=True
+)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -47,10 +61,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'timetable.wsgi.application'
-
-root = environ.Path(__file__) - 3
-env = environ.Env()
-environ.Env.read_env()
 
 SITE_ROOT = root()
 
