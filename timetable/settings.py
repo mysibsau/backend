@@ -75,11 +75,11 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 DATABASES = {'default': env.db('DATABASE_URL')}
 
 STATIC_URL = env.str('STATIC_URL')
-# STATIC_ROOT = env.str('STATIC_ROOT', default=None)
-# STATICFILES_DIRS = [
-#     path.join(BASE_DIR, "static"),
-#     STATIC_ROOT
-# ]
+STATIC_ROOT = env.str('STATIC_ROOT', default=None)
+STATICFILES_DIRS = [
+    path.join(BASE_DIR, "static"),
+    STATIC_ROOT
+]
 
 ADMIN_URL = env.str('ADMIN_URL', default='admin/')
 
