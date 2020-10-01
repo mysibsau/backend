@@ -1,8 +1,8 @@
 from rest_framework import serializers
-import api.models as models
+import api_v1.models as models
 
 from functools import lru_cache
-from api.services import getters
+from api_v1.services import getters
 
 
 @lru_cache(maxsize=1024)

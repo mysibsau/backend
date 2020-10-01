@@ -1,6 +1,6 @@
-import api.models as models
-import api.serializers as serializers
-import api.services.utils as utils
+import api_v1.models as models
+import api_v1.serializers as serializers
+import api_v1.services.utils as utils
 
 from django.http import Http404
 from functools import lru_cache

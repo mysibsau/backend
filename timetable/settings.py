@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'api',
+    'api_v1',
+    'api_v2',
     'django.contrib.postgres.fields',
 ]
 

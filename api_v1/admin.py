@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect
 from django.conf.urls import url
 from django.urls import path
 
-import api.models as models
-from api.services import setters
+import api_v1.models as models
+from api_v1.services import setters
 
 from multiprocessing import Process
 
