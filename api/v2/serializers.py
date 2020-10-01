@@ -63,6 +63,5 @@ def TimetableSerializers(timetables):
             'meta': getters.get_meta(),
             'even_week': DaySerializers(timetable.even_week),
             'odd_week': DaySerializers(timetable.odd_week),
-            'hash': getters.get_hash()
         })
     return result
