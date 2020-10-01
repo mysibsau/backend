@@ -7,4 +7,4 @@ from django.conf.urls.static import static
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     path('', include('api.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
