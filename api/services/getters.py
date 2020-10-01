@@ -24,7 +24,6 @@ def get_current_week_evenness_as_json():
 
 def get_timetable_group_as_json(obj_id):
     queryset = models.TimetableGroup.objects.filter(group__id=obj_id)
-    #queryset = queryset.filter(even_week=((week+1) % 2))
     return serializers.TimetableSerializers(queryset)
 
 
