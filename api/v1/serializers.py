@@ -1,8 +1,8 @@
 from rest_framework import serializers
-import api_v2.models as models
+import api.base.models as models
 
 from functools import lru_cache
-from api_v2.services import getters
+from api.v1.services import getters
 
 
 @lru_cache(maxsize=1024)
@@ -60,7 +60,6 @@ def TimetableSerializers(timetables):
     for timetable in timetables:
         result.append({
             'group': timetable.group.name,
-            'meta': getters.get_meta(),
             'even_week': DaySerializers(timetable.even_week),
             'odd_week': DaySerializers(timetable.odd_week),
             'hash': getters.get_hash()

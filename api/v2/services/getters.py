@@ -1,6 +1,6 @@
-import api_v1.models as models
-import api_v1.serializers as serializers
-import api_v1.services.utils as utils
+import api.base.models as models
+import api.v2.serializers as serializers
+import api.v2.services.utils as utils
 
 from django.http import Http404
 from functools import lru_cache
@@ -29,3 +29,10 @@ def get_timetable_group_as_json(obj_id):
 
 def get_timetable(obj_id):
     return get_timetable_group_as_json(obj_id)
+
+
+def get_meta():
+    return {
+        'week': utils.get_current_week_evenness(),
+        'hash': get_hash(),
+    }

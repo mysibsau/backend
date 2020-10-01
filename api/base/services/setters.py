@@ -1,6 +1,6 @@
-from api_v2.services.parsers.timetable_parser import Parser
-from api_v2.services.parsers.group_parser import GroupParser
-from api_v2.models import Group, Day, Lesson, Subgroup, TimetableGroup
+from api.base.services.parsers.timetable_parser import Parser
+from api.base.services.parsers.group_parser import GroupParser
+from api.base.models import Group, Day, Lesson, Subgroup, TimetableGroup
 
 
 WEEKDAY = {

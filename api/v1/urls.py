@@ -1,5 +1,5 @@
 from django.urls import path
-import api_v2.views as views
+import api.v1.views as views
 
 
 urlpatterns = [
