@@ -7,10 +7,12 @@ class BanScumbags:
         self.get_response = get_response
 
     def __call__(self, request):
-        if ".php" in request.get_raw_uri():
-            ip = request.META.get('REMOTE_ADDR')
-            system(f'ufw deny from {ip} to any')
-            return HttpResponse('I fuck u', content_type="and your mom")
+        if '.php' in request.get_raw_uri():
+            self.ban(request)
+            return HttpResponse('I fuck u')
 
-        response = self.get_response(request)
-        return response
+        return self.get_response(request)
+
+    def ban(self, request):
+        ip = request.META.get('REMOTE_ADDR')
+        system(f'ufw deny from {ip} to any')
