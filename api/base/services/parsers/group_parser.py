@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 from time import sleep
-from tqdm import tqdm
 
 class GroupParser:
     def get_name_group(self, soup: BeautifulSoup):
@@ -27,7 +26,7 @@ class GroupParser:
 
 
     def get_groups(self):
-        for group_id in tqdm(range(15_000)):
+        for group_id in range(15_000):
             group = self.get_group_by_id(group_id)
             if group:
                 yield group
