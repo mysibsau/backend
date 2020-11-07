@@ -13,7 +13,7 @@ environ.Env.read_env()
 
 if env.bool('SENTRY'):
     sentry_sdk.init(
-        dsn=env.url('DSN'),
+        dsn=env.str('DSN'),
         integrations=[DjangoIntegration()],
         traces_sample_rate=1.0,
 
