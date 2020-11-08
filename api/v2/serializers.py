@@ -29,6 +29,18 @@ def TeacherSerializers(teachers):
 
 
 @lru_cache(maxsize=1024)
+def PlaceSerializers(places):
+    result = []
+    for place in places:
+        result.append({
+            'id': place.id,
+            'name': place.name,
+            'address': place.address
+        })
+    return result
+
+
+@lru_cache(maxsize=1024)
 def SubgroupSerializers(subgroups):
     result = []
     for subgroup in subgroups.all():

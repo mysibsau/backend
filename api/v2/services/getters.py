@@ -16,6 +16,11 @@ def get_all_teachers_as_json():
     return serializers.TeacherSerializers(queryset)
 
 
+def get_all_places_as_json():
+    queryset = models.Place.objects.all()
+    return serializers.PlaceSerializers(queryset)
+
+
 @lru_cache(maxsize=1024)
 def get_hash():
     return utils.generate_hash(str(get_all_groups_as_json()))

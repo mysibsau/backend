@@ -36,6 +36,12 @@ class TeacherView(viewsets.ViewSet):
         return Response(getters.get_all_teachers_as_json())
 
 
+class PlaceView(viewsets.ViewSet):
+    @method_decorator(cache_page(60*60*2))
+    def all(self, request):
+        return Response(getters.get_all_places_as_json())
+
+
 class TimetableView(viewsets.ViewSet):
     @method_decorator(cache_page(60*60))
     def timetable(self, request, obj_id):

@@ -7,6 +7,7 @@ urlpatterns = [
 
      path('groups/', views.GroupView.as_view({'get': 'all'})),
      path('teachers/', views.TeacherView.as_view({'get': 'all'})),
+     path('places/', views.PlaceView.as_view({'get': 'all'})),
      
 
      path('hash/', views.HashView.as_view({'get': 'hash'})),
