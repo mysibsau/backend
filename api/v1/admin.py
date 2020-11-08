@@ -3,10 +3,11 @@ from django.http import HttpResponseRedirect
 from django.conf.urls import url
 from django.urls import path
 
-import api.base.models as models
-from api.base.services import setters
+import api.v1.models as models
+from api.v1.services import setters
 
 from multiprocessing import Process
+
 
 
 @admin.register(models.TimetableGroup)

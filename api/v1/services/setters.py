@@ -1,6 +1,6 @@
-from api.base.services.parsers.timetable_parser import Parser
-from api.base.services.parsers.group_parser import GroupParser
-from api.base.models import Group, Day, Lesson, Subgroup, TimetableGroup
+from api.v1.services.parsers.timetable_parser import Parser
+from api.v1.services.parsers.group_parser import GroupParser
+from api.v1.models import Group, Day, Lesson, Subgroup, TimetableGroup
 
 
 WEEKDAY = {
@@ -19,12 +19,10 @@ TYPES = {
 }
 
 def load_all_groups_from_pallada():
-    print('Start get groups')
     groups = GroupParser().get_groups()
     for id_, name in groups:
         if not len(Group.objects.filter(name=name)):
             Group(name=name, id_pallada=id_).save()
-    print('Stop get groups')
 
 
 def load_timetable():
