@@ -11,6 +11,11 @@ def get_all_groups_as_json():
     return serializers.GroupSerializers(queryset)
 
 
+def get_all_teachers_as_json():
+    queryset = models.Teacher.objects.all()
+    return serializers.TeacherSerializers(queryset)
+
+
 @lru_cache(maxsize=1024)
 def get_hash():
     return utils.generate_hash(str(get_all_groups_as_json()))

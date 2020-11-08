@@ -11,8 +11,19 @@ def GroupSerializers(groups):
     for group in groups:
         result.append({
             'id': group.id,
-            'name': group.name,
-            'mail': group.mail
+            'name': group.name
+        })
+    return result
+
+
+@lru_cache(maxsize=1024)
+def TeacherSerializers(teachers):
+    result = []
+    for teacher in teachers:
+        result.append({
+            'id': teacher.id,
+            'name': teacher.name,
+            'id_pallada': teacher.id_pallada
         })
     return result
 

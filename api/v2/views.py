@@ -30,6 +30,12 @@ class GroupView(viewsets.ViewSet):
         return Response(getters.get_all_groups_as_json())
 
 
+class TeacherView(viewsets.ViewSet):
+    @method_decorator(cache_page(60*60*2))
+    def all(self, request):
+        return Response(getters.get_all_teachers_as_json())
+
+
 class TimetableView(viewsets.ViewSet):
     @method_decorator(cache_page(60*60))
     def timetable(self, request, obj_id):

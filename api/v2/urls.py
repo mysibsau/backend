@@ -6,6 +6,7 @@ urlpatterns = [
      path('', views.RedirectOn.as_view({'get': 'sibsau'})),
 
      path('groups/', views.GroupView.as_view({'get': 'all'})),
+     path('teachers/', views.TeacherView.as_view({'get': 'all'})),
      
 
      path('hash/', views.HashView.as_view({'get': 'hash'})),
