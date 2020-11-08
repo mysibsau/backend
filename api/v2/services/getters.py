@@ -1,4 +1,4 @@
-import api.base.models as models
+import api.v2.models as models
 import api.v2.serializers as serializers
 import api.v2.services.utils as utils
 
