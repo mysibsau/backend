@@ -1,5 +1,5 @@
 from rest_framework import serializers
-import api.base.models as models
+import api.v2.models as models
 
 from functools import lru_cache
 from api.v2.services import getters

@@ -39,7 +39,7 @@ class Place(models.Model):
 
 
 
-class TimetableGroup(models.Model):
+class Timetable(models.Model):
     TYPES = (
         (1, 'Лекция'),
         (2, 'Лабораторная работа'),
@@ -68,7 +68,7 @@ class TimetableGroup(models.Model):
 
     lesson_name = models.TextField(verbose_name='Название')
     lesson_type = models.IntegerField(choices=TYPES, verbose_name='Тип')
-
+    
     place = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name='Аудитория')
     week = models.IntegerField(choices=WEEKS, verbose_name='Неделя')
     day = models.IntegerField(choices=DAYS, verbose_name='День')
