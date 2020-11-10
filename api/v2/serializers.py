@@ -40,51 +40,42 @@ def PlaceSerializers(places):
     return result
 
 
-@lru_cache(maxsize=1024)
-def SubgroupSerializers(subgroups):
+def SupgroupsSerializer(supgroups):
     result = []
-    for subgroup in subgroups.all():
-        result.append({
-            'num': subgroup.num,
-            'name': subgroup.name,
-            'type': subgroup.type,
-            'teacher': subgroup.teacher,
-            'place': subgroup.place,
-            'address': subgroup.address
-        })
+    for supgroup in supgroups:
+        result.append(
+            {
+                'num': supgroup.supgroup,
+                'name': supgroup.lesson_name,
+                'type': supgroup.lesson_type,
+                'teacher': supgroup.teacher.name,
+                'place': supgroup.place.name
+            }
+        )
     return result
 
 
-@lru_cache(maxsize=1024)
-def LessonSerializers(lessons):
+
+def DaySerializer(day: list) -> list:
     result = []
-    for lesson in lessons.all():
-        result.append({
-            'time': lesson.time,
-            'subgroups': SubgroupSerializers(lesson.subgroups)
-        })
+    times = sorted(set(day[i].time for i in range(len(day))))
+    for time in times:
+        supgroups = getters.select_lessons(day, time)
+        result.append({'time': time, 'subgroups': SupgroupsSerializer(supgroups)})
     return result
 
 
-@lru_cache(maxsize=1024)
-def DaySerializers(days):
-    result = []
-    for day in days.all():
-        result.append({
-            'day': day.day,
-            'lessons': LessonSerializers(day.lessons)
-        })
-    return result
-
 
 @lru_cache(maxsize=1024)
-def TimetableSerializers(timetables):
-    result = []
-    for timetable in timetables:
-        result.append({
-            'group': timetable.group.name,
-            'meta': getters.get_meta(),
-            'even_week': DaySerializers(timetable.even_week),
-            'odd_week': DaySerializers(timetable.odd_week),
-        })
+def TimetableSerializers(lessons) -> dict:
+    result = {'group': lessons[0].group.name, 'even_week': [], 'odd_week': [], "hash": "a788d"}
+    for week in range(1, 3):
+        for day in range(6):
+            day_json = {
+                'day': day,
+                'lessons': DaySerializer(getters.select_day(lessons, day, week)),
+            }
+            week_name = 'even_week' if week == 2 else 'odd_week'
+            result[week_name].append(day_json)
+
     return result

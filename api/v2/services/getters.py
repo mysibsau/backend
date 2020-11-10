@@ -32,13 +32,16 @@ def get_current_week_evenness_as_json():
     }
 
 
-def get_timetable_group_as_json(obj_id):
-    queryset = models.TimetableGroup.objects.filter(group__id=obj_id)
+@lru_cache(maxsize=1024)
+def get_timetable(obj_id):
+    queryset = models.Timetable.objects.filter(group__id=obj_id)
     return serializers.TimetableSerializers(queryset)
 
 
-def get_timetable(obj_id):
-    return get_timetable_group_as_json(obj_id)
+@lru_cache(maxsize=1024)
+def get_timetable_teacher(obj_id):
+    queryset = models.Timetable.objects.filter(teacher__id=obj_id)
+    return serializers.TimetableSerializers(queryset)
 
 
 def get_meta():
@@ -46,3 +49,22 @@ def get_meta():
         'week': utils.get_current_week_evenness(),
         'hash': get_hash(),
     }
+
+@lru_cache(maxsize=1024)
+def select_day(queryset, day, week):
+    result = []
+    for q in queryset :
+        if q.day == day and q.week == week:
+            result.append(q)
+        
+    return result
+
+
+def select_lessons(queryset, time):
+    result = []
+    for q in queryset:
+        if q.time == time:
+            result.append(q)
+    
+    return result
+
