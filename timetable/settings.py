@@ -1,6 +1,5 @@
 import environ
 from os import path
-import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 
@@ -12,6 +11,8 @@ env = environ.Env()
 environ.Env.read_env()
 
 if env.bool('SENTRY'):
+    import sentry_sdk
+    
     sentry_sdk.init(
         dsn=env.str('DSN'),
         integrations=[DjangoIntegration()],
@@ -28,6 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'silk',
+    'debug_toolbar',
     'api.v1',
     'api.v2'
 ]
@@ -39,11 +42,17 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'timetable.Middleware.BanScumbags.BanScumbags'
+    'timetable.Middleware.BanScumbags.BanScumbags',
+    'silk.middleware.SilkyMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
-
 ROOT_URLCONF = 'timetable.urls'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
 
 TEMPLATES = [
     {
@@ -71,6 +80,7 @@ TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 DATABASES = {'default': env.db('DATABASE_URL')}
+DATABASES['default']['CONN_MAX_AGE'] = 60 * 10
 
 STATIC_URL = env.str('STATIC_URL')
 STATIC_ROOT = env.str('STATIC_ROOT', default=None)
