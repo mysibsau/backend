@@ -2,7 +2,6 @@ import api.v2.models as models
 import api.v2.serializers as serializers
 import api.v2.services.utils as utils
 
-from django.http import Http404
 from functools import lru_cache
 
 
@@ -30,20 +29,25 @@ def get_all_places_as_json() -> dict:
     return serializers.PlaceSerializers(queryset)
 
 
-def get_hash() -> dict:
+def get_groups_hash() -> dict:
     '''
         Генерирует хэш, основываясь на списке групп
     '''
     return utils.generate_hash(str(get_all_groups_as_json()))
 
 
-def get_current_week_evenness_as_json() -> dict:
+def get_teachers_hash() -> dict:
     '''
-        Возвращает номер недели
+        Генерирует хэш, основываясь на списке преподавателей
     '''
-    return {
-        'week': utils.get_current_week_evenness()
-    }
+    return utils.generate_hash(str(get_all_teachers_as_json()))
+
+
+def get_palces_hash() -> dict:
+    '''
+        Генерирует хэш, основываясь на списке преподавателей
+    '''
+    return utils.generate_hash(str(get_all_places_as_json()))
 
 
 @lru_cache(maxsize=1024)
@@ -66,15 +70,16 @@ def get_timetable_teacher(obj_id) -> dict:
 
 def get_meta() -> dict:
     '''
-        Возвращает метаданные (номер недели и хэш)
+        Возвращает метаданные (хэши всех сущностей)
     '''
     return {
-        'week': utils.get_current_week_evenness(),
-        'hash': get_hash(),
+        'groups_hash': get_groups_hash(),
+        'teachers_hash': get_teachers_hash(),
+        'palces_hash': get_palces_hash()
     }
 
 @lru_cache(maxsize=1024)
-def select_day(queryset, day: int, week: int) -> dict:
+def select_day(queryset, day: int, week: int) -> list:
     '''
         Возвращает все пары, которые проходили в конкретный день
     '''
@@ -87,7 +92,7 @@ def select_day(queryset, day: int, week: int) -> dict:
 
 
 
-def select_lessons(queryset, time: str) -> dict:
+def select_lessons(queryset, time: str) -> list:
     '''
         Возвращает все пары, которые проходили в конкретный час
     '''
