@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 
-from api.v2.services import getters
+from apps.api.v2.services import getters
 
 
 class RedirectOn(viewsets.ViewSet):

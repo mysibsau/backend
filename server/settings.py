@@ -31,8 +31,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'silk',
     'debug_toolbar',
-    'api.v1',
-    'api.v2'
+    'apps.api.v1',
+    'apps.api.v2',
 ]
 
 MIDDLEWARE = [
@@ -42,12 +42,12 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'timetable.Middleware.BanScumbags.BanScumbags',
-    'silk.middleware.SilkyMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'timetable.Middleware.BanScumbags.BanScumbags',
+    #'silk.middleware.SilkyMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
-ROOT_URLCONF = 'timetable.urls'
+ROOT_URLCONF = 'server.urls'
 
 INTERNAL_IPS = [
     '127.0.0.1',
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'timetable.wsgi.application'
+WSGI_APPLICATION = 'server.wsgi.application'
 
 SITE_ROOT = root()
 
@@ -83,11 +83,11 @@ DATABASES = {'default': env.db('DATABASE_URL')}
 DATABASES['default']['CONN_MAX_AGE'] = 60 * 10
 
 STATIC_URL = env.str('STATIC_URL')
-STATIC_ROOT = env.str('STATIC_ROOT', default=None)
-STATICFILES_DIRS = [
-    path.join(BASE_DIR, "static"),
-    STATIC_ROOT
-]
+#STATIC_ROOT = env.str('STATIC_ROOT', default=None)
+#STATICFILES_DIRS = [
+#    path.join(BASE_DIR, "static"),
+#    STATIC_ROOT
+#]
 
 ADMIN_URL = env.str('ADMIN_URL', default='admin/')
 

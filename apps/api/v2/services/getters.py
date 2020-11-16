@@ -1,6 +1,6 @@
-import api.v2.models as models
-import api.v2.serializers as serializers
-import api.v2.services.utils as utils
+import apps.api.v2.models as models
+import apps.api.v2.serializers as serializers
+import apps.api.v2.services.utils as utils
 
 from functools import lru_cache
 
