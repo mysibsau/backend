@@ -18,7 +18,10 @@ TYPES = {
     'Практика': 3
 }
 
-def load_all_groups_from_pallada():
+def load_all_groups_from_pallada() -> None:
+    '''
+        Записывает в БД новые группы
+    '''
     groups = GroupParser().get_groups()
     for id_, name in groups:
         if not len(Group.objects.filter(name=name)):
@@ -26,10 +29,10 @@ def load_all_groups_from_pallada():
 
 
 
-def load_timetable():
-    print('_________________')
-    print(datetime.now().time())
-    print('_________________')
+def load_timetable() -> None:
+    '''
+        Сохраняет спрашенное расписание
+    '''
     for i, group in enumerate(Group.objects.all()):
         print(i)
         Timetable.objects.filter(group=group).delete()
@@ -71,9 +74,3 @@ def load_timetable():
                     ).save()
                 except:
                     print(group.id_pallada, week, day, lesson_name)
-                
-    
-    print('_________________')
-    print(datetime.now().time())
-    print('_________________')
-
