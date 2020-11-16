@@ -55,7 +55,6 @@ def SupgroupsSerializer(supgroups):
     return result
 
 
-
 def DaySerializer(day: list) -> list:
     result = []
     times = sorted(set(day[i].time for i in range(len(day))))
@@ -65,9 +64,10 @@ def DaySerializer(day: list) -> list:
     return result
 
 
-
 @lru_cache(maxsize=1024)
 def TimetableSerializers(lessons) -> dict:
+    if not len(lessons):
+        return {'error': 'Расписание не доступно'}
     result = {'group': lessons[0].group.name, 'even_week': [], 'odd_week': [], "hash": "a788d"}
     for week in range(1, 3):
         for day in range(6):
