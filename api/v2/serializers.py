@@ -6,7 +6,7 @@ from api.v2.services import getters
 
 
 @lru_cache(maxsize=1024)
-def GroupSerializers(groups):
+def GroupSerializers(groups) -> list:
     result = []
     for group in groups:
         result.append({
@@ -17,7 +17,7 @@ def GroupSerializers(groups):
 
 
 @lru_cache(maxsize=1024)
-def TeacherSerializers(teachers):
+def TeacherSerializers(teachers) -> list:
     result = []
     for teacher in teachers:
         result.append({
@@ -29,7 +29,7 @@ def TeacherSerializers(teachers):
 
 
 @lru_cache(maxsize=1024)
-def PlaceSerializers(places):
+def PlaceSerializers(places) -> list:
     result = []
     for place in places:
         result.append({
@@ -40,7 +40,7 @@ def PlaceSerializers(places):
     return result
 
 
-def SupgroupsSerializer(supgroups):
+def SupgroupsSerializer(supgroups: dict) -> list:
     result = []
     for supgroup in supgroups:
         result.append(
@@ -49,7 +49,9 @@ def SupgroupsSerializer(supgroups):
                 'name': supgroup.lesson_name,
                 'type': supgroup.lesson_type,
                 'teacher': supgroup.teacher.name,
-                'place': supgroup.place.name
+                'teacher_id': supgroup.teacher.id,
+                'place': supgroup.place.name,
+                'place_id': supgroup.place.id
             }
         )
     return result
@@ -68,7 +70,14 @@ def DaySerializer(day: list) -> list:
 def TimetableSerializers(lessons) -> dict:
     if not len(lessons):
         return {'error': 'Расписание не доступно'}
-    result = {'group': lessons[0].group.name, 'even_week': [], 'odd_week': [], "hash": "a788d"}
+
+    result = {
+        'group': lessons[0].group.name, 
+        'even_week': [], 
+        'odd_week': [], 
+        'meta': getters.get_meta()
+    }
+
     for week in range(1, 3):
         for day in range(6):
             day_json = {
