@@ -14,14 +14,16 @@ class RedirectOn(viewsets.ViewSet):
 
 class HashView(viewsets.ViewSet):
     @method_decorator(cache_page(60*60))
-    def hash(self, request):
-        return Response({'hash': getters.get_hash()})
+    def groups_hash(self, request):
+        return Response({'hash': getters.get_groups_hash()})
 
+    @method_decorator(cache_page(60*60))
+    def teachers_hash(self, request):
+        return Response({'hash': getters.get_teachers_hash()})
 
-class EvennessWeek(viewsets.ViewSet):
-    @method_decorator(cache_page(60*60*2))
-    def evenness(self, requests):
-        return Response(getters.get_current_week_evenness_as_json())
+    @method_decorator(cache_page(60*60))
+    def palaces_hash(self, request):
+        return Response({'hash': getters.get_palces_hash()})
 
 
 class GroupView(viewsets.ViewSet):
