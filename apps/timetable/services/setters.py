@@ -1,7 +1,7 @@
-from apps.api.v2.services.parsers.timetable_parser import Parser
-from apps.api.v2.services.parsers.group_parser import GroupParser
-from apps.api.v2.models import Group, Timetable, Teacher, Place
-from datetime import datetime
+from apps.timetable.services.parsers.timetable_parser import Parser
+from apps.timetable.services.parsers.group_parser import GroupParser
+from apps.timetable.models import Group, Timetable, Teacher, Place
+
 
 WEEKDAY = {
     'monday': 0,

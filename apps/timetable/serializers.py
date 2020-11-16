@@ -1,8 +1,5 @@
-from rest_framework import serializers
-import apps.api.v2.models as models
-
 from functools import lru_cache
-from apps.api.v2.services import getters
+from apps.timetable.services import getters
 
 
 @lru_cache(maxsize=1024)

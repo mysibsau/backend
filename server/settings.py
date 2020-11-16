@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'apps.api.v1',
     'apps.api.v2',
+    'apps.timetable'
 ]
 
 MIDDLEWARE = [
