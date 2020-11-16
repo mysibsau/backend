@@ -1,7 +1,3 @@
-from functools import lru_cache
-
-
-
 def UnionSerializers(unions):
     result = []
     for union in unions:
