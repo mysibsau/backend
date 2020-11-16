@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'apps.api.v1',
     'apps.api.v2',
-    'apps.timetable'
+    'apps.timetable',
+    'apps.campus_sibsau'
 ]
 
 MIDDLEWARE = [
@@ -85,10 +86,10 @@ DATABASES['default']['CONN_MAX_AGE'] = 60 * 10
 
 STATIC_URL = env.str('STATIC_URL')
 #STATIC_ROOT = env.str('STATIC_ROOT', default=None)
-#STATICFILES_DIRS = [
-#    path.join(BASE_DIR, "static"),
+STATICFILES_DIRS = [
+    path.join(BASE_DIR, "static"),
 #    STATIC_ROOT
-#]
+]
 
 ADMIN_URL = env.str('ADMIN_URL', default='admin/')
 

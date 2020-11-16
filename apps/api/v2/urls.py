@@ -3,5 +3,7 @@ import apps.api.v2.views as views
 
 
 urlpatterns = [
-     path('', include('apps.timetable.urls'))
+     path('', include('apps.timetable.urls')),
+     path('', include('apps.campus_sibsau.urls'))
 ]
+
