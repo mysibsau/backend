@@ -29,8 +29,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'silk',
-    'debug_toolbar',
     'apps.api.v1',
     'apps.api.v2',
     'apps.timetable',
@@ -45,9 +43,6 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    #'timetable.Middleware.BanScumbags.BanScumbags',
-    #'silk.middleware.SilkyMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'server.urls'

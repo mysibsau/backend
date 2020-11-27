@@ -9,12 +9,3 @@ urlpatterns = [
     path('', include('apps.api.v1.urls')),
     path('v2/', include('apps.api.v2.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
-
-
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
