@@ -43,7 +43,7 @@ def SupgroupsSerializer(supgroups: dict) -> list:
         result.append(
             {
                 'num': supgroup.supgroup,
-                'name': supgroup.lesson_name,
+                'name': supgroup.lesson.name_ru,
                 'type': supgroup.lesson_type,
                 'teacher': supgroup.teacher.name,
                 'teacher_id': supgroup.teacher.id,
@@ -63,9 +63,9 @@ def DaySerializer(day: list) -> list:
     return result
 
 
-@lru_cache(maxsize=1024)
+
 def TimetableSerializers(lessons) -> dict:
-    if not len(lessons):
+    if not lessons:
         return {'error': 'Расписание не доступно'}
 
     result = {

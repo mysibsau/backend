@@ -31,7 +31,7 @@ class Group(admin.ModelAdmin):
 @admin.register(models.Timetable)
 class TimetableAdmin(admin.ModelAdmin):
     list_filter = ('group', 'teacher', 'place')
-    list_display = ('id', 'group', 'supgroup', 'teacher', 'lesson_name',
+    list_display = ('id', 'group', 'supgroup', 'teacher', 'lesson',
                     'lesson_type', 'place', 'week', 'day', 'time')
     change_list_template = 'admin/load_timetable.html'
 
@@ -57,3 +57,18 @@ class Teacher(admin.ModelAdmin):
 @admin.register(models.Place)
 class Place(admin.ModelAdmin):
     list_display = ('id', 'name', 'address')
+
+
+@admin.register(models.Lesson)
+class Lesson(admin.ModelAdmin):
+    list_display = ('id', 'name_ru', 'name_en', 'name_ch', 'get_tags')
+    filter_horizontal = ('tags',)
+    list_filter = ('tags',)
+
+    def get_tags(self, obj):
+        return ', '.join(str(i) for i in obj.tags.all())
+
+
+@admin.register(models.Tag)
+class Tag(admin.ModelAdmin):
+    list_display = ('id', 'name')

@@ -38,6 +38,30 @@ class Place(models.Model):
         verbose_name_plural = u'Аудитории'
 
 
+class Tag(models.Model):
+    name = models.TextField('название тега')
+
+    def __str__(self) -> str:
+        return self.name
+
+    class Meta:
+        verbose_name = u'Тег'
+        verbose_name_plural = u'Теги'
+
+
+class Lesson(models.Model):
+    name_ru = models.TextField('Название на русском')
+    name_en = models.TextField('Название на английском', blank=True)
+    name_ch = models.TextField('Название на китайском', blank=True)
+    tags = models.ManyToManyField(Tag, 'Теги')
+
+    def __str__(self):
+        return self.name_ru
+    
+    class Meta:
+        verbose_name = u'Предмет'
+        verbose_name_plural = u'Предметы'
+
 
 class Timetable(models.Model):
     TYPES = (
@@ -66,7 +90,7 @@ class Timetable(models.Model):
 
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Преподаватель')
 
-    lesson_name = models.TextField(verbose_name='Название')
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Предмет')
     lesson_type = models.IntegerField(choices=TYPES, verbose_name='Тип')
     
     place = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name='Аудитория')
