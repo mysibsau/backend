@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-from time import sleep
 
 class GroupParser:
     def get_name_group(self, soup: BeautifulSoup):
