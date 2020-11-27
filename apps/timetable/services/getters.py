@@ -78,7 +78,7 @@ def get_meta() -> dict:
         'palces_hash': get_palces_hash()
     }
 
-@lru_cache(maxsize=1024)
+
 def select_day(queryset, day: int, week: int) -> list:
     '''
         Возвращает все пары, которые проходили в конкретный день
