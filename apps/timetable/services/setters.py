@@ -1,6 +1,6 @@
 from apps.timetable.services.parsers.timetable_parser import Parser
 from apps.timetable.services.parsers.group_parser import GroupParser
-from apps.timetable.models import Group, Timetable, Teacher, Place
+from apps.timetable.models import Group, Lesson, Timetable, Teacher, Place, Tag
 
 
 WEEKDAY = {
@@ -34,7 +34,6 @@ def load_timetable() -> None:
         Сохраняет спрашенное расписание
     '''
     for i, group in enumerate(Group.objects.all()):
-        print(i)
         Timetable.objects.filter(group=group).delete()
 
         for line in Parser().get_timetable(group.id_pallada):
@@ -50,6 +49,11 @@ def load_timetable() -> None:
                 lesson_name = line['name_subjects'][i]
                 lesson_type = line['type_subjects'][i]
 
+                lesson = Lesson.objects.filter(name_ru=lesson_name).first()
+                if not lesson:
+                    lesson = Lesson(name_ru=lesson_name)
+                    lesson.save()
+
                 place_name = line['location_in_university'][i]
                 place = Place.objects.filter(name=place_name).first()
                 if not place:
@@ -60,17 +64,15 @@ def load_timetable() -> None:
                 day = line['day']
                 time = line['time']
 
-                try:
-                    Timetable(
-                        group=group,
-                        supgroup=supgroup,
-                        teacher=teacher,
-                        lesson_name=lesson_name,
-                        lesson_type=lesson_type,
-                        place=place,
-                        week=week,
-                        day=day,
-                        time=time
-                    ).save()
-                except:
-                    print(group.id_pallada, week, day, lesson_name)
+                
+                Timetable(
+                    group=group,
+                    supgroup=supgroup,
+                    teacher=teacher,
+                    lesson=lesson,
+                    lesson_type=lesson_type,
+                    place=place,
+                    week=week,
+                    day=day,
+                    time=time
+                ).save()
