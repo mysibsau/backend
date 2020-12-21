@@ -56,7 +56,7 @@ def get_timetable(obj_id) -> dict:
         Возвращает расписание конкретной группы
     '''
     queryset = models.Timetable.objects.filter(group__id=obj_id).select_related()
-    return serializers.TimetableSerializers(queryset)
+    return serializers.TimetableSerializers(queryset, 'group')
 
 
 @lru_cache(maxsize=1024)
@@ -65,7 +65,16 @@ def get_timetable_teacher(obj_id) -> dict:
         Возвращает расписание преподавателя
     '''
     queryset = models.Timetable.objects.filter(teacher__id=obj_id).select_related()
-    return serializers.TimetableSerializers(queryset)
+    return serializers.TimetableSerializers(queryset, 'teacher')
+
+
+@lru_cache(maxsize=1024)
+def get_timetable_place(obj_id) -> dict:
+    '''
+        Возвращает расписание кабинета
+    '''
+    queryset = models.Timetable.objects.filter(place__id=obj_id).select_related()
+    return serializers.TimetableSerializers(queryset, 'place')
 
 
 def get_meta() -> dict:

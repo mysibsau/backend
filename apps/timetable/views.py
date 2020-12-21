@@ -47,3 +47,7 @@ class TimetableView(viewsets.ViewSet):
     @method_decorator(cache_page(60*60))
     def timetable_teacher(self, request, obj_id):
         return Response(getters.get_timetable_teacher(obj_id))
+
+    @method_decorator(cache_page(60*60))
+    def timetable_place(self, request, obj_id):
+        return Response(getters.get_timetable_place(obj_id))

@@ -40,17 +40,17 @@ def PlaceSerializers(places) -> list:
 def SupgroupsSerializer(supgroups: dict) -> list:
     result = []
     for supgroup in supgroups:
-        result.append(
-            {
+        result.append({
                 'num': supgroup.supgroup,
                 'name': supgroup.lesson.name_ru,
                 'type': supgroup.lesson_type,
                 'teacher': supgroup.teacher.name,
                 'teacher_id': supgroup.teacher.id,
+                'group': supgroup.group.name,
+                'group_id': supgroup.group.id,
                 'place': supgroup.place.name,
                 'place_id': supgroup.place.id
-            }
-        )
+            })
     return result
 
 
@@ -64,12 +64,18 @@ def DaySerializer(day: list) -> list:
 
 
 
-def TimetableSerializers(lessons) -> dict:
+def TimetableSerializers(lessons, type) -> dict:
     if not lessons:
         return {'error': 'Расписание не доступно'}
 
+    types = {
+        'teacher': lessons[0].teacher.name,
+        'group': lessons[0].group.name,
+        'place': lessons[0].place.name
+    }
+
     result = {
-        'group': lessons[0].group.name, 
+        'object': types[type], 
         'even_week': [], 
         'odd_week': [], 
         'meta': getters.get_meta()

@@ -10,12 +10,15 @@ urlpatterns = [
 
      path('groups/hash/', views.HashView.as_view({'get': 'groups_hash'})),
      path('teachers/hash/', views.HashView.as_view({'get': 'teachers_hash'})),
-     path('palces/hash/', views.HashView.as_view({'get': 'palaces_hash'})),
+     path('palaces/hash/', views.HashView.as_view({'get': 'palaces_hash'})),
 
      path('timetable/group/<int:obj_id>/',
           views.TimetableView.as_view({'get': 'timetable_group'})),
 
      path('timetable/teacher/<int:obj_id>/',
           views.TimetableView.as_view({'get': 'timetable_teacher'})),
+
+     path('timetable/place/<int:obj_id>/',
+          views.TimetableView.as_view({'get': 'timetable_place'})),
 
 ]
