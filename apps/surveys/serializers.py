@@ -1,6 +1,6 @@
 from apps.surveys import models
 from apps.surveys.services import check
-from datetime import date
+from datetime import datetime
 
 
 def ResponsesSerializer(responses):
@@ -40,8 +40,6 @@ def SurveysSeializers(surveys, uuid):
     result = []
     for survey in surveys:
         if check.user_already_answered(uuid, survey.id):
-            continue
-        if date.today() > survey.date_to:
             continue
         result.append({
             'id': survey.id,

@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from apps.surveys import models, serializers
 from apps.surveys.services import setters, check
 import json
+from datetime import datetime
 
 
 class SurveysView(viewsets.ViewSet):
@@ -13,7 +14,7 @@ class SurveysView(viewsets.ViewSet):
         uuid = request.GET.get('uuid')
         if not uuid:
             return Response('not uuid', 405)
-        queryset = models.Survey.objects.all()
+        queryset = models.Survey.objects.filter(date_to__gt=datetime.now())
         return Response(serializers.SurveysSeializers(queryset, uuid))
 
     @method_decorator(cache_page(60*60*2))

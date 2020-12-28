@@ -3,7 +3,7 @@ from django.db import models
 
 class Survey(models.Model):
     name = models.CharField('Название опроса', max_length=256)
-    date_to = models.DateField('Действует до')
+    date_to = models.DateTimeField('Действует до')
 
     def __str__(self):
         return self.name
