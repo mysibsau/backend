@@ -1,11 +1,10 @@
 from django.contrib import admin
-import apps.events.models as models
+from apps.events import models
 
 
 @admin.register(models.Event)
 class Event(admin.ModelAdmin):
     list_display = ('id', 'name', 'logo', 'text', 'author')
-
 
 
 @admin.register(models.Link)

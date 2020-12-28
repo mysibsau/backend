@@ -3,11 +3,10 @@ from django.http import HttpResponseRedirect
 from django.conf.urls import url
 from django.urls import path
 
-import apps.api.v1.models as models
+from apps.api.v1 import models
 from apps.api.v1.services import setters
 
 from multiprocessing import Process
-
 
 
 @admin.register(models.TimetableGroup)
@@ -47,7 +46,6 @@ class Group(admin.ModelAdmin):
             target=setters.load_all_groups_from_pallada
         ).start()
         return HttpResponseRedirect("../")
-
 
 
 @admin.register(models.Lesson)

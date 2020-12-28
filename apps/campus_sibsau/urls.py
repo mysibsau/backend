@@ -1,8 +1,8 @@
 from django.urls import path
-import apps.campus_sibsau.views as views
+from apps.campus_sibsau import views
 
 
 urlpatterns = [
-     path('unions/', views.UnionView.as_view({'get': 'all'})),
-     path('institute/', views.InstituteView.as_view({'get': 'all'})),
+    path('unions/', views.UnionView.as_view({'get': 'all'})),
+    path('institute/', views.InstituteView.as_view({'get': 'all'})),
 ]

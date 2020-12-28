@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.conf.urls import url
 from django.urls import path
 
-import apps.timetable.models as models
+from apps.timetable import models
 from apps.timetable.services import setters
 
 from multiprocessing import Process

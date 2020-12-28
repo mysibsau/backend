@@ -1,6 +1,6 @@
-import apps.timetable.models as models
-import apps.timetable.serializers as serializers
-import apps.timetable.services.utils as utils
+from apps.timetable import models
+from apps.timetable import serializers
+from apps.timetable.services import utils
 
 from functools import lru_cache
 

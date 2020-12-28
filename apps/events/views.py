@@ -3,8 +3,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework.response import Response
 
-import apps.events.models as models
-import apps.events.serializers as serializers
+from apps.events import models, serializers
 
 
 class EventView(viewsets.ViewSet):

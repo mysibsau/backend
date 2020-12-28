@@ -1,5 +1,5 @@
 from django.contrib import admin
-import apps.campus_sibsau.models as models
+from apps.campus_sibsau import models
 
 
 @admin.register(models.Building)
@@ -32,4 +32,5 @@ class Institute(admin.ModelAdmin):
 
 @admin.register(models.Union)
 class Union(admin.ModelAdmin):
-    list_display = ('id', 'name', 'logo', 'photo', 'fio', 'address', 'phone', 'group_vk', 'page_vk')
+    list_display = ('id', 'name', 'logo', 'photo', 'fio',
+                    'address', 'phone', 'group_vk', 'page_vk')

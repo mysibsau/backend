@@ -1,4 +1,4 @@
-import statistic.models as models
+from apps.statistic.models import models
 
 
 def collect_static(function):

@@ -3,8 +3,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework.response import Response
 
-import apps.campus_sibsau.models as models
-import apps.campus_sibsau.serializers as serializers
+from apps.campus_sibsau import models, serializers
 
 
 class UnionView(viewsets.ViewSet):
