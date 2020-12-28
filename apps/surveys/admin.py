@@ -1,6 +1,8 @@
 from django.contrib import admin
 from apps.surveys import models
 from datetime import datetime
+import csv
+from django.http import HttpResponse
 
 
 @admin.register(models.Survey)
@@ -12,6 +14,34 @@ class Survey(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs
         return qs.filter(date_to__gt=datetime.now())
+
+    actions = ['export_as_csv']
+
+    def export_as_csv(self, request, queryset):
+        meta = self.model._meta
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = f'attachment; filename={meta}_{datetime.now()}.csv'
+        writer = csv.writer(response)
+
+        writer.writerow(['id', 'who', 'survey', 'question', 'answers'])
+        for obj in queryset:
+            answers = models.Answer.objects.filter(survey=obj)
+            for answer in answers:
+                ans = answer.text
+                if not ans:
+                    ans = ', '.join([a.text for a in answer.answers.all()])
+                writer.writerow([
+                    answer.id,
+                    answer.who,
+                    answer.survey,
+                    answer.question,
+                    ans
+                ])
+
+        return response
+
+    export_as_csv.short_description = 'Экспортировать выбранные'
 
 
 @admin.register(models.Question)
