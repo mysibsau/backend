@@ -9,3 +9,5 @@ urlpatterns = [
     path('', include('apps.api.v1.urls')),
     path('v2/', include('apps.api.v2.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+admin.site.site_header = 'Мой СибГУ'

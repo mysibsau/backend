@@ -55,7 +55,8 @@ def get_timetable(obj_id) -> dict:
     '''
         Возвращает расписание конкретной группы
     '''
-    queryset = models.Timetable.objects.filter(group__id=obj_id).select_related()
+    queryset = models.Timetable.objects.filter(
+        group__id=obj_id).select_related()
     return serializers.TimetableSerializers(queryset, 'group')
 
 
@@ -64,7 +65,8 @@ def get_timetable_teacher(obj_id) -> dict:
     '''
         Возвращает расписание преподавателя
     '''
-    queryset = models.Timetable.objects.filter(teacher__id=obj_id).select_related()
+    queryset = models.Timetable.objects.filter(
+        teacher__id=obj_id).select_related()
     return serializers.TimetableSerializers(queryset, 'teacher')
 
 
@@ -73,7 +75,8 @@ def get_timetable_place(obj_id) -> dict:
     '''
         Возвращает расписание кабинета
     '''
-    queryset = models.Timetable.objects.filter(place__id=obj_id).select_related()
+    queryset = models.Timetable.objects.filter(
+        place__id=obj_id).select_related()
     return serializers.TimetableSerializers(queryset, 'place')
 
 
@@ -93,12 +96,11 @@ def select_day(queryset, day: int, week: int) -> list:
         Возвращает все пары, которые проходили в конкретный день
     '''
     result = []
-    for q in queryset :
+    for q in queryset:
         if q.day == day and q.week == week:
             result.append(q)
-        
-    return result
 
+    return result
 
 
 def select_lessons(queryset, time: str) -> list:
@@ -109,6 +111,5 @@ def select_lessons(queryset, time: str) -> list:
     for q in queryset:
         if q.time == time:
             result.append(q)
-    
-    return result
 
+    return result

@@ -57,7 +57,7 @@ class Lesson(models.Model):
 
     def __str__(self):
         return self.name_ru
-    
+
     class Meta:
         verbose_name = u'Предмет'
         verbose_name_plural = u'Предметы'
@@ -85,15 +85,19 @@ class Timetable(models.Model):
         (6, 'Воскресенье'),
     )
 
-    group = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name='Группа')
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, verbose_name='Группа')
     supgroup = models.IntegerField(verbose_name='Подгруппа')
 
-    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Преподаватель')
+    teacher = models.ForeignKey(
+        Teacher, on_delete=models.CASCADE, verbose_name='Преподаватель')
 
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Предмет')
+    lesson = models.ForeignKey(
+        Lesson, on_delete=models.CASCADE, verbose_name='Предмет')
     lesson_type = models.IntegerField(choices=TYPES, verbose_name='Тип')
-    
-    place = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name='Аудитория')
+
+    place = models.ForeignKey(
+        Place, on_delete=models.CASCADE, verbose_name='Аудитория')
     week = models.IntegerField(choices=WEEKS, verbose_name='Неделя')
     day = models.IntegerField(choices=DAYS, verbose_name='День')
     time = models.TextField(verbose_name='Время')

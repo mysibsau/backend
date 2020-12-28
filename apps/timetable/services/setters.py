@@ -18,6 +18,7 @@ TYPES = {
     'Практика': 3
 }
 
+
 def load_all_groups_from_pallada() -> None:
     '''
         Записывает в БД новые группы
@@ -28,10 +29,9 @@ def load_all_groups_from_pallada() -> None:
             Group(name=name, id_pallada=id_).save()
 
 
-
 def load_timetable() -> None:
     '''
-        Сохраняет спрашенное расписание
+        Сохраняет расписание
     '''
     for i, group in enumerate(Group.objects.all()):
         Timetable.objects.filter(group=group).delete()
@@ -41,9 +41,11 @@ def load_timetable() -> None:
                 supgroup = line['subgroups'][i] if line['subgroups'][i] else 0
                 teacher_parse = line['teachers'][i]
 
-                teacher = Teacher.objects.filter(id_pallada=teacher_parse[0]).first()
+                teacher = Teacher.objects.filter(
+                    id_pallada=teacher_parse[0]).first()
                 if not teacher:
-                    teacher = Teacher(name=teacher_parse[1], id_pallada=teacher_parse[0])
+                    teacher = Teacher(
+                        name=teacher_parse[1], id_pallada=teacher_parse[0])
                     teacher.save()
 
                 lesson_name = line['name_subjects'][i]
@@ -57,14 +59,16 @@ def load_timetable() -> None:
                 place_name = line['location_in_university'][i]
                 place = Place.objects.filter(name=place_name).first()
                 if not place:
-                    place = Place(name=place_name, address=line['location_in_city'][i])
+                    place = Place(
+                        name=place_name,
+                        address=line['location_in_city'][i]
+                    )
                     place.save()
-                
+
                 week = line['week']
                 day = line['day']
                 time = line['time']
 
-                
                 Timetable(
                     group=group,
                     supgroup=supgroup,

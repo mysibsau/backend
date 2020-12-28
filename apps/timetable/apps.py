@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
 
-class ApiConfig(AppConfig):
-    name = 'timetable'
+class TimetableConfig(AppConfig):
+    name = 'apps.timetable'
+    verbose_name = 'Расписание'

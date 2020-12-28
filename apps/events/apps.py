@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
 
-class StatisticsConfig(AppConfig):
-    name = 'events'
+class EventsConfig(AppConfig):
+    name = 'apps.events'
+    verbose_name = 'Мероприятия'
