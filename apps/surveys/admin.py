@@ -10,6 +10,7 @@ class Survey(admin.ModelAdmin):
     list_display = ('id', 'name', 'date_to')
 
     def get_queryset(self, request):
+        """Скрывает истекшие опросы для всех, кроме суперпользователя"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
@@ -18,6 +19,7 @@ class Survey(admin.ModelAdmin):
     actions = ['export_as_csv']
 
     def export_as_csv(self, request, queryset):
+        """Выгружает все ответы, связанные с выбранным опросом"""
         meta = self.model._meta
 
         response = HttpResponse(content_type='text/csv')
@@ -49,6 +51,7 @@ class Question(admin.ModelAdmin):
     list_display = ('id', 'survey', 'text', 'type', 'necessarily')
 
     def get_queryset(self, request):
+        """Скрывает истекшие опросы для всех, кроме суперпользователя"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
@@ -60,6 +63,7 @@ class ResponseOption(admin.ModelAdmin):
     list_display = ('id', 'question', 'text')
 
     def get_queryset(self, request):
+        """Скрывает истекшие опросы для всех, кроме суперпользователя"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
@@ -72,6 +76,7 @@ class AnswerOption(admin.ModelAdmin):
     filter_horizontal = ('answers',)
 
     def get_answers(self, obj):
+        """Форматирует ответы в виде строки"""
         if obj.text:
             return obj.text
         return ', '.join([answer.text for answer in obj.answers.all()])
@@ -79,6 +84,7 @@ class AnswerOption(admin.ModelAdmin):
     get_answers.short_description = "Ответы"
 
     def get_queryset(self, request):
+        """Скрывает истекшие опросы для всех, кроме суперпользователя"""
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
