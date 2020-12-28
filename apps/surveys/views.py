@@ -7,9 +7,7 @@ from apps.surveys import models, serializers
 from apps.surveys.services import setters, check
 import json
 from datetime import datetime
-import logging
-
-logger = logging.getLogger(__name__)
+from . import logger
 
 
 class SurveysView(viewsets.ViewSet):
@@ -29,10 +27,13 @@ class SurveysView(viewsets.ViewSet):
             logger.info(f"{request.META.get('REMOTE_ADDR')} не указал uuid в one")
             return Response('not uuid', 405)
         if check.user_already_answered(uuid, obj_id):
-            logger.info(f'{uuid} пытается получить тест {obj_id}')
+            logger.info(f'{uuid} уже проходил тест {obj_id}, но пытается получить его')
             return Response('Вы уже прогосовали', 405)
         logger.info(f'{uuid} запросил тест {obj_id}')
         queryset = models.Survey.objects.filter(id=obj_id).select_related().first()
+        if not queryset:
+            logger.info(f'Тест {obj_id} не найден')
+            return Response('Тест не найден', 405)
         return Response(serializers.SurveySeializers(queryset))
 
     def set_answer(self, request, obj_id):
@@ -51,5 +52,7 @@ class SurveysView(viewsets.ViewSet):
             logger.info(f"{data['uuid']} не указал questions в set_answer")
             return Response('not questions', 405)
         if check.user_already_answered(data['uuid'], obj_id):
+            logger.info(f"{data['uuid']} уже отправлял ответы на тест {obj_id}")
             return Response('uuid already answered', 405)
+        logger.info(f"{data['uuid']} отправил ответы на тест {obj_id}")
         return setters.set_answers(data, obj_id)

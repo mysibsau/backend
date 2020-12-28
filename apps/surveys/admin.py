@@ -1,8 +1,10 @@
+import logging
 from django.contrib import admin
 from apps.surveys import models
 from datetime import datetime
 import csv
 from django.http import HttpResponse
+from . import logger
 
 
 @admin.register(models.Survey)
@@ -21,6 +23,10 @@ class Survey(admin.ModelAdmin):
     def export_as_csv(self, request, queryset):
         """Выгружает все ответы, связанные с выбранным опросом"""
         meta = self.model._meta
+
+        logger.info(f'{request.user} экспортировал ответы тестов: ' + 
+            ', '.join(q.name for q in queryset)
+        )
 
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = f'attachment; filename={meta}_{datetime.now()}.csv'
