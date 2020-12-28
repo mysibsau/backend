@@ -11,3 +11,8 @@ class SurveysView(viewsets.ViewSet):
     def all(self, request):
         queryset = models.Survey.objects.all()
         return Response(serializers.SurveysSeializers(queryset))
+
+    def one(self, request, obj_id):
+        queryset = models.Survey.objects.filter(
+            id=obj_id).select_related().first()
+        return Response(serializers.SurveySeializers(queryset))
