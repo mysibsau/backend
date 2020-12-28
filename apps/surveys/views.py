@@ -9,7 +9,6 @@ import json
 
 
 class SurveysView(viewsets.ViewSet):
-    @method_decorator(cache_page(60*60*2))
     def all(self, request):
         uuid = request.GET.get('uuid')
         if not uuid:
