@@ -97,3 +97,29 @@ TIME_ZONE = env.str('TIME_ZONE')
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '{levelname} {asctime} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file_surveys': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/surveys.log',
+            'formatter': 'simple'
+        },
+    },
+    'loggers': {
+        'apps.surveys': {
+            'handlers': ['file_surveys'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
