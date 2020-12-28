@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'apps.api.v2',
     'apps.timetable',
     'apps.campus_sibsau',
-    'apps.events'
+    'apps.events',
+    'apps.surveys'
 ]
 
 MIDDLEWARE = [

@@ -6,6 +6,7 @@ from rest_framework.response import Response
 import apps.events.models as models
 import apps.events.serializers as serializers
 
+
 class EventView(viewsets.ViewSet):
     @method_decorator(cache_page(60*60*2))
     def all(self, request):
