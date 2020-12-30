@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from apps.surveys import models, serializers
 from apps.surveys.services import setters, check
 import json
-from datetime import datetime
+from django.utils import timezone
 from . import logger
 
 
@@ -17,7 +17,7 @@ class SurveysView(viewsets.ViewSet):
             logger.info(f"{request.META.get('REMOTE_ADDR')} не указал uuid")
             return Response('not uuid', 405)
         logger.info(f'{uuid} запросил список всех тестов')
-        queryset = models.Survey.objects.filter(date_to__gt=datetime.now())
+        queryset = models.Survey.objects.filter(date_to__gt=timezone.localtime())
         return Response(serializers.SurveysSerializers(queryset, uuid))
 
     @method_decorator(cache_page(60*60*2))

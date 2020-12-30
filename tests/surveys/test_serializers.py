@@ -9,7 +9,7 @@ class SurveysSerializersTest(TestCase):
         self.survey_attributes = {
             'id': randint(0, 100),
             'name': 'test',
-            'date_to': timezone.now()
+            'date_to': timezone.localtime()
         }
 
         self.survey = models.Survey.objects.create(**self.survey_attributes)
@@ -53,7 +53,7 @@ class SurveysSerializersTest(TestCase):
 
 class ResponsesSerializerTest(TestCase):
     def setUp(self):
-        survey = models.Survey.objects.create(name='test', date_to=timezone.now())
+        survey = models.Survey.objects.create(name='test', date_to=timezone.localtime())
         question = models.Question.objects.create(
             survey=survey, 
             text='text', 
@@ -103,7 +103,7 @@ class ResponsesSerializerTest(TestCase):
 
 class QuestionsSerializersTest(TestCase):
     def setUp(self):
-        survey = models.Survey.objects.create(name='test', date_to=timezone.now())
+        survey = models.Survey.objects.create(name='test', date_to=timezone.localtime())
 
         self.question_attributes = {
             'id': randint(0, 100),
@@ -193,7 +193,7 @@ class QuestionsSerializersTest(TestCase):
             question=self.question,
             text='text'
         )
-        survey = models.Survey.objects.create(name='test', date_to=timezone.now())
+        survey = models.Survey.objects.create(name='test', date_to=timezone.localtime())
         question = models.Question.objects.create(
             survey=survey, 
             text='text', 
@@ -214,7 +214,7 @@ class SurveySerializersTest(TestCase):
         self.survey_attributes = {
             'id': randint(0, 100),
             'name': 'test',
-            'date_to': timezone.now()
+            'date_to': timezone.localtime()
         }
 
         self.survey = models.Survey.objects.create(**self.survey_attributes)
@@ -271,7 +271,7 @@ class SurveySerializersTest(TestCase):
             type=0,
             necessarily=False
         )
-        survey = models.Survey.objects.create(name='text', date_to=timezone.now())
+        survey = models.Survey.objects.create(name='text', date_to=timezone.localtime())
         models.Question.objects.create(
             survey=survey,
             text='text',

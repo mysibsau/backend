@@ -1,7 +1,7 @@
 import logging
 from django.contrib import admin
 from apps.surveys import models
-from datetime import datetime
+from django.utils import timezone
 import csv
 from django.http import HttpResponse
 from . import logger
@@ -16,7 +16,7 @@ class Survey(admin.ModelAdmin):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(date_to__gt=datetime.now())
+        return qs.filter(date_to__gt=timezone.localtime())
 
     actions = ['export_as_csv']
 
@@ -29,7 +29,7 @@ class Survey(admin.ModelAdmin):
         )
 
         response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = f'attachment; filename={meta}_{datetime.now()}.csv'
+        response['Content-Disposition'] = f'attachment; filename={meta}_{timezone.localtime()}.csv'
         writer = csv.writer(response)
 
         writer.writerow(['id', 'who', 'survey', 'question', 'answers'])
@@ -61,7 +61,7 @@ class Question(admin.ModelAdmin):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(survey__date_to__gt=datetime.now())
+        return qs.filter(survey__date_to__gt=timezone.localtime())
 
 
 @admin.register(models.ResponseOption)
@@ -73,7 +73,7 @@ class ResponseOption(admin.ModelAdmin):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(question__survey__date_to__gt=datetime.now())
+        return qs.filter(question__survey__date_to__gt=timezone.localtime())
 
 
 @admin.register(models.Answer)
@@ -95,4 +95,4 @@ class AnswerOption(admin.ModelAdmin):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
-        return qs.filter(survey__date_to__gt=datetime.now())
+        return qs.filter(survey__date_to__gt=timezone.localtime())

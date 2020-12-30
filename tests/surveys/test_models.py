@@ -8,7 +8,7 @@ class SurveyModelTest(TestCase):
     def setUp(self):
         models.Survey.objects.create(
             name='Name',
-            date_to = timezone.now()
+            date_to = timezone.localtime()
         )
 
     def test_name_label(self):
@@ -52,7 +52,7 @@ class QuestionModelTest(TestCase):
     def setUp(self):
         models.Survey.objects.create(
             name = 'Name',
-            date_to = timezone.now()
+            date_to = timezone.localtime()
         )
         
         models.Question.objects.create(
@@ -121,7 +121,7 @@ class ResponseOptionModelTest(TestCase):
     def setUp(self):
         models.Survey.objects.create(
             name = 'Name',
-            date_to = timezone.now()
+            date_to = timezone.localtime()
         )
         
         models.Question.objects.create(
@@ -177,7 +177,7 @@ class AnswerModelTest(TestCase):
     def setUp(self):
         models.Survey.objects.create(
             name = 'Name',
-            date_to = timezone.now()
+            date_to = timezone.localtime()
         )
         
         models.Question.objects.create(
