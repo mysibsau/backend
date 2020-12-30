@@ -3,6 +3,9 @@ from django.utils import timezone
 
 
 def get_all_surveys_for_uuid(uuid):
+    """
+    Возвращает все опросы, на которые uuid еще не отвечал
+    """
     answers = models.Answer.objects.filter(who=uuid)
     ids = [a.survey.id for a in answers]
     queryset = models.Survey.objects.filter(
