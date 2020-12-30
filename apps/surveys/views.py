@@ -18,7 +18,7 @@ class SurveysView(viewsets.ViewSet):
             return Response('not uuid', 405)
         logger.info(f'{uuid} запросил список всех тестов')
         queryset = models.Survey.objects.filter(date_to__gt=datetime.now())
-        return Response(serializers.SurveysSeializers(queryset, uuid))
+        return Response(serializers.SurveysSerializers(queryset, uuid))
 
     @method_decorator(cache_page(60*60*2))
     def one(self, request, obj_id):
@@ -34,7 +34,7 @@ class SurveysView(viewsets.ViewSet):
         if not queryset:
             logger.info(f'Тест {obj_id} не найден')
             return Response('Тест не найден', 405)
-        return Response(serializers.SurveySeializers(queryset))
+        return Response(serializers.SurveySerializers(queryset))
 
     def set_answer(self, request, obj_id):
         data = dict()

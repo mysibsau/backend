@@ -114,10 +114,24 @@ LOGGING = {
             'filename': 'logs/surveys.log',
             'formatter': 'simple'
         },
+        'telegram_w0rng': {
+            'level': 'WARNING',
+            'class': 'telegram_handler.TelegramHandler',
+            'token': '1448925899:AAF617NDsT6LJklEUqemmBAY79gzoGsjODw',
+            'chat_id': '593127562',
+            'formatter': 'simple'
+        },
+        'telegram_artoff': {
+            'level': 'WARNING',
+            'class': 'telegram_handler.TelegramHandler',
+            'token': '1448925899:AAF617NDsT6LJklEUqemmBAY79gzoGsjODw',
+            'chat_id': '290687700',
+            'formatter': 'simple'
+        }
     },
     'loggers': {
         'apps.surveys': {
-            'handlers': ['file_surveys'],
+            'handlers': ['file_surveys', 'telegram_w0rng', 'telegram_artoff'],
             'level': 'INFO',
             'propagate': True,
         },

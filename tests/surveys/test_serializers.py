@@ -4,7 +4,7 @@ from apps.surveys import models, serializers
 from random import randint
 
 
-class SurveysSeializersTest(TestCase):
+class SurveysSerializersTest(TestCase):
     def setUp(self):
         self.survey_attributes = {
             'id': randint(0, 100),
@@ -13,7 +13,7 @@ class SurveysSeializersTest(TestCase):
         }
 
         self.survey = models.Survey.objects.create(**self.survey_attributes)
-        self.serializer = serializers.SurveysSeializers([self.survey], '1')
+        self.serializer = serializers.SurveysSerializers([self.survey], '1')
 
     def test_len_one_serializer(self):
         """Проверка, содержит ли массив сериализованных объектов
@@ -26,7 +26,7 @@ class SurveysSeializersTest(TestCase):
         many = randint(2, 100)
         surveys = [self.survey] * many
 
-        self.serializer = serializers.SurveysSeializers(surveys, '1')
+        self.serializer = serializers.SurveysSerializers(surveys, '1')
 
         self.assertEqual(len(self.serializer), many)
 

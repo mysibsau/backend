@@ -10,4 +10,4 @@ class EventView(viewsets.ViewSet):
     @method_decorator(cache_page(60*60*2))
     def all(self, request):
         queryset = models.Event.objects.all().select_related()
-        return Response(serializers.EventSeializers(queryset))
+        return Response(serializers.EventSerializers(queryset))

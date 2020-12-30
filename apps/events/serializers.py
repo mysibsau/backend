@@ -11,7 +11,7 @@ def LinkSerializers(links):
     return result
 
 
-def EventSeializers(events):
+def EventSerializers(events):
     result = []
     for event in events:
         links = models.Link.objects.filter(event__id=event.id)

@@ -13,7 +13,7 @@ def ResponsesSerializer(responses):
     return result
 
 
-def QuestionSeializers(questions):
+def QuestionsSerializers(questions):
     result = []
     for question in questions:
         responses = models.ResponseOption.objects.filter(
@@ -28,15 +28,15 @@ def QuestionSeializers(questions):
     return result
 
 
-def SurveySeializers(survey):
+def SurveySerializers(survey):
     questions = models.Question.objects.filter(survey__id=survey.id)
     return {
         'name': survey.name,
-        'questions': QuestionSeializers(questions)
+        'questions': QuestionsSerializers(questions)
     }
 
 
-def SurveysSeializers(surveys, uuid):
+def SurveysSerializers(surveys, uuid):
     result = []
     for survey in surveys:
         if check.user_already_answered(uuid, survey.id):
