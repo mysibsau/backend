@@ -1,3 +1,4 @@
+from unittest import result
 from django.test import TestCase
 from django.utils import timezone
 from apps.surveys import models
@@ -154,3 +155,45 @@ class CheckTypeQuestion(TestCase):
         result = check.check_type_question(json)
         self.assertEqual(result, True)
 
+
+class CheckContainAnswers(TestCase):
+    def setUp(self):
+        survey = models.Survey.objects.create(name='1', date_to=timezone.now())
+        question_one_answer = models.Question.objects.create(
+            survey = survey,
+            text = '1',
+            type = 0,
+            necessarily = True
+        )
+        question_answer_is_text = models.Question.objects.create(
+            survey = survey,
+            text = '1',
+            type = 2,
+            necessarily = True
+        )
+        models.ResponseOption.objects.create(
+            question = question_one_answer,
+            text = '1'
+        )
+        models.ResponseOption.objects.create(
+            question = question_answer_is_text,
+            text = '1'
+        )
+
+    def test_question_with_text_answer(self):
+        """Проверка, если вопрос имеет ответ в виде текста"""
+        json = {'id': 2, 'text': '1'}
+        result = check.check_contain_answer_in_question(json)
+        self.assertEqual(result, True)
+
+    def test_if_json_contain_only_right_answers(self):
+        """Проверка, если присланный json не содержит лишних ответов"""
+        json = {'id': 1, 'answers': [1, ]}
+        result = check.check_contain_answer_in_question(json)
+        self.assertEqual(result, True)
+
+    def test_if_json_contain_only_extra_answers(self):
+        """Проверка, если присланный json содержит лишние ответы"""
+        json = {'id': 1, 'answers': [1, 2]}
+        result = check.check_contain_answer_in_question(json)
+        self.assertEqual(result, False)
