@@ -115,3 +115,59 @@ class QuestionModelTest(TestCase):
         question = models.Question.objects.first()
         verbose_name_plural = question._meta.verbose_name_plural
         self.assertEqual(verbose_name_plural, 'Вопросы')
+
+
+class QuestionModelTest(TestCase):
+    def setUp(self):
+        models.Survey.objects.create(
+            name = 'Name',
+            date_to = timezone.now()
+        )
+        
+        models.Question.objects.create(
+            survey = models.Survey.objects.first(),
+            text = 'Text',
+            type = 0,
+            necessarily = False
+        )
+
+        models.ResponseOption.objects.create(
+            question = models.Question.objects.first(),
+            text = 'Text'
+        )
+
+    def test_question_label(self):
+        """Проверка названия поля question"""
+        response = models.ResponseOption.objects.first()
+        field_label = response._meta.get_field('question').verbose_name
+        self.assertEqual(field_label, 'Вопрос')
+
+    def test_text_label(self):
+        """Проверка названия поля text"""
+        response = models.ResponseOption.objects.first()
+        field_label = response._meta.get_field('text').verbose_name
+        self.assertEqual(field_label, 'Ответ')
+
+    def test_name_object_is_text_field(self):
+        """Проверка перевода объекта в str"""
+        response = models.ResponseOption.objects.first()
+        expected_object_name = response.text
+        self.assertEqual(str(response), expected_object_name)
+
+    def test_text_max_length(self):
+        """Проверка максимальной длины текста ответа"""
+        response = models.ResponseOption.objects.first()
+        max_length = response._meta.get_field('text').max_length
+        self.assertEquals(max_length, 128)
+
+    def test_model_verbose_name(self):
+        """Проверка названия модели в единственном числе"""
+        response = models.ResponseOption.objects.first()
+        verbose_name = response._meta.verbose_name
+        self.assertEqual(verbose_name, 'Вариант ответа')
+
+    def test_model_verbose_name_plural(self):    
+        """Проверка названия модели в множественном числе"""
+        response = models.ResponseOption.objects.first()
+        verbose_name_plural = response._meta.verbose_name_plural
+        self.assertEqual(verbose_name_plural, 'Варианты ответов')
