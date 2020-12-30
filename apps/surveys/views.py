@@ -12,6 +12,9 @@ from . import logger
 
 class SurveysView(viewsets.ViewSet):
     def all(self, request):
+        """
+        Возвращает все опросы, на которые пользователь еще не отвечал
+        """
         uuid = request.GET.get('uuid')
         if not uuid:
             logger.info(f"{request.META.get('REMOTE_ADDR')} не указал uuid")
@@ -37,13 +40,12 @@ class SurveysView(viewsets.ViewSet):
         return Response(serializers.SurveySerializers(queryset))
 
     def set_answer(self, request, obj_id):
-        data = dict()
+        if not request.body:
+            logger.info(f'{request.META.get("REMOTE_ADDR")} не передал ответы')
+            return Response('JSON с ответами пуст', 405)
         
-        try:
-            data = json.loads(request.body)
-        except:
-            logger.critical(f'{request.META.get("REMOTE_ADDR")} все сломал {request.body}')
-            return Response('Что-то сломалось', 405)
+        data = json.loads(request.body)
+            
 
         if 'uuid' not in data:
             logger.info(f"{request.META.get('REMOTE_ADDR')} не указал uuid в set_answer")
