@@ -80,6 +80,7 @@ class ResponseOption(admin.ModelAdmin):
 class AnswerOption(admin.ModelAdmin):
     list_display = ('id', 'who', 'survey', 'question', 'get_answers')
     filter_horizontal = ('answers',)
+    list_filter = ('who', 'survey')
 
     def get_answers(self, obj):
         """Форматирует ответы в виде строки"""
