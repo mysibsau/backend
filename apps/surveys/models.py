@@ -39,7 +39,7 @@ class ResponseOption(models.Model):
         verbose_name='Вопрос'
     )
 
-    text = models.CharField('Ответ', max_length=128, blank=True, null=True)
+    text = models.CharField('Ответ', max_length=128)
 
     def __str__(self):
         return self.text
