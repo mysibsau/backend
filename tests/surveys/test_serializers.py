@@ -164,7 +164,7 @@ class QuestionsSerializersTest(TestCase):
         self.assertEqual(data['responses'], list())
 
     def test_contains_expected_response(self):
-        """Проверка содержит ли сериализованный объект вопрос"""
+        """Проверка содержит ли сериализованный объект ответ"""
         response = models.ResponseOption.objects.create(
             question=self.question,
             text='text'
@@ -173,8 +173,8 @@ class QuestionsSerializersTest(TestCase):
         data = serializer[0]
         self.assertEqual(len(data['responses']), 1)
     
-    def test_contains_expected_responses(self):
-        """Проверка содержит ли сериализованный объект все вопросы"""
+    def test_contains_expected_all_responses(self):
+        """Проверка содержит ли сериализованный объект все ответы"""
         response_one = models.ResponseOption.objects.create(
             question=self.question,
             text='text'
@@ -188,7 +188,7 @@ class QuestionsSerializersTest(TestCase):
         self.assertEqual(len(data['responses']), 2)
 
     def test_not_contains_expected_responses(self):
-        """Проверка не содержит ли сериализованный объект лишних вопросв"""
+        """Проверка не содержит ли сериализованный объект лишних ответов"""
         response_one = models.ResponseOption.objects.create(
             question=self.question,
             text='text'
@@ -207,3 +207,76 @@ class QuestionsSerializersTest(TestCase):
         serializer = serializers.QuestionsSerializers([self.question])
         data = serializer[0]
         self.assertEqual(len(data['responses']), 1)
+
+
+class SurveySerializersTest(TestCase):
+    def setUp(self):
+        self.survey_attributes = {
+            'id': randint(0, 100),
+            'name': 'test',
+            'date_to': timezone.now()
+        }
+
+        self.survey = models.Survey.objects.create(**self.survey_attributes)
+        self.serializer = serializers.SurveySerializers(self.survey)
+
+    def test_contains_expected_fields(self):
+        """Проверяет, содержит ли сериализованный объект все нужные поля"""
+        self.assertEqual(
+            set(self.serializer.keys()), 
+            set(['name', 'questions'])
+        )
+
+    def test_name_field_content(self):
+        """Проверка значения поля name"""
+        self.assertEqual(self.serializer['name'], self.survey_attributes['name'])
+
+    def test_questions_field_content(self):
+        """Проверка значения поля questions"""
+        self.assertEqual(self.serializer['questions'], list())
+
+    def test_contains_expected_question(self):
+        """Проверка содержит ли сериализованный объект вопрос"""
+        question = models.Question.objects.create(
+            survey=self.survey,
+            text='text',
+            type=0,
+            necessarily=False
+        )
+        serializer = serializers.SurveySerializers(self.survey)
+        self.assertEqual(len(serializer['questions']), 1)
+
+    def test_contains_expected_all_questions(self):
+        """Проверка содержит ли сериализованный объект все вопросы"""
+        models.Question.objects.create(
+            survey=self.survey,
+            text='text',
+            type=0,
+            necessarily=False
+        )
+        models.Question.objects.create(
+            survey=self.survey,
+            text='text',
+            type=0,
+            necessarily=True
+        )
+        serializer = serializers.SurveySerializers(self.survey)
+        self.assertEqual(len(serializer['questions']), 2)
+
+    def test_not_contains_expected_all_questions(self):
+        """Проверка не содержит ли сериализованный объект все вопросы"""
+        models.Question.objects.create(
+            survey=self.survey,
+            text='text',
+            type=0,
+            necessarily=False
+        )
+        survey = models.Survey.objects.create(name='text', date_to=timezone.now())
+        models.Question.objects.create(
+            survey=survey,
+            text='text',
+            type=0,
+            necessarily=True
+        )
+        serializer = serializers.SurveySerializers(self.survey)
+        self.assertEqual(len(serializer['questions']), 1)
