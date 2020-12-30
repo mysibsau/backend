@@ -4,7 +4,7 @@ from django.views.decorators.cache import cache_page
 from rest_framework.response import Response
 
 from apps.surveys import models, serializers
-from apps.surveys.services import setters, check
+from apps.surveys.services import setters, check, getters
 import json
 from django.utils import timezone
 from . import logger
@@ -17,8 +17,8 @@ class SurveysView(viewsets.ViewSet):
             logger.info(f"{request.META.get('REMOTE_ADDR')} не указал uuid")
             return Response('not uuid', 405)
         logger.info(f'{uuid} запросил список всех тестов')
-        queryset = models.Survey.objects.filter(date_to__gt=timezone.localtime())
-        return Response(serializers.SurveysSerializers(queryset, uuid))
+        queryset = getters.get_all_surveys_for_uuid(uuid)
+        return Response(serializers.SurveysSerializers(queryset))
 
     @method_decorator(cache_page(60*60*2))
     def one(self, request, obj_id):

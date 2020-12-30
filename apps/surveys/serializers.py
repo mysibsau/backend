@@ -36,11 +36,9 @@ def SurveySerializers(survey):
     }
 
 
-def SurveysSerializers(surveys, uuid):
+def SurveysSerializers(surveys):
     result = []
     for survey in surveys:
-        if check.user_already_answered(uuid, survey.id):
-            continue
         result.append({
             'id': survey.id,
             'name': survey.name,
