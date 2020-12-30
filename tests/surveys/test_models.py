@@ -1,7 +1,6 @@
 from django.test import TestCase
 from apps.surveys import models
 from django.utils import timezone
-from pprint import pprint
 
 
 class SurveyModelTest(TestCase):
