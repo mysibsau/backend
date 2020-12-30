@@ -91,7 +91,7 @@ class ResponseOption(admin.ModelAdmin):
 
 
 @admin.register(models.Answer)
-class AnswerOption(admin.ModelAdmin):
+class Answer(admin.ModelAdmin):
     list_display = ('id', 'who', 'survey', 'question', 'get_answers')
     filter_horizontal = ('answers',)
     list_filter = ('who', 'survey')
