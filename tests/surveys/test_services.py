@@ -6,6 +6,7 @@ from random import randint, choice
 from string import ascii_letters
 from apps.surveys.services import getters, check
 from datetime import timedelta
+from pprint import pprint
 
 
 class GettersGetAllTest(TestCase):
@@ -226,3 +227,86 @@ class CheckNecessarilyQuestion(TestCase):
         json = [{'id': 2, 'text': 2}, ]
         result = check.check_contain_answer_necessarily_question(1, json)
         self.assertEqual(result, False)
+
+
+class CheckAll(TestCase):
+    def setUp(self):
+        survey = models.Survey.objects.create(name='1', date_to=timezone.now())
+        question_one = models.Question.objects.create(
+            survey = survey,
+            text = '1',
+            type = 1,
+            necessarily = True
+        )
+        question_two = models.Question.objects.create(
+            survey = survey,
+            text = '1',
+            type = 2,
+            necessarily = False
+        )
+        models.ResponseOption.objects.create(
+            question = question_one,
+            text = '1'
+        )
+
+    def test_data_response_if_not_all_required_answers_filled(self):
+        """
+        Проверка текста ошибки, если
+        Не все обязательные ответы заполнены
+        """
+        json = [{'id': 2, 'text': 2}, ]
+        result = check.check_all(1, json)
+        self.assertEqual(result.data, 'Не все обязательные ответы заполнены')
+
+    def test_status_code_response_if_not_all_required_answers_filled(self):
+        """
+        Проверка кода ошибки, если
+        Не все обязательные ответы заполнены
+        """
+        json = [{'id': 2, 'text': 2}, ]
+        result = check.check_all(1, json)
+        self.assertEqual(result.status_code, 405)
+
+    def test_data_response_if_incorrect_form_responses(self):
+        """
+        Проверка текста ошибки, если
+        Неправильная форма ответов
+        """
+        json = [{'id': 1, 'text': [1, ]}, ]
+        result = check.check_all(1, json)
+        self.assertEqual(result.data, 'Неправильная форма ответов')
+
+    def test_status_code_response_if_incorrect_form_responses(self):
+        """
+        Проверка кода ошибки, если
+        Неправильная форма ответов
+        """
+        json = [{'id': 1, 'text': [1, ]}, ]
+        result = check.check_all(1, json)
+        self.assertEqual(result.status_code, 405)
+
+    def test_data_response_if_question_not_contain_this_answer(self):
+        """
+        Проверка текста ошибки, если
+        Вопрос не содержит такого ответа
+        """
+        json = [{'id': 1, 'answers': [2, ]}, ]
+        result = check.check_all(1, json)
+        self.assertEqual(result.data, 'Вопрос не содержит такого ответа')
+
+    def test_status_code_response_if_incorrect_form_responses(self):
+        """
+        Проверка кода ошибки, если
+        Вопрос не содержит такого ответа
+        """
+        json = [{'id': 1, 'answers': [2, ]}, ]
+        result = check.check_all(1, json)
+        self.assertEqual(result.status_code, 405)
+
+    def test_if_json_right(self):
+        """
+        Проверка результата работы, если все хорошо
+        """
+        json = [{'id': 1, 'answers': [1, ]}, {'id': 2, 'text': '123'}]
+        result = check.check_all(1, json)
+        self.assertEqual(result, None)

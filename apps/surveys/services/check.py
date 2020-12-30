@@ -36,6 +36,8 @@ def check_contain_answer_in_question(question_json: dict) -> bool:
     answers = models.ResponseOption.objects.filter(
         id__in=question_json.get('answers')
     )
+    if not answers.count():
+        return False
     for answer in answers:
         if answer.question != question:
             return False
