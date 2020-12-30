@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'nested_inline',
     'apps.api.v1',
     'apps.api.v2',
     'apps.timetable',

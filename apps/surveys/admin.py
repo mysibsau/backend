@@ -5,11 +5,27 @@ from django.utils import timezone
 import csv
 from django.http import HttpResponse
 from . import logger
+from nested_inline.admin import NestedStackedInline, NestedModelAdmin
+
+
+class ResponseOptionInline(NestedStackedInline):
+    model = models.ResponseOption
+    extra = 0
+    fk_name = 'question'
+
+
+class QuestionInline(NestedStackedInline):
+    model = models.Question
+    inlines = [ResponseOptionInline]
+    extra = 1
+    fk_name = 'survey'
 
 
 @admin.register(models.Survey)
-class Survey(admin.ModelAdmin):
+class Survey(NestedModelAdmin):
     list_display = ('id', 'name', 'date_to')
+    inlines = [QuestionInline,]
+    actions = ['export_as_csv']
 
     def get_queryset(self, request):
         """Скрывает истекшие опросы для всех, кроме суперпользователя"""
@@ -17,8 +33,6 @@ class Survey(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs
         return qs.filter(date_to__gt=timezone.localtime())
-
-    actions = ['export_as_csv']
 
     def export_as_csv(self, request, queryset):
         """Выгружает все ответы, связанные с выбранным опросом"""
@@ -55,7 +69,7 @@ class Survey(admin.ModelAdmin):
 @admin.register(models.Question)
 class Question(admin.ModelAdmin):
     list_display = ('id', 'survey', 'text', 'type', 'necessarily')
-
+    inlines = [ResponseOptionInline]
     def get_queryset(self, request):
         """Скрывает истекшие опросы для всех, кроме суперпользователя"""
         qs = super().get_queryset(request)
