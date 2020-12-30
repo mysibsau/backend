@@ -10,7 +10,7 @@ class Survey(models.Model):
 
     class Meta:
         verbose_name = u'Опрос'
-        verbose_name_plural = u'опросы'
+        verbose_name_plural = u'Опросы'
 
 
 class Question(models.Model):
