@@ -13,7 +13,7 @@ class SurveysSerializersTest(TestCase):
         }
 
         self.survey = models.Survey.objects.create(**self.survey_attributes)
-        self.serializer = serializers.SurveysSerializers([self.survey], '1')
+        self.serializer = serializers.SurveysSerializers([self.survey])
 
     def test_len_one_serializer(self):
         """Проверка, содержит ли массив сериализованных объектов
@@ -26,7 +26,7 @@ class SurveysSerializersTest(TestCase):
         many = randint(2, 100)
         surveys = [self.survey] * many
 
-        self.serializer = serializers.SurveysSerializers(surveys, '1')
+        self.serializer = serializers.SurveysSerializers(surveys)
 
         self.assertEqual(len(self.serializer), many)
 
