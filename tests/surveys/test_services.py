@@ -197,3 +197,32 @@ class CheckContainAnswers(TestCase):
         json = {'id': 1, 'answers': [1, 2]}
         result = check.check_contain_answer_in_question(json)
         self.assertEqual(result, False)
+
+
+class CheckNecessarilyQuestion(TestCase):
+    def setUp(self):
+        survey = models.Survey.objects.create(name='1', date_to=timezone.now())
+        question_one = models.Question.objects.create(
+            survey = survey,
+            text = '1',
+            type = 2,
+            necessarily = True
+        )
+        question_two = models.Question.objects.create(
+            survey = survey,
+            text = '1',
+            type = 2,
+            necessarily = False
+        )
+
+    def test_if_json_contain_necessarily_question(self):
+        """Проверка, если json содержит все обязательные ответы"""
+        json = [{'id': 1, 'text': '1'}, {'id': 2, 'text': 2}]
+        result = check.check_contain_answer_necessarily_question(1, json)
+        self.assertEqual(result, True)
+
+    def test_if_json_not_contain_necessarily_question(self):
+        """Проверка, если json не содержит все обязательные ответы"""
+        json = [{'id': 2, 'text': 2}, ]
+        result = check.check_contain_answer_necessarily_question(1, json)
+        self.assertEqual(result, False)

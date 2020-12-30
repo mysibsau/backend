@@ -46,7 +46,8 @@ def check_contain_answer_necessarily_question(survey_id: int, questions: list) -
     """Проверяет, заполнены ли все обязательные вопросы"""
     questions_all = models.Question.objects.filter(survey__id=survey_id)
     necessarily_question = set(
-        [question.id for question in questions_all if question.necessarily])
+        [question.id for question in questions_all if question.necessarily]
+    )
     questions_ids = set(question['id'] for question in questions)
     # Является ли множество обязательных ответов подмножеством данных ответов
     return necessarily_question <= questions_ids
