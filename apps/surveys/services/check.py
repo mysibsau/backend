@@ -31,10 +31,11 @@ def check_type_question(question_json: dict) -> bool:
 def check_contain_answer_in_question(question_json: dict) -> bool:
     """Проверяет, содержит ли вопрос данный вариант ответа"""
     question = models.Question.objects.filter(id=question_json['id']).first()
-    if question_json.get('text') or question.type == 2:
+    if question.type == 2:
         return True
     answers = models.ResponseOption.objects.filter(
-        id__in=question_json.get('answers'))
+        id__in=question_json.get('answers')
+    )
     for answer in answers:
         if answer.question != question:
             return False
