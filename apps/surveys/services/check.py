@@ -12,14 +12,14 @@ def user_already_answered(uuid: str, survey_id: int) -> bool:
 def check_type_question(question_json: dict) -> bool:
     """Проверяет, совпадает ли формат ответа с типом вопроса"""
     question = models.Question.objects.filter(id=question_json['id']).first()
-    # Если вопрос имеет 1 вариант ответа
-    # И он не содержит поля answers
-    # Или длина поля != 1
-    if question.type == 0 and ('answers' not in question_json or len(question_json['answers']) > 1):
+    
+    # Если вопрос имеет варианты ответа
+    # Но присланный json не содержит нужного поля
+    if question.type in [0, 1] and 'answers' not in question_json:
         return False
-    # Если вопрос имеет несколько вариантов ответа
-    # И вопрос не имеет поля answers
-    elif question.type == 1 and 'answers' not in question_json:
+    # Если вопрос имеет 1 вариант ответа
+    # И длина поля != 1
+    elif question.type == 0 and len(question_json['answers']) != 1:
         return False
     # Если вопрос имеет текстовый ответ
     # И не содержит текста
