@@ -17,7 +17,7 @@ class SurveysView(viewsets.ViewSet):
         """
         uuid = request.GET.get('uuid')
         if not uuid:
-            logger.info(f"{request.META.get('REMOTE_ADDR')} не указал uuid")
+            logger.info(f"{request.META.get('REMOTE_ADDR')} не указал uuid в all")
             return Response('not uuid', 405)
         logger.info(f'{uuid} запросил список всех тестов')
         queryset = getters.get_all_surveys_for_uuid(uuid)
@@ -45,8 +45,7 @@ class SurveysView(viewsets.ViewSet):
             return Response('JSON с ответами пуст', 405)
         
         data = json.loads(request.body)
-            
-
+        
         if 'uuid' not in data:
             logger.info(f"{request.META.get('REMOTE_ADDR')} не указал uuid в set_answer")
             return Response('not uuid', 405)
