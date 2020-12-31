@@ -4,7 +4,6 @@ from sentry_sdk.integrations.django import DjangoIntegration
 import sys
 import logging
 
-
 BASE_DIR = path.dirname(path.dirname(path.abspath(__file__)))
 CONN_MAX_AGE = 60
 
@@ -101,6 +100,9 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+
+TG_TOKEN = env.str('TG_TOKEN')
+NICK_AND_ID = zip(env.list('TG_CHAT_NAMES'), env.list('TG_CHAT_IDS'))
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -117,24 +119,20 @@ LOGGING = {
             'filename': 'logs/surveys.log',
             'formatter': 'simple'
         },
-        'telegram_w0rng': {
-            'level': 'WARNING',
-            'class': 'telegram_handler.TelegramHandler',
-            'token': '1448925899:AAF617NDsT6LJklEUqemmBAY79gzoGsjODw',
-            'chat_id': '593127562',
-            'formatter': 'simple'
-        },
-        'telegram_artoff': {
-            'level': 'WARNING',
-            'class': 'telegram_handler.TelegramHandler',
-            'token': '1448925899:AAF617NDsT6LJklEUqemmBAY79gzoGsjODw',
-            'chat_id': '290687700',
-            'formatter': 'simple'
+        **{
+            f'telegram_{nick}': {
+                'level': 'WARNING',
+                'class': 'telegram_handler.TelegramHandler',
+                'token': TG_TOKEN,
+                'chat_id': chat_id,
+                'formatter': 'simple' 
+            }
+            for nick, chat_id in NICK_AND_ID
         }
     },
     'loggers': {
         'apps.surveys': {
-            'handlers': ['file_surveys', 'telegram_w0rng', 'telegram_artoff'],
+            'handlers': ['file_surveys', 'telegram_w0rng', 'telegram_artoff', 'telegram_kiri11_mi1'],
             'level': 'INFO',
             'propagate': True,
         },
