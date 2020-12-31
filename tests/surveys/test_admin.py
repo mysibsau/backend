@@ -1,5 +1,6 @@
 from django.contrib.admin.sites import AdminSite
 from django.test import TestCase
+from rest_framework import response
 from apps.surveys import models
 from apps.surveys import admin
 from django.test import RequestFactory
@@ -149,3 +150,29 @@ class AnswerTest(TestCase):
         queryset = self.admin.get_queryset(self.request)
         count = queryset.count()
         self.assertEqual(count, 0)
+
+    def test_convert_answert_to_str(self):
+        """
+        Проверка перевода ответа в строку
+        """
+        self.request.user = MockSuperUser()
+        obj = models.Answer.objects.first()
+        string = self.admin.get_answers(obj)
+        self.assertEqual(string, '')
+
+        ro1 = models.ResponseOption.objects.create(
+            question = models.Question.objects.first(),
+            text = 'Да',
+        )
+        ro2 = models.ResponseOption.objects.create(
+            question = models.Question.objects.first(),
+            text = 'Нет',
+        )
+        obj.answers.add(ro1, ro2)
+        string = self.admin.get_answers(obj)
+        self.assertEqual(string, 'Да, Нет')
+
+        obj.text = 'test'
+        obj.save()
+        string = self.admin.get_answers(obj)
+        self.assertEqual(string, 'test')
