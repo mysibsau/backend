@@ -132,7 +132,7 @@ LOGGING = {
     },
     'loggers': {
         'apps.surveys': {
-            'handlers': ['file_surveys', 'telegram_w0rng', 'telegram_artoff', 'telegram_kiri11_mi1'],
+            'handlers': ['file_surveys', *[f'telegram_{nick}' for nick in env.list('TG_CHAT_NAMES')]],
             'level': 'INFO',
             'propagate': True,
         },
