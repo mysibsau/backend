@@ -1,6 +1,8 @@
 import environ
 from os import path
 from sentry_sdk.integrations.django import DjangoIntegration
+import sys
+import logging
 
 
 BASE_DIR = path.dirname(path.dirname(path.abspath(__file__)))
@@ -138,3 +140,6 @@ LOGGING = {
         },
     },
 }
+
+if len(sys.argv) > 1 and sys.argv[1] == 'test':
+    logging.disable(logging.CRITICAL)

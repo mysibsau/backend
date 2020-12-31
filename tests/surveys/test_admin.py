@@ -14,7 +14,6 @@ class MockSuperUser:
     def __str__(self):
         return 'TestCase'
 
-    
 
 class MockUsualUser:
     is_superuser = False
@@ -84,7 +83,6 @@ class SurveyAdminTest(TestCase):
         row = b'1,123,Test,text,"Yes, No"\r\n'
         self.assertEqual(result[1], head)
         self.assertEqual(result[2], row)
-
 
 
 class QuestionAdminTest(TestCase):
