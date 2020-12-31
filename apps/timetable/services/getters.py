@@ -1,5 +1,5 @@
 from apps.timetable import models
-from apps.timetable import serializers
+from apps.timetable.v2 import serializers
 from apps.timetable.services import utils
 
 from functools import lru_cache
@@ -10,7 +10,7 @@ def get_all_groups_as_json() -> dict:
         Возвращает все группы, отфармотированные в слоарье
     '''
     queryset = models.Group.objects.all()
-    return serializers.GroupSerializers(queryset)
+    return 
 
 
 def get_all_teachers_as_json() -> dict:
