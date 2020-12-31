@@ -11,10 +11,15 @@ from pprint import pprint
 
 class MockSuperUser:
     is_superuser = True
+    def __str__(self):
+        return 'TestCase'
 
+    
 
 class MockUsualUser:
     is_superuser = False
+    def __str__(self):
+        return 'TestCase'
 
 
 class SurveyAdminTest(TestCase):
@@ -42,6 +47,44 @@ class SurveyAdminTest(TestCase):
         queryset = self.admin.get_queryset(self.request)
         count = queryset.count()
         self.assertEqual(count, 1)
+
+    def test_export_to_csv(self):
+        """
+        Проверка экспорта ответов в CSV
+        """
+        question = models.Question.objects.create(
+            survey = models.Survey.objects.first(),
+            text = 'text',
+            type = 0,
+            necessarily = True
+        )
+        obj = models.Answer.objects.create(
+            who = '123',
+            survey = models.Survey.objects.first(),
+            question = question,
+        )
+
+        ro1 = models.ResponseOption.objects.create(
+            question = question,
+            text = 'Yes',
+        )
+        ro2 = models.ResponseOption.objects.create(
+            question = question,
+            text = 'No',
+        )
+        obj.answers.add(ro1, ro2)
+
+        self.request.user = MockSuperUser()
+        response = self.admin.export_as_csv(
+            self.request, 
+            models.Survey.objects.all()
+        )
+        result = response._container
+        head = b'id,who,survey,question,answers\r\n'
+        row = b'1,123,Test,text,"Yes, No"\r\n'
+        self.assertEqual(result[1], head)
+        self.assertEqual(result[2], row)
+
 
 
 class QuestionAdminTest(TestCase):
