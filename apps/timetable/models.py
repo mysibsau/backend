@@ -28,7 +28,7 @@ class Teacher(models.Model):
 
 class Place(models.Model):
     name = models.TextField(verbose_name='Название')
-    address = models.TextField(blank=True, verbose_name='Адресс')
+    address = models.TextField(blank=True, verbose_name='Адрес')
 
     def __str__(self):
         return self.name
