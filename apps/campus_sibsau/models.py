@@ -15,9 +15,12 @@ class Building(models.Model):
 
 
 class Director(models.Model):
-    image = models.ImageField(verbose_name='Фотография', upload_to='static/campus_sibsau_photos/')
+    image = models.ImageField(
+        verbose_name = 'Фотография', 
+        upload_to = 'campus/directors/photos/'
+    )
     name = models.CharField(verbose_name='ФИО', max_length=200)
-    address = models.TextField(verbose_name='Адресс')
+    address = models.TextField(verbose_name='Адрес')
     phone = models.CharField(verbose_name='Телефон', max_length=19)
     mail = models.EmailField(verbose_name='Почта')
 
@@ -32,7 +35,7 @@ class Director(models.Model):
 class Department(models.Model):
     name = models.CharField(verbose_name='Название', max_length=200)
     fio = models.CharField(verbose_name='ФИО', max_length=200)
-    address = models.TextField(verbose_name='Адресс')
+    address = models.TextField(verbose_name='Адрес')
     phone = models.CharField(verbose_name='Телефон', max_length=19)
     mail = models.EmailField(verbose_name='Почта')
 
@@ -45,9 +48,12 @@ class Department(models.Model):
 
 
 class Soviet(models.Model):
-    image = models.ImageField(verbose_name='Фотография', upload_to='static/campus_sibsau_photos/')
+    image = models.ImageField(
+        verbose_name = 'Фотография', 
+        upload_to = 'campus/soviets/photos/'
+    )
     fio = models.CharField(verbose_name='ФИО', max_length=200)
-    address = models.TextField(verbose_name='Адресс')
+    address = models.TextField(verbose_name='Адрес')
     phone = models.CharField(verbose_name='Телефон', max_length=19)
     mail = models.EmailField(verbose_name='Почта')
 
@@ -61,9 +67,17 @@ class Soviet(models.Model):
 
 class Institute(models.Model):
     name = models.TextField(verbose_name='Название')
-    director = models.ForeignKey(Director, on_delete=models.CASCADE, verbose_name='Директор института')
+    director = models.ForeignKey(
+        Director, 
+        on_delete = models.CASCADE, 
+        verbose_name = 'Директор института'
+    )
     departments = models.ManyToManyField(Department, verbose_name='Кафедры')
-    soviet = models.ForeignKey(Soviet, on_delete=models.CASCADE, verbose_name='Студенческий совет')
+    soviet = models.ForeignKey(
+        Soviet, 
+        on_delete = models.CASCADE, 
+        verbose_name = 'Студенческий совет'
+    )
 
     def __str__(self):
         return self.director.name
@@ -75,10 +89,16 @@ class Institute(models.Model):
 
 class Union(models.Model):
     name = models.CharField(verbose_name='Название', max_length=200)
-    logo = models.ImageField(verbose_name='Логотип', upload_to='static/campus_sibsau_photos/')
-    photo = models.ImageField(verbose_name='Фотография', upload_to='static/campus_sibsau_photos/')
+    logo = models.ImageField(
+        verbose_name = 'Логотип', 
+        upload_to = 'campus/unions/logo/'
+    )
+    photo = models.ImageField(
+        verbose_name = 'Фотография', 
+        upload_to = 'campus/unions/photos'
+    )
     fio = models.CharField(verbose_name='ФИО', max_length=200)
-    address = models.TextField(verbose_name='Адресс')
+    address = models.TextField(verbose_name='Адрес')
     phone = models.CharField(verbose_name='Телефон', max_length=19)
     group_vk = models.URLField(verbose_name='Группа во вконтакте')
     page_vk = models.URLField(verbose_name='Председатель во вконтакте')
