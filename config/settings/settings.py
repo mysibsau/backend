@@ -1,6 +1,7 @@
 from os import path
 from sentry_sdk.integrations.django import DjangoIntegration
 from .env import env
+from sys import argv
 
 
 ##################################################################
@@ -11,7 +12,7 @@ BASE_DIR = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
 SECRET_KEY = env.str('SECRET_KEY')
 ROOT_URLCONF = 'config.urls'
 WSGI_APPLICATION = 'config.wsgi.application'
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+ALLOWED_HOSTS = ['*']
 ADMIN_URL = env.str('ADMIN_URL', default='admin/')
 
 ##################################################################
@@ -25,10 +26,22 @@ TEMPLATE_DEBUG = DEBUG
 # Настройки Бд
 ##################################################################
 
-DATABASES = {'default': env.db('DATABASE_URL')}
-DATABASES['default']['CONN_MAX_AGE'] = 60 * 10
-CONN_MAX_AGE = 60
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env.str('DATABASE_NAME'),
+        'USER' : env.str('DATABASE_USER'),
+        'PASSWORD' : env.str('DATABASE_PASSWORD'),
+        'HOST' : env.str('DATABASE_HOST'),
+        'PORT' : env.str('DATABASE_PORT'),
+    }
+}
 
+if len(argv) > 1 and argv[1] == 'test':
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:'
+    }
 
 ##################################################################
 # Настройки шаблонов, мидлвейров
