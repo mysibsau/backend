@@ -7,7 +7,7 @@ from .env import env
 # Базовые настройки
 ##################################################################
 
-BASE_DIR = path.dirname(path.dirname(path.abspath(__file__)))
+BASE_DIR = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
 SECRET_KEY = env.str('SECRET_KEY')
 ROOT_URLCONF = 'config.urls'
 WSGI_APPLICATION = 'config.wsgi.application'
@@ -87,7 +87,7 @@ if not DEBUG:
 
 STATIC_URL = '/static/'
 STATIC_ROOT = path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = ('static',)
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = path.join(BASE_DIR, 'media')
