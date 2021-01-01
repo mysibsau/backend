@@ -8,7 +8,8 @@ def GroupSerializers(groups) -> list:
     for group in groups:
         result.append({
             'id': group.id,
-            'name': group.name
+            'name': group.name,
+            'mail': ''
         })
     return result
 
