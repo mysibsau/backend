@@ -106,5 +106,5 @@ class Timetable(models.Model):
         return str(self.group)
 
     class Meta:
-        verbose_name = u'Рассписание'
-        verbose_name_plural = u'Рассписание'
+        verbose_name = u'Расписание'
+        verbose_name_plural = u'Расписание'
