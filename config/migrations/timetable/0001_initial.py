@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.TextField(verbose_name='Название')),
-                ('address', models.TextField(blank=True, verbose_name='Адресс')),
+                ('address', models.TextField(blank=True, verbose_name='Адрес')),
             ],
             options={
                 'verbose_name': 'Аудитория',
