@@ -13,8 +13,6 @@ INSTALLED_APPS = [
 ]
 
 LOCAL_APPS = [
-    'apps.api.v1',
-    'apps.api.v2',
     'apps.timetable',
     'apps.campus_sibsau',
     'apps.events',
