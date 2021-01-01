@@ -88,8 +88,8 @@ class Migration(migrations.Migration):
                 ('teacher', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='timetable.teacher', verbose_name='Преподаватель')),
             ],
             options={
-                'verbose_name': 'Рассписание',
-                'verbose_name_plural': 'Рассписание',
+                'verbose_name': 'Расписание',
+                'verbose_name_plural': 'Расписание',
             },
         ),
         migrations.AddField(
