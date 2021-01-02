@@ -2,7 +2,11 @@ from django.db import models
 
 
 class Building(models.Model):
-    coast = models.PositiveSmallIntegerField(verbose_name='Берег')
+    COASTS = (
+        (0, 'Левый'),
+        (1, 'Правый')
+    )
+    coast = models.PositiveSmallIntegerField(verbose_name='Берег', choices=COASTS)
     name = models.CharField(verbose_name='Название', max_length=20)
     link = models.URLField(verbose_name='Ссылка на 2gis')
 
