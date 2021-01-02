@@ -24,7 +24,7 @@ class Soviet(admin.ModelAdmin):
 
 @admin.register(models.Institute)
 class Institute(admin.ModelAdmin):
-    list_display = ('id', 'director', 'get_departments', 'soviet')
+    list_display = ('id', 'short_name', 'director', 'get_departments', 'soviet')
 
     def get_departments(self, obj):
         return ', '.join([i.name for i in obj.departments.all()])

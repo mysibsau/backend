@@ -71,6 +71,7 @@ class Soviet(models.Model):
 
 class Institute(models.Model):
     name = models.TextField(verbose_name='Название')
+    short_name = models.CharField('Сокращенное название', max_length=16, blank=True)
     director = models.ForeignKey(
         Director, 
         on_delete = models.CASCADE, 

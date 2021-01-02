@@ -71,6 +71,8 @@ def InstituteSerializers(institutes):
     result = []
     for institute in institutes:
         result.append({
+            'name': institute.name,
+            'short_name': institute.short_name,
             'director': DirectorSerializers([institute.director])[0],
             'departments': DepartmentSerializers(institute.departments.all()),
             'soviet': SovietSerializers([institute.soviet])[0]
