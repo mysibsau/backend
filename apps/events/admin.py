@@ -1,5 +1,6 @@
 from django.contrib import admin
 from apps.events import models
+from django.utils import timezone
 
 
 class LinkInline(admin.TabularInline):
@@ -14,6 +15,13 @@ class Event(admin.ModelAdmin):
     inlines = [
         LinkInline,
     ]
+
+    def get_queryset(self, request):
+        """Скрывает истекшие мероприятия для всех, кроме суперпользователя"""
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(date_to__gt=timezone.localtime())
 
 
 @admin.register(models.Link)
