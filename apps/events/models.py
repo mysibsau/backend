@@ -6,6 +6,7 @@ class Event(models.Model):
     logo = models.ImageField(verbose_name='Афиша', upload_to='events_logo/')
     text = models.TextField('Текст поста')
     author = models.CharField(verbose_name='Заказчик', max_length=200)
+    date_to = models.DateTimeField('Действует до')
 
     def __str__(self):
         return self.name
