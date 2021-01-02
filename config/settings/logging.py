@@ -20,6 +20,12 @@ LOGGING = {
             'filename': 'logs/surveys.log',
             'formatter': 'simple'
         },
+        'file_events': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/events.log',
+            'formatter': 'simple'
+        },
         'telegram_w0rng': {
             'level': 'WARNING',
             'class': 'telegram_handler.TelegramHandler',
@@ -45,6 +51,11 @@ LOGGING = {
     'loggers': {
         'apps.surveys': {
             'handlers': ['file_surveys', 'telegram_w0rng'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'apps.events': {
+            'handlers': ['file_events', 'telegram_w0rng'],
             'level': 'INFO',
             'propagate': True,
         },
