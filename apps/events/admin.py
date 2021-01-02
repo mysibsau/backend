@@ -28,3 +28,10 @@ class Event(admin.ModelAdmin):
 class Link(admin.ModelAdmin):
     list_display = ('id', 'name', 'link', 'event')
     list_filter = ('event', )
+
+    def get_queryset(self, request):
+        """Скрывает ссылки истекших мероприятий для всех, кроме суперпользователя"""
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(event__date_to__gt=timezone.localtime())
