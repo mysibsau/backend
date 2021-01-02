@@ -3,5 +3,5 @@ from apps.events import views
 
 
 urlpatterns = [
-    path('events/', views.EventView.as_view({'get': 'all'})),
+    path('all/', views.EventView.as_view({'get': 'all'})),
 ]
