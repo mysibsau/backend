@@ -58,8 +58,8 @@ class Soviet(models.Model):
     )
     fio = models.CharField(verbose_name='ФИО', max_length=200)
     address = models.TextField(verbose_name='Адрес')
-    phone = models.CharField(verbose_name='Телефон', max_length=19)
-    mail = models.EmailField(verbose_name='Почта')
+    phone = models.CharField(verbose_name='Телефон', max_length=19, blank=True, null=True)
+    mail = models.EmailField(verbose_name='Почта', blank=True, null=True)
 
     def __str__(self):
         return self.fio
