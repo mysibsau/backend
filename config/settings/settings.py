@@ -99,7 +99,7 @@ if not DEBUG:
 ##################################################################
 
 STATIC_URL = '/static/'
-STATIC_ROOT = path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = path.join(BASE_DIR, 'static')
 
 
 MEDIA_URL = '/media/'
