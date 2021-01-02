@@ -23,7 +23,6 @@ class SurveysView(viewsets.ViewSet):
         queryset = getters.get_all_surveys_for_uuid(uuid)
         return Response(serializers.SurveysSerializers(queryset))
 
-    @method_decorator(cache_page(60*60*2))
     def one(self, request, obj_id):
         uuid = request.GET.get('uuid')
         if not uuid:

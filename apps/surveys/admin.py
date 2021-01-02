@@ -23,7 +23,7 @@ class QuestionInline(NestedStackedInline):
 
 @admin.register(models.Survey)
 class Survey(NestedModelAdmin):
-    list_display = ('id', 'name', 'date_to')
+    list_display = ('id', 'name', 'date_to', 'reanswer')
     inlines = [QuestionInline,]
     actions = ['export_as_csv']
 
