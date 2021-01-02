@@ -1,4 +1,4 @@
-from apps.events.models import models
+from apps.events import models
 
 
 def LinkSerializers(links):
