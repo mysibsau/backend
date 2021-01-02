@@ -18,3 +18,11 @@ class InstituteView(viewsets.ViewSet):
     def all(self, request):
         queryset = models.Institute.objects.all().select_related()
         return Response(serializers.InstituteSerializers(queryset))
+
+
+class BuildingView(viewsets.ViewSet):
+    @method_decorator(cache_page(60*60*2))
+    def all(self, request):
+        queryset = models.Building.objects.all()
+        return Response(serializers.BuildingSerializers(queryset))
+
