@@ -29,6 +29,8 @@ class Institute(admin.ModelAdmin):
     def get_departments(self, obj):
         return ', '.join([i.name for i in obj.departments.all()])
 
+    get_departments.short_description = "Кафедры"
+
 
 @admin.register(models.Union)
 class Union(admin.ModelAdmin):
