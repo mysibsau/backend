@@ -40,8 +40,8 @@ class Department(models.Model):
     name = models.CharField(verbose_name='Название', max_length=200)
     fio = models.CharField(verbose_name='ФИО', max_length=200)
     address = models.TextField(verbose_name='Адрес')
-    phone = models.CharField(verbose_name='Телефон', max_length=19)
-    mail = models.EmailField(verbose_name='Почта')
+    phone = models.CharField(verbose_name='Телефон', max_length=19, blank=True, null=True)
+    mail = models.EmailField(verbose_name='Почта', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -105,7 +105,7 @@ class Union(models.Model):
     address = models.TextField(verbose_name='Адрес')
     phone = models.CharField(verbose_name='Телефон', max_length=19)
     group_vk = models.URLField(verbose_name='Группа во вконтакте')
-    page_vk = models.URLField(verbose_name='Председатель во вконтакте')
+    page_vk = models.URLField(verbose_name='Председатель во вконтакте', blank=True, null=True)
 
     def __str__(self):
         return self.fio
