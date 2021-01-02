@@ -9,6 +9,7 @@ class Building(models.Model):
     coast = models.PositiveSmallIntegerField(verbose_name='Берег', choices=COASTS)
     name = models.CharField(verbose_name='Название', max_length=20)
     link = models.URLField(verbose_name='Ссылка на 2gis')
+    type = models.CharField('Тип', max_length=128, blank=True)
 
     def __str__(self):
         return self.name
@@ -77,11 +78,12 @@ class Institute(models.Model):
         on_delete = models.CASCADE, 
         verbose_name = 'Директор института'
     )
-    departments = models.ManyToManyField(Department, verbose_name='Кафедры')
+    departments = models.ManyToManyField(Department, verbose_name='Кафедры', blank=True)
     soviet = models.ForeignKey(
         Soviet, 
         on_delete = models.CASCADE, 
-        verbose_name = 'Студенческий совет'
+        verbose_name = 'Студенческий совет',
+        blank=True
     )
 
     def __str__(self):
@@ -94,6 +96,7 @@ class Institute(models.Model):
 
 class Union(models.Model):
     name = models.CharField(verbose_name='Название', max_length=200)
+    short_name = models.CharField(verbose_name='Сокращенное название', max_length=64, blank=True)
     logo = models.ImageField(
         verbose_name = 'Логотип', 
         upload_to = 'campus/unions/logo/'
@@ -103,10 +106,12 @@ class Union(models.Model):
         upload_to = 'campus/unions/photos'
     )
     fio = models.CharField(verbose_name='ФИО', max_length=200)
+    leader_rank = models.CharField(verbose_name='Должность', max_length=128, blank=True)
     address = models.TextField(verbose_name='Адрес')
     phone = models.CharField(verbose_name='Телефон', max_length=19)
     group_vk = models.URLField(verbose_name='Группа во вконтакте')
     page_vk = models.URLField(verbose_name='Председатель во вконтакте', blank=True, null=True)
+    about = models.TextField('Описание', blank=True)
 
     def __str__(self):
         return self.fio
