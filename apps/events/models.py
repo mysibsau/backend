@@ -3,7 +3,7 @@ from django.db import models
 
 class Event(models.Model):
     name = models.CharField('Название', max_length=512)
-    logo = models.ImageField(verbose_name='Афиша', upload_to='events_logo/')
+    logo = models.ImageField(verbose_name='Афиша', upload_to='events/logo/')
     text = models.TextField('Текст поста')
     author = models.CharField(verbose_name='Заказчик', max_length=200)
     date_to = models.DateTimeField('Действует до')
