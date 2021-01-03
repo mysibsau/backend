@@ -4,7 +4,7 @@ from apps.campus_sibsau import models
 
 @admin.register(models.Building)
 class Building(admin.ModelAdmin):
-    list_display = ('id', 'coast', 'name', 'link')
+    list_display = ('id', 'coast', 'name', 'address', 'type', 'link')
 
 
 @admin.register(models.Director)
@@ -24,13 +24,15 @@ class Soviet(admin.ModelAdmin):
 
 @admin.register(models.Institute)
 class Institute(admin.ModelAdmin):
-    list_display = ('id', 'director', 'get_departments', 'soviet')
+    list_display = ('id', 'short_name', 'director', 'get_departments', 'soviet')
+    filter_horizontal = ('departments',)
 
     def get_departments(self, obj):
         return ', '.join([i.name for i in obj.departments.all()])
 
+    get_departments.short_description = "Кафедры"
+
 
 @admin.register(models.Union)
 class Union(admin.ModelAdmin):
-    list_display = ('id', 'name', 'logo', 'photo', 'fio',
-                    'address', 'phone', 'group_vk', 'page_vk')
+    list_display = ('id', 'name', 'fio', )

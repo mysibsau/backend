@@ -2,10 +2,11 @@ from django.db import models
 
 
 class Event(models.Model):
-    name = models.TextField('Название')
-    logo = models.ImageField(verbose_name='Афиша', upload_to='events_logo/')
+    name = models.CharField('Название', max_length=512)
+    logo = models.ImageField(verbose_name='Афиша', upload_to='events/logo/')
     text = models.TextField('Текст поста')
     author = models.CharField(verbose_name='Заказчик', max_length=200)
+    date_to = models.DateTimeField('Действует до')
 
     def __str__(self):
         return self.name
@@ -16,7 +17,7 @@ class Event(models.Model):
 
 
 class Link(models.Model):
-    name = models.TextField('название')
+    name = models.CharField('название', max_length=512)
     link = models.URLField('Ссылка')
     event = models.ForeignKey(
         Event, 

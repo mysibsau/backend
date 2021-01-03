@@ -28,6 +28,7 @@ kombu==5.0.2
 Pillow==8.0.1
 pkg-resources==0.0.0
 prompt-toolkit==3.0.8
+psycopg2==2.8.6
 pycodestyle==2.6.0
 pyhttptest==0.7
 pymorphy2==0.9.1

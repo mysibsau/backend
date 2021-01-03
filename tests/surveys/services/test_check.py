@@ -24,14 +24,14 @@ class CheckAlreadyAnswerTest(TestCase):
 
     def test_user_already_answered_if_user_did_respond(self):
         """
-        Проверка, если пользователь отвечал
+        Проверка, если пользователь отвечал на вопрос с одной попыткой
         """
         survey = models.Survey.objects.first()
         question = models.Question.objects.create(
             survey = survey,
             text = '1',
             type = 0,
-            necessarily = False
+            necessarily = False,
         )
         models.Answer.objects.create(
             who = self.uuid,
@@ -42,6 +42,29 @@ class CheckAlreadyAnswerTest(TestCase):
         result = check.user_already_answered(self.uuid, 1)
         self.assertEqual(result, True)
 
+    def test_user_already_answered_if_user_did_respond_on_reanswer_test(self):
+        """
+        Проверка, если пользователь отвечал на вопрос с повторым ответом
+        """
+        survey = models.Survey.objects.create(
+            name='Test', 
+            date_to=timezone.localtime(),
+            reanswer = True
+        )
+        question = models.Question.objects.create(
+            survey = survey,
+            text = '1',
+            type = 0,
+            necessarily = False,
+        )
+        models.Answer.objects.create(
+            who = self.uuid,
+            survey = survey,
+            question = question,
+        )
+
+        result = check.user_already_answered(self.uuid, 2)
+        self.assertEqual(result, False)
 
 class CheckTypeQuestion(TestCase):
     def setUp(self):

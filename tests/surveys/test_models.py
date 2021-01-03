@@ -6,8 +6,9 @@ from django.utils import timezone
 class SurveyModelTest(TestCase):
     def setUp(self):
         models.Survey.objects.create(
-            name='Name',
-            date_to = timezone.localtime()
+            name = 'Name',
+            date_to = timezone.localtime(),
+            reanswer = True
         )
 
     def test_name_label(self):
@@ -21,6 +22,12 @@ class SurveyModelTest(TestCase):
         survey = models.Survey.objects.first()
         field_label = survey._meta.get_field('date_to').verbose_name
         self.assertEquals(field_label,'Действует до')
+
+    def test_reanswer_label(self):
+        """Проверка названия поля reanswer"""
+        survey = models.Survey.objects.first()
+        field_label = survey._meta.get_field('reanswer').verbose_name
+        self.assertEquals(field_label,'Повторный ответ')
 
     def test_name_object_is_name_field(self):
         """Проверка перевода объекта в str"""

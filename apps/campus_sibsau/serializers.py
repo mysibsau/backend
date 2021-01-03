@@ -2,14 +2,18 @@ def UnionSerializers(unions):
     result = []
     for union in unions:
         result.append({
+            'id': union.id,
             'name': union.name,
-            'logo': union.logo,
-            'photo': union.photo,
+            'short_name': union.short_name,
+            'logo': union.logo.url,
+            'photo': union.photo.url,
+            'leader_rank': union.leader_rank,
             'fio': union.fio,
             'address': union.address,
             'phone': union.phone,
             'group_vk': union.group_vk,
-            'page_vk': union.page_vk
+            'page_vk': union.page_vk,
+            'about': union.about
         })
     return result
 
@@ -21,7 +25,9 @@ def BuildingSerializers(buildings):
         result.append({
             'coast': building.coast,
             'name': building.name,
-            'link': building.link
+            'address': building.address,
+            'link': building.link,
+            'type': building.type
         })
     return result
 
@@ -71,6 +77,8 @@ def InstituteSerializers(institutes):
     result = []
     for institute in institutes:
         result.append({
+            'name': institute.name,
+            'short_name': institute.short_name,
             'director': DirectorSerializers([institute.director])[0],
             'departments': DepartmentSerializers(institute.departments.all()),
             'soviet': SovietSerializers([institute.soviet])[0]

@@ -4,6 +4,7 @@ from django.db import models
 class Survey(models.Model):
     name = models.CharField('Название опроса', max_length=256)
     date_to = models.DateTimeField('Действует до')
+    reanswer = models.BooleanField('Повторный ответ', default=False)
 
     def __str__(self):
         return self.name
