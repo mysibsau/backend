@@ -4,8 +4,8 @@ def UnionSerializers(unions):
         result.append({
             'name': union.name,
             'short_name': union.short_name,
-            'logo': union.logo,
-            'photo': union.photo,
+            'logo': union.logo.url,
+            'photo': union.photo.url,
             'leader_rank': union.leader_rank,
             'fio': union.fio,
             'address': union.address,
@@ -24,6 +24,7 @@ def BuildingSerializers(buildings):
         result.append({
             'coast': building.coast,
             'name': building.name,
+            'address': building.address,
             'link': building.link,
             'type': building.type
         })
