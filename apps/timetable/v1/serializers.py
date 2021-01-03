@@ -14,18 +14,17 @@ def GroupSerializers(groups) -> list:
     return result
 
 
-
 def SupgroupsSerializer(supgroups: dict) -> list:
     result = []
     for supgroup in supgroups:
         result.append({
-                'num': supgroup.supgroup,
-                'name': supgroup.lesson.name_ru,
-                'type': supgroup.lesson_type,
-                'teacher': supgroup.teacher.name,
-                'place': supgroup.place.name,
-                'address': supgroup.place.address,
-            })
+            'num': supgroup.supgroup,
+            'name': supgroup.lesson.name_ru,
+            'type': supgroup.lesson_type,
+            'teacher': supgroup.teacher.name,
+            'place': supgroup.place.name,
+            'address': supgroup.place.address,
+        })
     return result
 
 
@@ -38,15 +37,14 @@ def DaySerializer(day: list) -> list:
     return result
 
 
-
 def TimetableSerializers(lessons) -> dict:
     if not lessons:
         return {'error': 'Расписание не доступно'}
 
     result = {
-        'group': lessons[0].group.name, 
-        'even_week': [], 
-        'odd_week': [], 
+        'group': lessons[0].group.name,
+        'even_week': [],
+        'odd_week': [],
         'hash': getters.get_meta()['groups_hash']
     }
 

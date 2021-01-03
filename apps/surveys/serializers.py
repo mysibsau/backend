@@ -1,6 +1,4 @@
 from apps.surveys import models
-from apps.surveys.services import check
-from django.utils import timezone
 
 
 def ResponsesSerializer(responses):

@@ -41,16 +41,16 @@ def SupgroupsSerializer(supgroups: dict) -> list:
     result = []
     for supgroup in supgroups:
         result.append({
-                'num': supgroup.supgroup,
-                'name': supgroup.lesson.name_ru,
-                'type': supgroup.lesson_type,
-                'teacher': supgroup.teacher.name,
-                'teacher_id': supgroup.teacher.id,
-                'group': supgroup.group.name,
-                'group_id': supgroup.group.id,
-                'place': supgroup.place.name,
-                'place_id': supgroup.place.id
-            })
+            'num': supgroup.supgroup,
+            'name': supgroup.lesson.name_ru,
+            'type': supgroup.lesson_type,
+            'teacher': supgroup.teacher.name,
+            'teacher_id': supgroup.teacher.id,
+            'group': supgroup.group.name,
+            'group_id': supgroup.group.id,
+            'place': supgroup.place.name,
+            'place_id': supgroup.place.id
+        })
     return result
 
 
@@ -61,7 +61,6 @@ def DaySerializer(day: list) -> list:
         supgroups = getters.select_lessons(day, time)
         result.append({'time': time, 'subgroups': SupgroupsSerializer(supgroups)})
     return result
-
 
 
 def TimetableSerializers(lessons, type) -> dict:

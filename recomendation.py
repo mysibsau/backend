@@ -17,9 +17,11 @@ result = list(timetable)
 print(len(timetable))
 count = 0
 
+
 def get_best(lessons):
     lessons.sort(key=lambda x: len(x.lesson.tags.all()), reverse=True)
     return lessons[0]
+
 
 for week in range(1, 3):
     for day in range(7):

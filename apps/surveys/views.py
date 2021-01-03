@@ -1,12 +1,9 @@
 from rest_framework import viewsets
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
 from rest_framework.response import Response
 
 from apps.surveys import models, serializers
 from apps.surveys.services import setters, check, getters
 import json
-from django.utils import timezone
 from . import logger
 
 
@@ -42,9 +39,9 @@ class SurveysView(viewsets.ViewSet):
         if not request.body:
             logger.info(f'{request.META.get("REMOTE_ADDR")} не передал ответы')
             return Response('JSON с ответами пуст', 405)
-        
+
         data = json.loads(request.body)
-        
+
         if 'uuid' not in data:
             logger.info(f"{request.META.get('REMOTE_ADDR')} не указал uuid в set_answer")
             return Response('not uuid', 405)

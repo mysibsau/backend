@@ -1,4 +1,3 @@
-from rest_framework.test import force_authenticate
 from rest_framework.test import APIRequestFactory
 from apps.surveys import views, models
 from django.test import TestCase

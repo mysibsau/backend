@@ -51,7 +51,7 @@ class Parser:
     def get_type_subjects(self, line):
         result = []
         for sub_subject in self.get_subjects(line):
-            type_subject = self.parse_type_of_subject(sub_subject.find('span', {'class': 'name'}).parent.text )
+            type_subject = self.parse_type_of_subject(sub_subject.find('span', {'class': 'name'}).parent.text)
             result.append(self.types_subject[type_subject])
         return result
 

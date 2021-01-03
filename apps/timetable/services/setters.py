@@ -1,6 +1,6 @@
 from apps.timetable.services.parsers.timetable_parser import Parser
 from apps.timetable.services.parsers.group_parser import GroupParser
-from apps.timetable.models import Group, Lesson, Timetable, Teacher, Place, Tag
+from apps.timetable.models import Group, Lesson, Timetable, Teacher, Place
 
 
 WEEKDAY = {

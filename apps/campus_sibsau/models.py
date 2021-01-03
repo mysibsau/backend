@@ -6,10 +6,10 @@ class Building(models.Model):
         (0, 'Левый'),
         (1, 'Правый')
     )
-    coast = models.PositiveSmallIntegerField(verbose_name='Берег', choices=COASTS)
+    coast = models.PositiveSmallIntegerField('Берег', choices=COASTS)
     address = models.CharField('Адрес', max_length=256)
-    name = models.CharField(verbose_name='Название', max_length=20)
-    link = models.URLField(verbose_name='Ссылка на 2gis')
+    name = models.CharField('Название', max_length=20)
+    link = models.URLField('Ссылка на 2gis')
     type = models.CharField('Тип', max_length=128, blank=True)
 
     def __str__(self):
@@ -22,13 +22,13 @@ class Building(models.Model):
 
 class Director(models.Model):
     image = models.ImageField(
-        verbose_name = 'Фотография', 
-        upload_to = 'campus/directors/photos/'
+        verbose_name='Фотография',
+        upload_to='campus/directors/photos/'
     )
-    name = models.CharField(verbose_name='ФИО', max_length=200)
-    address = models.TextField(verbose_name='Адрес')
-    phone = models.CharField(verbose_name='Телефон', max_length=19)
-    mail = models.EmailField(verbose_name='Почта')
+    name = models.CharField('ФИО', max_length=200)
+    address = models.TextField('Адрес')
+    phone = models.CharField('Телефон', max_length=19)
+    mail = models.EmailField('Почта')
 
     def __str__(self):
         return self.name
@@ -39,11 +39,11 @@ class Director(models.Model):
 
 
 class Department(models.Model):
-    name = models.CharField(verbose_name='Название', max_length=200)
-    fio = models.CharField(verbose_name='ФИО', max_length=200)
-    address = models.TextField(verbose_name='Адрес')
-    phone = models.CharField(verbose_name='Телефон', max_length=19, blank=True, null=True)
-    mail = models.EmailField(verbose_name='Почта', blank=True, null=True)
+    name = models.CharField('Название', max_length=200)
+    fio = models.CharField('ФИО', max_length=200)
+    address = models.TextField('Адрес')
+    phone = models.CharField('Телефон', max_length=19, blank=True, null=True)
+    mail = models.EmailField('Почта', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -55,13 +55,13 @@ class Department(models.Model):
 
 class Soviet(models.Model):
     image = models.ImageField(
-        verbose_name = 'Фотография', 
-        upload_to = 'campus/soviets/photos/'
+        verbose_name='Фотография',
+        upload_to='campus/soviets/photos/'
     )
-    fio = models.CharField(verbose_name='ФИО', max_length=200)
-    address = models.TextField(verbose_name='Адрес')
-    phone = models.CharField(verbose_name='Телефон', max_length=19, blank=True, null=True)
-    mail = models.EmailField(verbose_name='Почта', blank=True, null=True)
+    fio = models.CharField('ФИО', max_length=200)
+    address = models.TextField('Адрес')
+    phone = models.CharField('Телефон', max_length=19, blank=True, null=True)
+    mail = models.EmailField('Почта', blank=True, null=True)
 
     def __str__(self):
         return self.fio
@@ -72,18 +72,18 @@ class Soviet(models.Model):
 
 
 class Institute(models.Model):
-    name = models.TextField(verbose_name='Название')
+    name = models.TextField('Название')
     short_name = models.CharField('Сокращенное название', max_length=16, blank=True)
     director = models.ForeignKey(
-        Director, 
-        on_delete = models.CASCADE, 
-        verbose_name = 'Директор института'
+        Director,
+        on_delete=models.CASCADE,
+        verbose_name='Директор института'
     )
     departments = models.ManyToManyField(Department, verbose_name='Кафедры', blank=True)
     soviet = models.ForeignKey(
-        Soviet, 
-        on_delete = models.CASCADE, 
-        verbose_name = 'Студенческий совет',
+        Soviet,
+        on_delete=models.CASCADE,
+        verbose_name='Студенческий совет',
         blank=True
     )
 
@@ -96,26 +96,26 @@ class Institute(models.Model):
 
 
 class Union(models.Model):
-    name = models.CharField(verbose_name='Название', max_length=200)
-    short_name = models.CharField(verbose_name='Сокращенное название', max_length=64, blank=True)
+    name = models.CharField('Название', max_length=200)
+    short_name = models.CharField('Сокращенное название', max_length=64, blank=True)
     logo = models.ImageField(
-        verbose_name = 'Логотип', 
-        upload_to = 'campus/unions/logo/'
+        verbose_name='Логотип',
+        upload_to='campus/unions/logo/'
     )
     photo = models.ImageField(
-        verbose_name = 'Фотография', 
-        upload_to = 'campus/unions/photos'
+        verbose_name='Фотография',
+        upload_to='campus/unions/photos'
     )
-    fio = models.CharField(verbose_name='ФИО', max_length=200)
-    leader_rank = models.CharField(verbose_name='Должность', max_length=128, blank=True)
-    address = models.TextField(verbose_name='Адрес')
-    phone = models.CharField(verbose_name='Телефон', max_length=19)
-    group_vk = models.URLField(verbose_name='Группа во вконтакте')
+    fio = models.CharField('ФИО', max_length=200)
+    leader_rank = models.CharField('Должность', max_length=128, blank=True)
+    address = models.TextField('Адрес')
+    phone = models.CharField('Телефон', max_length=19)
+    group_vk = models.URLField('Группа во вконтакте')
     page_vk = models.URLField(
-        verbose_name = 'Председатель во вконтакте', 
-        blank = True,
-        null = True, 
-        help_text = '''Ссылка обязательно должна быть в формате https://vk.com/id1234. 
+        verbose_name='Председатель во вконтакте',
+        blank=True,
+        null=True,
+        help_text='''Ссылка обязательно должна быть в формате https://vk.com/id1234. 
                        Если она будет иметь другой формат, то нельзя будет отправлять заявки на вступление'''
     )
     about = models.TextField('Описание', blank=True)

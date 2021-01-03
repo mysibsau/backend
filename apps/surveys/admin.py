@@ -1,4 +1,3 @@
-import logging
 from django.contrib import admin
 from apps.surveys import models
 from django.utils import timezone
@@ -24,7 +23,7 @@ class QuestionInline(NestedStackedInline):
 @admin.register(models.Survey)
 class Survey(NestedModelAdmin):
     list_display = ('id', 'name', 'date_to', 'reanswer')
-    inlines = [QuestionInline,]
+    inlines = [QuestionInline, ]
     actions = ['export_as_csv']
 
     def get_queryset(self, request):
@@ -38,7 +37,7 @@ class Survey(NestedModelAdmin):
         """Выгружает все ответы, связанные с выбранным опросом"""
         meta = self.model._meta
 
-        logger.info(f'{request.user} экспортировал ответы тестов: ' + 
+        logger.info(f'{request.user} экспортировал ответы тестов: ' +
             ', '.join(q.name for q in queryset)
         )
 
@@ -70,6 +69,7 @@ class Survey(NestedModelAdmin):
 class Question(admin.ModelAdmin):
     list_display = ('id', 'survey', 'text', 'type', 'necessarily')
     inlines = [ResponseOptionInline]
+
     def get_queryset(self, request):
         """Скрывает истекшие опросы для всех, кроме суперпользователя"""
         qs = super().get_queryset(request)

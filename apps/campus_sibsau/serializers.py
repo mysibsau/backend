@@ -18,7 +18,6 @@ def UnionSerializers(unions):
     return result
 
 
-
 def BuildingSerializers(buildings):
     result = []
     for building in buildings:
@@ -58,7 +57,6 @@ def DepartmentSerializers(departments):
     return result
 
 
-
 def SovietSerializers(soviets):
     result = []
     for soviet in soviets:
@@ -70,7 +68,6 @@ def SovietSerializers(soviets):
             'mail': soviet.mail
         })
     return result
-
 
 
 def InstituteSerializers(institutes):

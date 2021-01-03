@@ -7,15 +7,15 @@ from functools import lru_cache
 
 def get_all_groups_as_json() -> dict:
     '''
-        Возвращает все группы, отфармотированные в слоарье
+        Возвращает все группы, отформатированные в словаре
     '''
     queryset = models.Group.objects.all()
-    return 
+    return serializers.GroupSerializers(queryset)
 
 
 def get_all_teachers_as_json() -> dict:
     '''
-        Возвращает всех преподавателей, отфармотированные в слоарье
+        Возвращает всех преподавателей, отформатированные в словаре
     '''
     queryset = models.Teacher.objects.all()
     return serializers.TeacherSerializers(queryset)
@@ -23,7 +23,7 @@ def get_all_teachers_as_json() -> dict:
 
 def get_all_places_as_json() -> dict:
     '''
-        Возвращает все кабинеты, отфармотированные в слоарье
+        Возвращает все кабинеты, отформатированные в словаре
     '''
     queryset = models.Place.objects.all()
     return serializers.PlaceSerializers(queryset)
