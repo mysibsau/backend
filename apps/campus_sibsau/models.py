@@ -7,6 +7,7 @@ class Building(models.Model):
         (1, 'Правый')
     )
     coast = models.PositiveSmallIntegerField(verbose_name='Берег', choices=COASTS)
+    address = models.CharField('Адрес', max_length=256)
     name = models.CharField(verbose_name='Название', max_length=20)
     link = models.URLField(verbose_name='Ссылка на 2gis')
     type = models.CharField('Тип', max_length=128, blank=True)

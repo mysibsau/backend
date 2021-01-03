@@ -4,7 +4,7 @@ from apps.campus_sibsau import models
 
 @admin.register(models.Building)
 class Building(admin.ModelAdmin):
-    list_display = ('id', 'coast', 'name', 'type', 'link')
+    list_display = ('id', 'coast', 'name', 'address', 'type', 'link')
 
 
 @admin.register(models.Director)
