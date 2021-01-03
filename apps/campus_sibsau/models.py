@@ -111,7 +111,13 @@ class Union(models.Model):
     address = models.TextField(verbose_name='Адрес')
     phone = models.CharField(verbose_name='Телефон', max_length=19)
     group_vk = models.URLField(verbose_name='Группа во вконтакте')
-    page_vk = models.URLField(verbose_name='Председатель во вконтакте', blank=True, null=True)
+    page_vk = models.URLField(
+        verbose_name = 'Председатель во вконтакте', 
+        blank = True,
+        null = True, 
+        help_text = '''Ссылка обязательно должна быть в формате https://vk.com/id1234. 
+                       Если она будет иметь другой формат, то нельзя будет отправлять заявки на вступление'''
+    )
     about = models.TextField('Описание', blank=True)
 
     def __str__(self):
