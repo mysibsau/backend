@@ -71,7 +71,7 @@ LOGGING = {
             'propagate': True,
         },
         'apps.timetable': {
-            'handlers': ['file_campus', 'telegram_w0rng'],
+            'handlers': ['file_campus', 'telegram_w0rng', 'telegram_kiri11_mi1'],
             'level': 'INFO',
             'propagate': True,
         },

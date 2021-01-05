@@ -1,7 +1,7 @@
 from apps.timetable.services.parsers.timetable_parser import Parser
 from apps.timetable.services.parsers.group_parser import GroupParser
 from apps.timetable.models import Group, Lesson, Timetable, Teacher, Place
-
+from apps.timetable import logger
 
 WEEKDAY = {
     'monday': 0,
@@ -23,16 +23,18 @@ def load_all_groups_from_pallada() -> None:
     '''
         Записывает в БД новые группы
     '''
+    logger.info('Парсинг групп запущен')
     groups = GroupParser().get_groups()
     for id_, name in groups:
-        if not len(Group.objects.filter(name=name)):
-            Group(name=name, id_pallada=id_).save()
+        Group.objects.get_or_create(name=name, id_pallada=id_)
+    logger.info('Парсинг групп завершен')
 
 
 def load_timetable() -> None:
     '''
         Сохраняет расписание
     '''
+    logger.info('Парсинг расписания запущен')
     for i, group in enumerate(Group.objects.all()):
         Timetable.objects.filter(group=group).delete()
 
@@ -80,3 +82,4 @@ def load_timetable() -> None:
                     day=day,
                     time=time
                 ).save()
+    logger.info('Парсинг групп завершен')
