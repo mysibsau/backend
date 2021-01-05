@@ -70,6 +70,11 @@ LOGGING = {
             'level': 'INFO',
             'propagate': True,
         },
+        'apps.timetable': {
+            'handlers': ['file_campus', 'telegram_w0rng'],
+            'level': 'INFO',
+            'propagate': True,
+        },
         'django.request': {
             'handlers': ['telegram_w0rng'],
             'level': 'ERROR',
