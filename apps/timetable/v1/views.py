@@ -1,5 +1,4 @@
 from rest_framework import viewsets
-from django.shortcuts import redirect
 from rest_framework.response import Response
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
@@ -28,3 +27,9 @@ class TimetableView(viewsets.ViewSet):
             group__id=obj_id
         ).select_related()
         return Response(serializers.TimetableSerializers(queryset))
+
+    @method_decorator(cache_page(60*60))
+    def current_week(self, request):
+        return Response(
+            {'week': getters.get_current_week()}
+        )

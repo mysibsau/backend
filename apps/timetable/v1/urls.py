@@ -10,4 +10,5 @@ urlpatterns = [
     path('timetable/<int:obj_id>/',
          views.TimetableView.as_view({'get': 'timetable_group'})),
 
+    path('CurrentWeek/', views.TimetableView.as_view({'get': 'current_week'}))
 ]
