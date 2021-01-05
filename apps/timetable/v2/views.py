@@ -4,6 +4,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 
 from apps.timetable.services import getters
+from apps.timetable.v2 import serializers
+from apps.timetable import models
 
 
 class HashView(viewsets.ViewSet):
@@ -17,25 +19,28 @@ class HashView(viewsets.ViewSet):
 
     @method_decorator(cache_page(60*60))
     def palaces_hash(self, request):
-        return Response({'hash': getters.get_palces_hash()})
+        return Response({'hash': getters.get_places_hash()})
 
 
 class GroupView(viewsets.ViewSet):
     @method_decorator(cache_page(60*60*2))
     def all(self, request):
-        return Response(getters.get_all_groups_as_json())
+        queryset = models.Place.objects.all()
+        return Response(serializers.PlaceSerializers(queryset))
 
 
 class TeacherView(viewsets.ViewSet):
     @method_decorator(cache_page(60*60*2))
     def all(self, request):
-        return Response(getters.get_all_teachers_as_json())
+        queryset = models.Teacher.objects.all()
+        return Response(serializers.TeacherSerializers(queryset))
 
 
 class PlaceView(viewsets.ViewSet):
     @method_decorator(cache_page(60*60*2))
     def all(self, request):
-        return Response(getters.get_all_places_as_json())
+        queryset = models.Place.objects.all()
+        return Response(serializers.PlaceSerializers(queryset))
 
 
 class TimetableView(viewsets.ViewSet):
