@@ -5,7 +5,7 @@ class Event(models.Model):
     name = models.CharField('Название', max_length=512)
     logo = models.ImageField('Афиша', upload_to='events/logo/')
     text = models.TextField('Текст поста')
-    author = models.CharField('Заказчик', max_length=200)
+    author = models.CharField('Автор', max_length=200)
     date_to = models.DateTimeField('Действует до')
 
     def __str__(self):
