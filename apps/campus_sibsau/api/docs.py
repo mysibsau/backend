@@ -38,6 +38,9 @@ swagger_join_to_union = {
 swagger_all_institutes = {
     'operation_id': 'All institutes',
     'methods': ['GET'],
+    'manual_parameters': [
+        openapi.Parameter('language', openapi.IN_QUERY, "Язык ответа. Может быть *ru* или *en*", type=openapi.TYPE_STRING, default='ru'),
+    ],
     'responses': {
         200: openapi.Response(
             description="все гуд",
@@ -81,6 +84,9 @@ swagger_all_institutes = {
 swagger_all_buildings = {
     'operation_id': 'All buildings',
     'methods': ['GET'],
+    'manual_parameters': [
+        openapi.Parameter('language', openapi.IN_QUERY, "Язык ответа. Может быть *ru* или *en*", type=openapi.TYPE_STRING, default='ru'),
+    ],
     'responses': {
         200: openapi.Response(
             description="все гуд",
@@ -104,6 +110,9 @@ swagger_all_buildings = {
 swagger_all_unions = {
     'operation_id': 'All unions',
     'methods': ['GET'],
+    'manual_parameters': [
+        openapi.Parameter('language', openapi.IN_QUERY, "Язык ответа. Может быть *ru* или *en*", type=openapi.TYPE_STRING, default='ru'),
+    ],
     'responses': {
         200: openapi.Response(
             description="все гуд",
