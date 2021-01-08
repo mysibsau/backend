@@ -8,22 +8,22 @@ class SetAnswers(TestCase):
     def setUp(self):
         survey = models.Survey.objects.create(name='1', date_to=timezone.now())
         question_one = models.Question.objects.create(
-            survey = survey,
-            text = '1',
-            type = 1,
-            necessarily = True
+            survey=survey,
+            text='1',
+            type=1,
+            necessarily=True
         )
-        question_two = models.Question.objects.create(
-            survey = survey,
-            text = '1',
-            type = 2,
-            necessarily = False
+        models.Question.objects.create(
+            survey=survey,
+            text='1',
+            type=2,
+            necessarily=False
         )
         models.ResponseOption.objects.create(
-            question = question_one,
-            text = '1'
+            question=question_one,
+            text='1'
         )
-    
+
     def test_drop_error(self):
         """
         Проверка результата, если выпала ошибка
@@ -63,7 +63,7 @@ class SetAnswers(TestCase):
             ]
         }
         result = setters.set_answers(json, 1)
-        self.assertEqual(result.data, 'good')
+        self.assertEqual(result.data, {'good': 'Ваши ответы записаны'})
 
     def test_count_recorded_answers(self):
         json = {
