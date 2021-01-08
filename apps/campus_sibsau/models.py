@@ -115,7 +115,7 @@ class Union(models.Model):
         verbose_name='Председатель во вконтакте',
         blank=True,
         null=True,
-        help_text='''Ссылка обязательно должна быть в формате https://vk.com/id1234. 
+        help_text='''Ссылка обязательно должна быть в формате https://vk.com/id1234.
                        Если она будет иметь другой формат, то нельзя будет отправлять заявки на вступление'''
     )
     about = models.TextField('Описание', blank=True)

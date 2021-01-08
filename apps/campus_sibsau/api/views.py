@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.response import Response
 
+
 from apps.campus_sibsau import models, logger
 from apps.campus_sibsau.services.join_to_union import main as join_to_union_vk
 from . import docs, serializers
