@@ -81,3 +81,16 @@ def InstituteSerializers(institutes):
             'soviet': SovietSerializers([institute.soviet])[0]
         })
     return result
+
+
+def SportClubSerializer(clubs):
+    result = []
+    for club in clubs:
+        result.append({
+            'name': club.name,
+            'fio': club.fio,
+            'phone': club.phone,
+            'address': club.address,
+            'dates': club.dates,
+        })
+    return result
