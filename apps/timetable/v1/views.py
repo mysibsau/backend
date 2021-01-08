@@ -8,14 +8,14 @@ from rest_framework.decorators import api_view, schema
 
 @api_view(['GET'])
 @schema(None)
-@cache_page(60*60)
+@cache_page(60 * 60)
 def groups_hash(request):
     return Response({'hash': getters.get_groups_hash()})
 
 
 @api_view(['GET'])
 @schema(None)
-@cache_page(60*60*2)
+@cache_page(60 * 60 * 2)
 def all_groups(request):
     queryset = models.Group.objects.all()
     return Response(serializers.GroupSerializers(queryset))
@@ -23,7 +23,7 @@ def all_groups(request):
 
 @api_view(['GET'])
 @schema(None)
-@cache_page(60*60)
+@cache_page(60 * 60)
 def timetable_group(request, group_id):
     queryset = models.Timetable.objects.filter(
         group__id=group_id
@@ -34,7 +34,7 @@ def timetable_group(request, group_id):
 
 @api_view(['GET'])
 @schema(None)
-@cache_page(60*60)
+@cache_page(60 * 60)
 def current_week(request):
     return Response(
         {'week': getters.get_current_week()}
