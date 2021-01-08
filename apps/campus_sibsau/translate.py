@@ -30,3 +30,8 @@ class InstituteTranslationOptions(TranslationOptions):
 @register(models.Union)
 class UnionTranslationOptions(TranslationOptions):
     fields = ('name', 'short_name', 'fio', 'leader_rank', 'address', 'about')
+
+
+@register(models.SportClub)
+class UnionTranslationOptions(TranslationOptions):
+    fields = ('name', 'fio', 'address', 'dates')
