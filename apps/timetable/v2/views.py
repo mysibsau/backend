@@ -1,57 +1,77 @@
-from rest_framework import viewsets
 from rest_framework.response import Response
-from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 
 from apps.timetable.services import getters
 from apps.timetable.v2 import serializers
 from apps.timetable import models
 
-
-class HashView(viewsets.ViewSet):
-    @method_decorator(cache_page(60*60))
-    def groups_hash(self, request):
-        return Response({'hash': getters.get_groups_hash()})
-
-    @method_decorator(cache_page(60*60))
-    def teachers_hash(self, request):
-        return Response({'hash': getters.get_teachers_hash()})
-
-    @method_decorator(cache_page(60*60))
-    def palaces_hash(self, request):
-        return Response({'hash': getters.get_places_hash()})
+from rest_framework.decorators import api_view
 
 
-class GroupView(viewsets.ViewSet):
-    @method_decorator(cache_page(60*60*2))
-    def all(self, request):
-        queryset = models.Place.objects.all()
-        return Response(serializers.PlaceSerializers(queryset))
+@api_view(['GET'])
+@cache_page(60*60)
+def groups_hash(request):
+    return Response({'hash': getters.get_groups_hash()})
 
 
-class TeacherView(viewsets.ViewSet):
-    @method_decorator(cache_page(60*60*2))
-    def all(self, request):
-        queryset = models.Teacher.objects.all()
-        return Response(serializers.TeacherSerializers(queryset))
+@api_view(['GET'])
+@cache_page(60*60)
+def teachers_hash(request):
+    return Response({'hash': getters.get_teachers_hash()})
 
 
-class PlaceView(viewsets.ViewSet):
-    @method_decorator(cache_page(60*60*2))
-    def all(self, request):
-        queryset = models.Place.objects.all()
-        return Response(serializers.PlaceSerializers(queryset))
+@api_view(['GET'])
+@cache_page(60*60)
+def palaces_hash(request):
+    return Response({'hash': getters.get_places_hash()})
 
 
-class TimetableView(viewsets.ViewSet):
-    @method_decorator(cache_page(60*60))
-    def timetable_group(self, request, obj_id):
-        return Response(getters.get_timetable(obj_id))
+@api_view(['GET'])
+@cache_page(60*60*2)
+def all_groups(request):
+    queryset = models.Place.objects.all()
+    return Response(serializers.PlaceSerializers(queryset))
 
-    @method_decorator(cache_page(60*60))
-    def timetable_teacher(self, request, obj_id):
-        return Response(getters.get_timetable_teacher(obj_id))
 
-    @method_decorator(cache_page(60*60))
-    def timetable_place(self, request, obj_id):
-        return Response(getters.get_timetable_place(obj_id))
+@api_view(['GET'])
+@cache_page(60*60)
+def all_teachers(request):
+    queryset = models.Teacher.objects.all()
+    return Response(serializers.TeacherSerializers(queryset))
+
+
+@api_view(['GET'])
+@cache_page(60*60)
+def all_places(request):
+    queryset = models.Place.objects.all()
+    return Response(serializers.PlaceSerializers(queryset))
+
+
+@api_view(['GET'])
+@cache_page(60*60)
+def timetable_group(request, group_id):
+    queryset = models.Timetable.objects.filter(
+        group__id=group_id
+    ).select_related()
+    data = serializers.TimetableSerializers(queryset, 'group')
+    return Response(data)
+
+
+@api_view(['GET'])
+@cache_page(60*60)
+def timetable_teacher(request, teacher_id):
+    queryset = models.Timetable.objects.filter(
+        teacher__id=teacher_id
+    ).select_related()
+    data = serializers.TimetableSerializers(queryset, 'teacher')
+    return Response(data)
+
+
+@api_view(['GET'])
+@cache_page(60*60)
+def timetable_place(request, place_id):
+    queryset = models.Timetable.objects.filter(
+        place__id=place_id
+    ).select_related()
+    data = serializers.TimetableSerializers(queryset, 'place')
+    return Response(data)
