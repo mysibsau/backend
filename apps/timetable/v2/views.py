@@ -88,7 +88,7 @@ def timetable_group(request, group_id):
     * **meta** - блок с дополнительной информацией.
 
     ------
-    Блок **meta** в себя:
+    Блок **meta** состоит из:
     * **groups_hash** - хэш групп;
     * **teachers_hash** - хэш препродавателей;
     * **places_hash** - хэш кабинетов;
@@ -126,7 +126,7 @@ def timetable_group(request, group_id):
     Существует 3 типа пар:
     1. Лекция;
     2. Лабораторная работа;
-    3. Практика.  
+    3. Практика.
     """
     queryset = models.Timetable.objects.filter(
         group__id=group_id
