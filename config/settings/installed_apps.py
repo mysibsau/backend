@@ -10,6 +10,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'nested_inline',
+    'drf_yasg'
 ]
 
 LOCAL_APPS = [

@@ -30,10 +30,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env.str('DATABASE_NAME'),
-        'USER' : env.str('DATABASE_USER'),
-        'PASSWORD' : env.str('DATABASE_PASSWORD'),
-        'HOST' : env.str('DATABASE_HOST'),
-        'PORT' : env.str('DATABASE_PORT'),
+        'USER': env.str('DATABASE_USER'),
+        'PASSWORD': env.str('DATABASE_PASSWORD'),
+        'HOST': env.str('DATABASE_HOST'),
+        'PORT': env.str('DATABASE_PORT'),
     }
 }
 
@@ -113,9 +113,16 @@ if env.bool('SENTRY'):
     import sentry_sdk
 
     sentry_sdk.init(
-        dsn = env.str('DSN'),
-        integrations = [DjangoIntegration()],
-        traces_sample_rate = 1.0,
-
-        send_default_pii = True
+        dsn=env.str('DSN'),
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+        send_default_pii=True
     )
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ]
+}
