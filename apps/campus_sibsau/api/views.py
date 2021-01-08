@@ -53,7 +53,7 @@ def all_institutes(request):
     """
     Возвращает список всех институтов ВУЗа.
     """
-    logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех инстиутов")
+    logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех институтов")
     queryset = models.Institute.objects.all().select_related()
     return Response(serializers.InstituteSerializers(queryset))
 
@@ -70,6 +70,7 @@ def all_buildings(request):
     return Response(serializers.BuildingSerializers(queryset))
 
 
+@swagger_auto_schema(**docs.swagger_all_sport_clubs)
 @api_view(['GET'])
 @cache_page(60 * 60 * 2)
 def all_sport_clubs(request):

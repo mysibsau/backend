@@ -138,3 +138,28 @@ swagger_all_unions = {
     },
     'tags': ['Campus']
 }
+
+swagger_all_sport_clubs = {
+    'operation_id': 'All sport clubs',
+    'methods': ['GET'],
+    'manual_parameters': [
+        openapi.Parameter('language', openapi.IN_QUERY, "Язык ответа. Может быть *ru* или *en*", type=openapi.TYPE_STRING, default='ru'),
+    ],
+    'responses': {
+        200: openapi.Response(
+            description="все гуд",
+            examples={
+                "application/json": [
+                    {
+                        "name": "Название кружка",
+                        "fio": "ФИО тренера",
+                        "phone": "телефон тренера",
+                        "address": "адрес проведения тренировок",
+                        "dates": "дни и время тренировок"
+                    }
+                ]
+            }
+        ),
+    },
+    'tags': ['Campus']
+}
