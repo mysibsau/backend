@@ -1,12 +1,6 @@
 from apps.timetable import models
 from apps.timetable.api.v2 import serializers
 from apps.timetable.services import utils
-from django.utils import timezone
-
-
-def get_current_week() -> int:
-    num_current_week = timezone.localdate().isocalendar()[1]
-    return 1 if num_current_week % 2 else 2
 
 
 def get_groups_hash() -> dict:
@@ -41,7 +35,7 @@ def get_meta() -> dict:
         'groups_hash': get_groups_hash(),
         'teachers_hash': get_teachers_hash(),
         'places_hash': get_places_hash(),
-        'current_week': get_current_week()
+        'current_week': utils.calculate_number_current_week()
     }
 
 
