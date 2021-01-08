@@ -64,9 +64,6 @@ def DaySerializer(day: list) -> list:
 
 
 def TimetableSerializers(lessons, type) -> dict:
-    if not lessons:
-        return {'error': 'Расписание не доступно'}
-
     types = {
         'teacher': lessons[0].teacher.name,
         'group': lessons[0].group.name,
@@ -74,9 +71,9 @@ def TimetableSerializers(lessons, type) -> dict:
     }
 
     result = {
-        'object': types[type], 
-        'even_week': [], 
-        'odd_week': [], 
+        'object': types[type],
+        'even_week': [],
+        'odd_week': [],
         'meta': getters.get_meta()
     }
 

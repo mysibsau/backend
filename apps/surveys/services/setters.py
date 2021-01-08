@@ -24,4 +24,4 @@ def set_answers(answers, survey_id):
                 )
             )
 
-    return Response('good', 200)
+    return Response({'good': 'Ваши ответы записаны'}, 200)

@@ -3,12 +3,8 @@ from apps.timetable.v1 import views
 
 
 urlpatterns = [
-    path('groups/', views.GroupView.as_view({'get': 'all'})),
-
-    path('hash/', views.HashView.as_view({'get': 'groups_hash'})),
-
-    path('timetable/<int:obj_id>/',
-         views.TimetableView.as_view({'get': 'timetable_group'})),
-
-    path('CurrentWeek/', views.TimetableView.as_view({'get': 'current_week'}))
+    path('groups/', views.all_groups, name='gropus-list'),
+    path('hash/', views.groups_hash, name='hash-groups'),
+    path('timetable/<int:group_id>/', views.timetable_group, name='groups-timetable'),
+    path('CurrentWeek/', views.current_week, name='num-current-week')
 ]
