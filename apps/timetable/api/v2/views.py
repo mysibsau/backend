@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from django.views.decorators.cache import cache_page
 
 from apps.timetable.services import getters
-from apps.timetable.v2 import serializers, docs
+from . import serializers, docs
 from apps.timetable import models
 
 from rest_framework.decorators import api_view

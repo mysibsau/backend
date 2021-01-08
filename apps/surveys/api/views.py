@@ -1,9 +1,9 @@
 from rest_framework.response import Response
 
-from apps.surveys import models, serializers, docs
+from apps.surveys import models, logger
+from . import serializers, docs
 from apps.surveys.services import setters, check, getters
 import json
-from . import logger
 from rest_framework.decorators import api_view
 from drf_yasg.utils import swagger_auto_schema
 

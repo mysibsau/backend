@@ -1,5 +1,5 @@
 from django.urls import path
-from apps.timetable.v2 import views
+from . import views
 
 
 urlpatterns = [

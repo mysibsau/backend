@@ -1,9 +1,9 @@
 from rest_framework.response import Response
 from django.utils import timezone
-from apps.events import models, serializers, docs
-from . import logger
+from apps.events import models, logger
 from rest_framework.decorators import api_view
 from drf_yasg.utils import swagger_auto_schema
+from . import serializers, docs
 
 
 @swagger_auto_schema(**docs.swagger_all_events)
