@@ -126,3 +126,18 @@ class Union(models.Model):
     class Meta:
         verbose_name = u'Объединениие'
         verbose_name_plural = u'Объединения'
+
+
+class SportClub(models.Model):
+    name = models.CharField('Название кружка', max_length=200)
+    fio = models.CharField('Тренер', max_length=200)
+    phone = models.CharField('Телефон тренера', max_length=19)
+    address = models.TextField('Адрес')
+    dates = models.TextField('В какие дни ведет')
+
+    def __str__(self):
+        return f'{self.fio} ({self.name}) {self.phone}'
+
+    class Meta:
+        verbose_name = u'Спортивный кружок'
+        verbose_name_plural = u'Спортивные кружки'
