@@ -68,3 +68,14 @@ def all_buildings(request):
     logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех корпусов")
     queryset = models.Building.objects.all()
     return Response(serializers.BuildingSerializers(queryset))
+
+
+@api_view(['GET'])
+@cache_page(60 * 60 * 2)
+def all_sport_clubs(request):
+    """
+    Возвращает список всех спортивных кружков
+    """
+    logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех кружков")
+    queryset = models.SportClub.objects.all()
+    return Response(serializers.SportClubSerializer(queryset))
