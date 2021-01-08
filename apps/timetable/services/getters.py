@@ -3,8 +3,6 @@ from apps.timetable.v2 import serializers
 from apps.timetable.services import utils
 from django.utils import timezone
 
-from functools import lru_cache
-
 
 def get_current_week() -> int:
     num_current_week = timezone.localdate().isocalendar()[1]
@@ -33,39 +31,6 @@ def get_places_hash() -> dict:
     '''
     queryset = models.Place.objects.all()
     return utils.generate_hash(str(serializers.PlaceSerializers(queryset)))
-
-
-@lru_cache(maxsize=1024)
-def get_timetable(obj_id) -> dict:
-    '''
-        Возвращает расписание конкретной группы
-    '''
-    queryset = models.Timetable.objects.filter(
-        group__id=obj_id
-    ).select_related()
-    return serializers.TimetableSerializers(queryset, 'group')
-
-
-@lru_cache(maxsize=1024)
-def get_timetable_teacher(obj_id) -> dict:
-    '''
-        Возвращает расписание преподавателя
-    '''
-    queryset = models.Timetable.objects.filter(
-        teacher__id=obj_id
-    ).select_related()
-    return serializers.TimetableSerializers(queryset, 'teacher')
-
-
-@lru_cache(maxsize=1024)
-def get_timetable_place(obj_id) -> dict:
-    '''
-        Возвращает расписание кабинета
-    '''
-    queryset = models.Timetable.objects.filter(
-        place__id=obj_id
-    ).select_related()
-    return serializers.TimetableSerializers(queryset, 'place')
 
 
 def get_meta() -> dict:
