@@ -1,0 +1,10 @@
+{% extends 'admin/change_list.html' %}
+
+{% block object-tools %}
+<form action="import/" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Импортировать все расписание" />
+</form>
+{{ block.super }}
+
+{% endblock %}
