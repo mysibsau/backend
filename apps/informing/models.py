@@ -6,7 +6,10 @@ class Information(models.Model):
     author = models.CharField(verbose_name='Автор', editable=False, max_length=64)
     text = models.TextField('Текст')
     views = models.PositiveIntegerField('Просмотры', editable=False, default=0)
-    date_to = models.DateTimeField('Действует до', auto_now=True)
+    date_to = models.DateTimeField('Действует до')
+
+    def count_likes(self):
+        return Like.objects.filter(information__id=self.id).count()
 
 
 class Event(Information):
