@@ -47,6 +47,7 @@ swagger_all_institutes = {
             examples={
                 "application/json": [
                     {
+                        "id": 1,
                         "name": "Название",
                         "short_name": "Короткое название",
                         "director": {
@@ -119,7 +120,7 @@ swagger_all_unions = {
             examples={
                 "application/json": [
                     {
-                        "id": 1,
+                        "rank": 1,
                         "name": "Название",
                         "short_name": "Короткое название",
                         "logo": "путь до лого",

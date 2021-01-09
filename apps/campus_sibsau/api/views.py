@@ -52,6 +52,8 @@ def join_to_union(request, union_id):
 def all_institutes(request):
     """
     Возвращает список всех институтов ВУЗа.
+
+    Поле rank служит для изменения порядка отображения элементов.
     """
     logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех институтов")
     queryset = models.Institute.objects.all().select_related()
