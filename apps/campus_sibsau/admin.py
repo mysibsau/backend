@@ -36,7 +36,7 @@ class Institute(TabbedTranslationAdmin):
 
 @admin.register(models.Union)
 class Union(TabbedTranslationAdmin):
-    list_display = ('id', 'name', 'fio', )
+    list_display = ('id', 'name', 'fio', 'rank')
 
 
 @admin.register(models.SportClub)

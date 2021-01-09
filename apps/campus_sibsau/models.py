@@ -98,6 +98,11 @@ class Institute(models.Model):
 class Union(models.Model):
     name = models.CharField('Название', max_length=200)
     short_name = models.CharField('Сокращенное название', max_length=64, blank=True)
+    rank = models.PositiveIntegerField(
+        verbose_name='Номер в списке',
+        help_text='Чем меньше номер, тем выше по списку будет объединение',
+        default=0
+    )
     logo = models.ImageField(
         verbose_name='Логотип',
         upload_to='campus/unions/logo/'

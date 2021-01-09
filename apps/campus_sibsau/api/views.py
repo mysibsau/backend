@@ -17,7 +17,7 @@ def all_unions(request):
     Возвращает список всех объединений.
     """
     logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех объединений")
-    queryset = models.Union.objects.all()
+    queryset = models.Union.objects.all().order_by('rank')
     data = serializers.UnionSerializers(queryset)
     return Response(data)
 
