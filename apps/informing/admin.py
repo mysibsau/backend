@@ -1,4 +1,3 @@
-from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 from django.contrib import admin
 from . import models
 
@@ -13,31 +12,24 @@ class AbstractInformationAdmin():
         obj.save()
 
     def likes(self, obj):
-        return models.Like.objects.filter(information__id=obj.id).count()
+        return obj.count_likes()
 
     likes.short_description = 'Лайки'
 
 
-class ImageAdmin(NestedStackedInline):
+class ImageAdmin(admin. TabularInline):
     model = models.Image
     extra = 0
     fk_name = 'news'
 
 
-class LinkAdmin(NestedStackedInline):
-    model = models.Link
-    extra = 0
-    fk_name = 'information'
-
-
 @admin.register(models.Event)
 class EventAdmin(AbstractInformationAdmin, admin.ModelAdmin):
     list_display = ('id', 'name', 'logo', 'author', 'date_to', 'views', 'likes')
-    fields = ('name', 'text', 'logo')
-    inlines = [LinkAdmin, ]
+    fields = ('name', 'text', 'logo', 'date_to')
 
 
 @admin.register(models.News)
-class NewsAdmin(AbstractInformationAdmin, NestedModelAdmin):
+class NewsAdmin(AbstractInformationAdmin, admin.ModelAdmin):
     list_display = ('id', 'author', 'date_to', 'views', 'likes')
-    inlines = [ImageAdmin, LinkAdmin]
+    inlines = [ImageAdmin, ]

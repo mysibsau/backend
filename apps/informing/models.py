@@ -52,22 +52,9 @@ class Like(models.Model):
 
 
 class Image(models.Model):
-    image = models.ImageField('Изображение', upload_to='informing/events/')
+    image = models.ImageField('Изображение', upload_to='informing/news/')
     news = models.ForeignKey(News, models.CASCADE)
 
     class Meta:
         verbose_name = u'Фото'
         verbose_name_plural = u'Фотографии'
-
-
-class Link(models.Model):
-    information = models.ForeignKey(Information, models.CASCADE)
-    text = models.CharField('Текст ссылки', max_length=512)
-    link = models.URLField('Ссылка')
-
-    def __str__(self):
-        return self.text
-
-    class Meta:
-        verbose_name = u'Ссылка'
-        verbose_name_plural = u'Ссылки'
