@@ -72,7 +72,7 @@ def all_places(request):
     return Response(serializers.PlaceSerializers(queryset))
 
 
-@swagger_auto_schema(**docs.swagger_timetable)
+@swagger_auto_schema(**docs.swagger_timetable_group)
 @api_view(['GET'])
 @cache_page(60 * 60)
 def timetable_group(request, group_id):
@@ -137,7 +137,7 @@ def timetable_group(request, group_id):
     return Response(data)
 
 
-@swagger_auto_schema(**docs.swagger_timetable)
+@swagger_auto_schema(**docs.swagger_timetable_teacher)
 @api_view(['GET'])
 @cache_page(60 * 60)
 def timetable_teacher(request, teacher_id):
@@ -157,7 +157,7 @@ def timetable_teacher(request, teacher_id):
     return Response(data)
 
 
-@swagger_auto_schema(**docs.swagger_timetable)
+@swagger_auto_schema(**docs.swagger_timetable_place)
 @api_view(['GET'])
 @cache_page(60 * 60)
 def timetable_place(request, place_id):

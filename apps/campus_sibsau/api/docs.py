@@ -11,10 +11,11 @@ swagger_join_to_union = {
         openapi.Parameter('vk', openapi.IN_QUERY, "ссылка в вк на студента", type=openapi.TYPE_STRING, required=True),
         openapi.Parameter('hobby', openapi.IN_QUERY, "увлечения студента", type=openapi.TYPE_STRING, required=True),
         openapi.Parameter('reason', openapi.IN_QUERY, "причина по которой должны взять студента студента", type=openapi.TYPE_STRING, required=True),
+        openapi.Parameter('union_id', openapi.IN_PATH, "ID объединения, в которое студент хочет вступить", type=openapi.TYPE_INTEGER, required=True),
     ],
     'responses': {
         200: openapi.Response(
-            description='good',
+            description='Заявка отправлена',
             examples={
                 "application/json": {'good': 'Ваша заявка отправлена'}
             }
@@ -43,7 +44,7 @@ swagger_all_institutes = {
     ],
     'responses': {
         200: openapi.Response(
-            description="все гуд",
+            description="Вернулся список всех институтов",
             examples={
                 "application/json": [
                     {
@@ -90,7 +91,7 @@ swagger_all_buildings = {
     ],
     'responses': {
         200: openapi.Response(
-            description="все гуд",
+            description="Вернулся список всех корпусов",
             examples={
                 "application/json": [
                     {
@@ -116,7 +117,7 @@ swagger_all_unions = {
     ],
     'responses': {
         200: openapi.Response(
-            description="все гуд",
+            description="Вернулся список всех объединений",
             examples={
                 "application/json": [
                     {
@@ -148,7 +149,7 @@ swagger_all_sport_clubs = {
     ],
     'responses': {
         200: openapi.Response(
-            description="все гуд",
+            description="Вернулся список всех спортивных секций",
             examples={
                 "application/json": [
                     {

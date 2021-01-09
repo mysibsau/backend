@@ -1,14 +1,13 @@
 from rest_framework.response import Response
 from django.utils import timezone
 from apps.events import models, logger
-from rest_framework.decorators import api_view
-from drf_yasg.utils import swagger_auto_schema
-from . import serializers, docs
+from rest_framework.decorators import api_view, schema
+from . import serializers
 from django.views.decorators.cache import cache_page
 
 
-@swagger_auto_schema(**docs.swagger_all_events)
 @api_view(['GET'])
+@schema(None)
 @cache_page(60 * 60)
 def all_events(request):
     """

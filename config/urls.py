@@ -15,8 +15,8 @@ admin.site.site_header = 'Мой СибГУ'
 schema_view = get_schema_view(
     openapi.Info(
         title=f"API {admin.site.site_header}",
-        default_version='v2',
-        license=openapi.License(name="BSD License"),
+        default_version='v2.1',
+        license=openapi.License(name="GNU General Public License v3.0"),
     ),
     public=True,
     permission_classes=(permissions.IsAdminUser,),
@@ -28,7 +28,7 @@ urlpatterns = [
     path('', include('apps.api.urls_v1')),
     path('v1/', include('apps.api.urls_v1')),
     path('v2/', include('apps.api.urls_v2')),
-    path('docs/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('docs/', schema_view.with_ui('redoc', cache_timeout=0)),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -9,7 +9,7 @@ swagger_all_surveys = {
     ],
     'responses': {
         200: openapi.Response(
-            description="все гуд",
+            description="Вернулся список всех доступных опросов",
             examples={
                 "application/json": [
                     {
@@ -36,10 +36,11 @@ swagger_specific_survey = {
     'methods': ['GET'],
     'manual_parameters': [
         openapi.Parameter('UUID', openapi.IN_QUERY, "Уникальный индификатор", type=openapi.TYPE_STRING, required=True),
+        openapi.Parameter('survey_id', openapi.IN_PATH, "Id опроса", type=openapi.TYPE_INTEGER, required=True),
     ],
     'responses': {
         200: openapi.Response(
-            description="все гуд",
+            description="Вернется опрос со всеми вопросами",
             examples={
                 "application/json": {
                     "name": "Название опроса",
@@ -87,10 +88,11 @@ swagger_set_answer = {
     'methods': ['POST'],
     'manual_parameters': [
         openapi.Parameter('UUID', openapi.IN_QUERY, "Уникальный индификатор", type=openapi.TYPE_STRING, required=True),
+        openapi.Parameter('survey_id', openapi.IN_PATH, "Id опроса", type=openapi.TYPE_INTEGER, required=True),
     ],
     'responses': {
         200: openapi.Response(
-            description="все гуд",
+            description="Все ответы были записаны",
             examples={
                 "application/json": {'good': 'Ваши ответы записаны'}
             }
