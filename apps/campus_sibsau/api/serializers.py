@@ -2,6 +2,7 @@ def UnionSerializers(unions):
     result = []
     for union in unions:
         result.append({
+            'id': union.id,
             'rank': union.rank,
             'name': union.name,
             'short_name': union.short_name,
