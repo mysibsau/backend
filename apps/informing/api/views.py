@@ -1,5 +1,6 @@
-from rest_framework.response import Response
 from django.utils import timezone
+from django.db.models import F
+from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from . import serializers
 from .. import models
@@ -34,17 +35,38 @@ def all_news(request):
 
 
 @api_view(['GET'])
-def like_news(request, news_id):
+def like(request, post_id):
+    """
+    Позволяет ставить и убирать лайки на запись *post_id*
+    """
     uuid = request.GET.get('uuid')
     if not uuid:
         return Response({'error': 'not uuid'}, 401)
 
     information = models.Information.objects.filter(
         date_to__gt=timezone.localtime(),
-        id=news_id
+        id=post_id
     ).first()
 
     if not information:
         return Response({'error': 'Запись не найдена'}, 404)
 
     return Response(*setters.like_it(uuid, information))
+
+
+@api_view(['GET'])
+def view(request, post_id):
+    """
+    Позволяет увеличивать счетчик просмотров записи *post_id*
+    """
+    information = models.Information.objects.filter(
+        date_to__gt=timezone.localtime(),
+        id=post_id
+    )
+
+    if not information:
+        return Response({'error': 'Запись не найдена'}, 404)
+
+    information.update(views=F('views') + 1)
+
+    return Response({'good': 'просмотр засчитан'}, 200)
