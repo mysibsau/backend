@@ -1,29 +1,30 @@
 from django.contrib import admin
 from apps.campus_sibsau import models
+from modeltranslation.admin import TabbedTranslationAdmin
 
 
 @admin.register(models.Building)
-class Building(admin.ModelAdmin):
+class BuildingAdmin(TabbedTranslationAdmin):
     list_display = ('id', 'coast', 'name', 'address', 'type', 'link')
 
 
 @admin.register(models.Director)
-class Director(admin.ModelAdmin):
+class Director(TabbedTranslationAdmin):
     list_display = ('id', 'image', 'name', 'address', 'phone', 'mail')
 
 
 @admin.register(models.Department)
-class Department(admin.ModelAdmin):
+class Department(TabbedTranslationAdmin):
     list_display = ('id', 'name', 'fio', 'address', 'phone', 'mail')
 
 
 @admin.register(models.Soviet)
-class Soviet(admin.ModelAdmin):
+class Soviet(TabbedTranslationAdmin):
     list_display = ('id', 'image', 'fio', 'address', 'phone', 'mail')
 
 
 @admin.register(models.Institute)
-class Institute(admin.ModelAdmin):
+class Institute(TabbedTranslationAdmin):
     list_display = ('id', 'short_name', 'director', 'get_departments', 'soviet')
     filter_horizontal = ('departments',)
 
@@ -34,5 +35,10 @@ class Institute(admin.ModelAdmin):
 
 
 @admin.register(models.Union)
-class Union(admin.ModelAdmin):
-    list_display = ('id', 'name', 'fio', )
+class Union(TabbedTranslationAdmin):
+    list_display = ('id', 'name', 'fio', 'rank')
+
+
+@admin.register(models.SportClub)
+class SportClub(TabbedTranslationAdmin):
+    list_display = ('id', 'name', 'fio', 'phone', 'address', 'dates')

@@ -72,6 +72,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'config.middlewares.set_language.set_language'
 ]
 
 ##################################################################
@@ -100,6 +101,9 @@ if not DEBUG:
 
 STATIC_URL = '/static/'
 STATIC_ROOT = path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    'fix_static_files'
+]
 
 
 MEDIA_URL = '/media/'

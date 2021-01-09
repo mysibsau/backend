@@ -65,7 +65,7 @@ class Survey(NestedModelAdmin):
     export_as_csv.short_description = 'Экспортировать выбранные'
 
 
-@admin.register(models.Question)
+# @admin.register(models.Question)
 class Question(admin.ModelAdmin):
     list_display = ('id', 'survey', 'text', 'type', 'necessarily')
     inlines = [ResponseOptionInline]
@@ -78,7 +78,7 @@ class Question(admin.ModelAdmin):
         return qs.filter(survey__date_to__gt=timezone.localtime())
 
 
-@admin.register(models.ResponseOption)
+# @admin.register(models.ResponseOption)
 class ResponseOption(admin.ModelAdmin):
     list_display = ('id', 'question', 'text')
 

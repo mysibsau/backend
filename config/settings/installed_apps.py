@@ -2,6 +2,7 @@ from os import path, mkdir
 
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -10,14 +11,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'nested_inline',
-    'drf_yasg'
+    'drf_yasg',
 ]
 
 LOCAL_APPS = [
     'apps.timetable',
     'apps.campus_sibsau',
     'apps.events',
-    'apps.surveys'
+    'apps.surveys',
+    'apps.informing'
 ]
 
 INSTALLED_APPS += LOCAL_APPS

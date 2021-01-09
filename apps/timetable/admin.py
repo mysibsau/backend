@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.http import HttpResponseRedirect
-from django.conf.urls import url
 from django.urls import path
 
 from apps.timetable import models
@@ -30,7 +29,7 @@ class Group(admin.ModelAdmin):
 
 @admin.register(models.Timetable)
 class TimetableAdmin(admin.ModelAdmin):
-    list_filter = ('group', 'teacher', 'place')
+    # list_filter = ('group', 'teacher', 'place')
     list_display = ('id', 'group', 'supgroup', 'teacher', 'lesson',
                     'lesson_type', 'place', 'week', 'day', 'time')
     change_list_template = 'admin/load_timetable.html'
@@ -69,6 +68,6 @@ class Lesson(admin.ModelAdmin):
         return ', '.join(str(i) for i in obj.tags.all())
 
 
-@admin.register(models.Tag)
+# @admin.register(models.Tag)
 class Tag(admin.ModelAdmin):
     list_display = ('id', 'name')
