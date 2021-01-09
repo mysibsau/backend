@@ -60,13 +60,13 @@ def all_institutes(request):
 
 @swagger_auto_schema(**docs.swagger_all_buildings)
 @api_view(['GET'])
-@cache_page(60 * 60 * 2)
+# @cache_page(60 * 60 * 2)
 def all_buildings(request):
     """
     Возвращает список всех корпусов ВУЗа.
     """
     logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех корпусов")
-    queryset = models.Building.objects.all()
+    queryset = models.Building.objects.all().order_by('name')
     return Response(serializers.BuildingSerializers(queryset))
 
 
