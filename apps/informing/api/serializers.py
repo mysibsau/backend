@@ -1,10 +1,11 @@
 from .. import models
 
 
-def EventsSerializers(events):
+def EventsSerializers(events, liked):
     result = []
     for event in events:
         result.append({
+            'id': event.id,
             'name': event.name,
             'logo': {
                 'url': event.logo.url,
@@ -13,7 +14,8 @@ def EventsSerializers(events):
             },
             'text': event.text,
             'views': event.views,
-            'likes': event.count_likes()
+            'likes': event.count_likes(),
+            'is_liked': event.id in liked
         })
     return result
 
@@ -29,14 +31,16 @@ def ImagesSerializer(images):
     return result
 
 
-def NewsSerializer(news_queryset):
+def NewsSerializer(news_queryset, liked):
     result = []
     for news in news_queryset:
         images = models.Image.objects.filter(news__id=news.id)
         result.append({
+            'id': news.id,
             'text': news.text,
             'views': news.views,
             'likes': news.count_likes(),
+            'is_liked': news.id in liked,
             'images': ImagesSerializer(images)
         })
     return result
