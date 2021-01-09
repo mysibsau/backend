@@ -27,7 +27,7 @@ def QuestionsSerializers(questions):
 
 
 def SurveySerializers(survey):
-    questions = models.Question.objects.filter(survey__id=survey.id)
+    questions = models.Question.objects.filter(survey__id=survey.id).order_by('id')
     return {
         'name': survey.name,
         'questions': QuestionsSerializers(questions)
