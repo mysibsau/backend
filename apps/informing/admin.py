@@ -33,6 +33,7 @@ class LinkAdmin(NestedStackedInline):
 @admin.register(models.Event)
 class EventAdmin(AbstractInformationAdmin, admin.ModelAdmin):
     list_display = ('id', 'name', 'logo', 'author', 'date_to', 'views', 'likes')
+    fields = ('name', 'text', 'logo')
     inlines = [LinkAdmin, ]
 
 
