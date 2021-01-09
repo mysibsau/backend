@@ -51,8 +51,6 @@ class Like(models.Model):
 class Image(models.Model):
     image = models.ImageField('Изображение', upload_to='informing/events/')
     news = models.ForeignKey(News, models.CASCADE)
-    width = models.PositiveIntegerField(editable=False, default=0)
-    height = models.PositiveIntegerField(editable=False, default=0)
 
     class Meta:
         verbose_name = u'Фото'
