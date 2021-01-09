@@ -1,16 +1,32 @@
 from django.utils import timezone
 from django.db.models import F
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from . import serializers
+from drf_yasg.utils import swagger_auto_schema
+
+from . import serializers, docs
 from .. import models
 from ..services import getters, setters
 
 
+@swagger_auto_schema(**docs.swagger_all_events)
 @api_view(['GET'])
 def all_events(request):
     """
+    All events
+
     Возвращает список всех мероприятий, дата которых еще не истекла
+
+    Содержит сущость *logo*, которое включает в себя:
+    * **url** - путь до картинки
+    * **width** - ширину картинки в пикселях;
+    * **height** - высоту картинки в пикселях;
+
+    Также имеет следующие поля:
+    * **views** - количество просмотров;
+    * **likes** - количество лайков;
+    * **is_liked** - лайкнул ли пост пользователь c уникальным индификатором *UUID*;
     """
     uuid = request.GET.get('uuid')
     if not uuid:
@@ -20,10 +36,23 @@ def all_events(request):
     return Response(serializers.EventsSerializers(queryset, liked))
 
 
+@swagger_auto_schema(**docs.swagger_all_news)
 @api_view(['GET'])
 def all_news(request):
     """
+    All news
+
     Возвращает список всех новостей, дата которых еще не истекла
+
+    Содержит массив *images* который состоит из сущностей:
+    * **url** - путь до картинки
+    * **width** - ширину картинки в пикселях;
+    * **height** - высоту картинки в пикселях;
+
+    Также имеет следующие поля:
+    * **views** - количество просмотров;
+    * **likes** - количество лайков;
+    * **is_liked** - лайкнул ли пост пользователь c уникальным индификатором *UUID*;
     """
     uuid = request.GET.get('uuid')
     if not uuid:
@@ -34,6 +63,7 @@ def all_news(request):
     return Response(serializers.NewsSerializer(queryset, liked))
 
 
+@swagger_auto_schema(**docs.swagger_like)
 @api_view(['GET'])
 def like(request, post_id):
     """
@@ -54,6 +84,7 @@ def like(request, post_id):
     return Response(*setters.like_it(uuid, information))
 
 
+@swagger_auto_schema(**docs.swagger_view)
 @api_view(['GET'])
 def view(request, post_id):
     """
