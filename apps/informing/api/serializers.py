@@ -14,7 +14,7 @@ def EventsSerializers(events, liked):
             },
             'text': event.text,
             'views': event.views,
-            'likes': event.count_likes(),
+            'likes': event.likes,
             'is_liked': event.id in liked
         })
     return result
@@ -39,7 +39,7 @@ def NewsSerializer(news_queryset, liked):
             'id': news.id,
             'text': news.text,
             'views': news.views,
-            'likes': news.count_likes(),
+            'likes': news.likes,
             'is_liked': news.id in liked,
             'images': ImagesSerializer(images)
         })

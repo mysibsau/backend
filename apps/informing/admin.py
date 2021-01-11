@@ -11,11 +11,6 @@ class AbstractInformationAdmin():
         obj.author = str(request.user)
         obj.save()
 
-    def likes(self, obj):
-        return obj.count_likes()
-
-    likes.short_description = 'Лайки'
-
 
 class ImageAdmin(admin. TabularInline):
     model = models.Image

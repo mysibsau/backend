@@ -8,8 +8,10 @@ class Information(models.Model):
     views = models.PositiveIntegerField('Просмотры', editable=False, default=0)
     date_to = models.DateTimeField('Действует до')
 
-    def count_likes(self):
+    @property
+    def likes(self):
         return Like.objects.filter(information__id=self.id).count()
+    likes.fget.short_description = u'Лайки'
 
 
 class Event(Information):

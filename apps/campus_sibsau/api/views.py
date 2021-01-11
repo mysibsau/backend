@@ -51,6 +51,8 @@ def join_to_union(request, union_id):
 @cache_page(60 * 60 * 2)
 def all_institutes(request):
     """
+    All institutes
+    
     Возвращает список всех институтов ВУЗа.
 
     Поле rank служит для изменения порядка отображения элементов.
