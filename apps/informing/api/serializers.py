@@ -44,3 +44,25 @@ def NewsSerializer(news_queryset, liked):
             'images': ImagesSerializer(images)
         })
     return result
+
+
+def NotificationsSerializer(notification, context):
+    request = context.get('request')
+    result = []
+    PRIORITIES = {
+        5: 'normal',
+        10: 'high'
+    }
+    for topic in notification.topics.all():
+        priority = notification.priority
+        priority = priority if topic.name[-3:] == 'ios' else PRIORITIES[priority]
+        result.append({
+            'notification': {
+                'title': notification.title,
+                'body': notification.text,
+                'image': request.build_absolute_uri(notification.image.url)
+            },
+            'to': f'/topics/{topic}',
+            'priority': priority
+        })
+    return result
