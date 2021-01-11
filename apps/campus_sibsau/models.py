@@ -18,6 +18,7 @@ class Building(models.Model):
     class Meta:
         verbose_name = u'Корпус'
         verbose_name_plural = u'Корпуса'
+        ordering = ['name']
 
 
 class Director(models.Model):
@@ -131,6 +132,7 @@ class Union(models.Model):
     class Meta:
         verbose_name = u'Объединениие'
         verbose_name_plural = u'Объединения'
+        ordering = ['rank']
 
 
 class SportClub(models.Model):

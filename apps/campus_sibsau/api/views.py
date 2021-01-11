@@ -17,7 +17,7 @@ def all_unions(request):
     Возвращает список всех объединений.
     """
     logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех объединений")
-    queryset = models.Union.objects.all().order_by('rank')
+    queryset = models.Union.objects.all()
     data = serializers.UnionSerializers(queryset)
     return Response(data)
 
@@ -70,7 +70,7 @@ def all_buildings(request):
     Возвращает список всех корпусов ВУЗа.
     """
     logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех корпусов")
-    queryset = models.Building.objects.all().order_by('name')
+    queryset = models.Building.objects.all()
     return Response(serializers.BuildingSerializers(queryset))
 
 
