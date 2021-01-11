@@ -62,3 +62,38 @@ class Image(models.Model):
     class Meta:
         verbose_name = u'Фото'
         verbose_name_plural = u'Фотографии'
+
+
+class Topic(models.Model):
+    name = models.CharField('Название', max_length=32)
+    description = models.TextField('Описание')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Топик'
+        verbose_name_plural = 'Топики'
+
+
+class Notification(models.Model):
+    PRIORITIES = (
+        (5, 'Нормальный'),
+        (10, 'Высокий')
+    )
+
+    title = models.CharField('Заголовок', max_length=128)
+    text = models.TextField('Текст сообщения')
+    image = models.ImageField(
+        'Изображение',
+        upload_to='informing/notification/',
+        blank=True,
+        null=True
+    )
+    priority = models.PositiveIntegerField('Приоритет', choices=PRIORITIES, default=5)
+    topics = models.ManyToManyField(Topic, verbose_name='Топики')
+    message_id = models.TextField(editable=False)
+
+    class Meta:
+        verbose_name = 'Уведомление'
+        verbose_name_plural = 'Уведомления'
