@@ -1,6 +1,6 @@
 import requests
 from config.settings import env
-from ..api.serializers import NotificationsSerializer 
+from ..api.serializers import NotificationsSerializer
 from json import loads
 
 
