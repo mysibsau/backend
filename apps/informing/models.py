@@ -22,6 +22,7 @@ class Event(Information):
     class Meta:
         verbose_name = u'Мероприятие'
         verbose_name_plural = u'Мероприятия'
+        ordering = ['-id']
 
 
 class News(Information):
@@ -37,6 +38,7 @@ class News(Information):
     class Meta:
         verbose_name = u'Новость'
         verbose_name_plural = u'Новости'
+        ordering = ['-id']
 
 
 class Like(models.Model):
