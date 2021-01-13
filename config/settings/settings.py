@@ -34,6 +34,7 @@ DATABASES = {
         'PASSWORD': env.str('DATABASE_PASSWORD'),
         'HOST': env.str('DATABASE_HOST'),
         'PORT': env.str('DATABASE_PORT'),
+        'CONN_MAX_AGE': 60 * 10,
     }
 }
 
