@@ -12,6 +12,7 @@ class Survey(models.Model):
     class Meta:
         verbose_name = u'Опрос'
         verbose_name_plural = u'Опросы'
+        ordering = ['-id']
 
 
 class Question(models.Model):
@@ -31,6 +32,7 @@ class Question(models.Model):
     class Meta:
         verbose_name = u'Вопрос'
         verbose_name_plural = u'Вопросы'
+        ordering = ['id']
 
 
 class ResponseOption(models.Model):
@@ -48,6 +50,7 @@ class ResponseOption(models.Model):
     class Meta:
         verbose_name = u'Вариант ответа'
         verbose_name_plural = u'Варианты ответов'
+        ordering = ['id']
 
 
 class Answer(models.Model):
