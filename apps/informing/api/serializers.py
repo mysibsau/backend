@@ -60,9 +60,11 @@ def NotificationsSerializer(notification, context):
             'notification': {
                 'title': notification.title,
                 'body': notification.text,
-                'image': request.build_absolute_uri(notification.image.url)
+                'badge': 100
             },
             'to': f'/topics/{topic}',
             'priority': priority
         })
+        if notification.image:
+            result[-1]['image'] = request.build_absolute_uri(notification.image.url)
     return result
