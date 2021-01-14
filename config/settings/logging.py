@@ -32,6 +32,18 @@ LOGGING = {
             'filename': 'logs/campus.log',
             'formatter': 'simple'
         },
+        'file_timetable': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/timetable.log',
+            'formatter': 'simple'
+        },
+        'file_informing': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/informing.log',
+            'formatter': 'simple'
+        },
         'telegram_w0rng': {
             'level': 'WARNING',
             'class': 'telegram_handler.TelegramHandler',
@@ -70,8 +82,13 @@ LOGGING = {
             'level': 'INFO',
             'propagate': True,
         },
+        'apps.informing': {
+            'handlers': ['file_informing', 'telegram_w0rng'],
+            'level': 'INFO',
+            'propagate': True,
+        },
         'apps.timetable': {
-            'handlers': ['file_campus', 'telegram_w0rng', 'telegram_kiri11_mi1'],
+            'handlers': ['file_timetable', 'telegram_w0rng', 'telegram_kiri11_mi1'],
             'level': 'INFO',
             'propagate': True,
         },
