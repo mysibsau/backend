@@ -1,5 +1,6 @@
 from django.utils import timezone
 from django.db.models import F
+from django.http import HttpResponse
 import json
 
 from rest_framework.response import Response
@@ -114,4 +115,6 @@ def add_news(request):
         return Response({'error': 'no data'}, 404)
 
     data = json.loads(request.body)
-    return Response(*parse_data_from_vk.parse(data))
+
+    data, _ = parse_data_from_vk.parse(data)
+    return HttpResponse(data)
