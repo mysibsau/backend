@@ -114,4 +114,4 @@ def add_news(request):
         return Response({'error': 'no data'}, 404)
 
     data = json.loads(request.body)
-    return Response(*parse_data_from_vk(data))
+    return Response(*parse_data_from_vk.parse(data))
