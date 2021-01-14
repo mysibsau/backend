@@ -92,13 +92,15 @@ LOGGING = {
             'level': 'INFO',
             'propagate': True,
         },
-        'django.request': {
-            'handlers': ['telegram_w0rng'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
     },
 }
+
+if not env.bool('DEBUG', default=False):
+    LOGGING['loggers']['django.request'] = {
+        'handlers': ['telegram_w0rng'],
+        'level': 'ERROR',
+        'propagate': True,
+    }
 
 if len(argv) > 1 and argv[1] == 'test':
     logging.disable(logging.CRITICAL)
