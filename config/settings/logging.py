@@ -49,21 +49,21 @@ LOGGING = {
             'class': 'telegram_handler.TelegramHandler',
             'token': TG_TOKEN,
             'chat_id': env.str('TG_W0RNG'),
-            'formatter': 'simple' 
+            'formatter': 'simple'
         },
         'telegram_artoff': {
             'level': 'WARNING',
             'class': 'telegram_handler.TelegramHandler',
             'token': TG_TOKEN,
             'chat_id': env.str('TG_ARTOFF'),
-            'formatter': 'simple' 
+            'formatter': 'simple'
         },
         'telegram_kiri11_mi1': {
             'level': 'WARNING',
             'class': 'telegram_handler.TelegramHandler',
             'token': TG_TOKEN,
             'chat_id': env.str('TG_KIRI11MI1'),
-            'formatter': 'simple' 
+            'formatter': 'simple'
         },
     },
     'loggers': {
