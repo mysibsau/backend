@@ -55,6 +55,9 @@ def save_post(post):
         img_temp.write(urlopen(photo_photo).read())
         img_temp.flush()
 
+        name = img_temp.name.split('media/informing/news/')[1]
+        img_temp.name = 'media/informing/news/' + name
+
         models.Image.objects.create(
             image=File(img_temp),
             news=news
@@ -65,6 +68,7 @@ def filter_post(post):
     """
     Фильтрует неподходящие посты
     """
+    group_id = abs(post.get('from_id', -1))
     if not post:
         logger.info('Пост не передан')
         return
@@ -74,7 +78,7 @@ def filter_post(post):
     if post.get('post_type', 'no_post') != 'post':
         logger.info('Пост имеет не подходящий тип')
         return
-    if not check_contain_allowed_tags(post.get('text', '')):
+    if not check_contain_allowed_tags(post.get('text', ''), group_id):
         logger.info('Пост не содержит нужных хэштегов')
         return
     save_post(post)
