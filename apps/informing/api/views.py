@@ -1,13 +1,14 @@
 from django.utils import timezone
 from django.db.models import F
+import json
 
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, schema
 from drf_yasg.utils import swagger_auto_schema
 
 from . import serializers, docs
 from .. import models
-from ..services import getters, setters
+from ..services import getters, setters, parse_data_from_vk
 
 
 @swagger_auto_schema(**docs.swagger_all_events)
@@ -101,3 +102,16 @@ def view(request, post_id):
     information.update(views=F('views') + 1)
 
     return Response({'good': 'просмотр засчитан'}, 200)
+
+
+@schema(None)
+@api_view(['GET', 'POST'])
+def add_news(request):
+    """
+    CallBack для парсинга запросов от вк
+    """
+    if not request.body:
+        return Response({'error': 'no data'}, 404)
+
+    data = json.loads(request.body)
+    return Response(*parse_data_from_vk(data))
