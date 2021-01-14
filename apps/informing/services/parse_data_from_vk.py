@@ -7,15 +7,16 @@ from django.core.files.temp import NamedTemporaryFile
 from urllib.request import urlopen
 
 
-def check_contain_allowed_tags(text):
+def check_contain_allowed_tags(text, group_id):
     """
     Проверяет содержит ли текст теги, посты с которыми необходимо опубликовать.
     """
-    ALLOWED_TAGS = [
-        '#Reshetnev_University',
-    ]
+    ALLOWED_TAGS_FOR_GROUPS = {
+        168099: ['#Reshetnev_University'],
+        189994777: ['#МойСибгу']
+    }
 
-    for tag in ALLOWED_TAGS:
+    for tag in ALLOWED_TAGS_FOR_GROUPS.get(group_id, []):
         if tag in text:
             return True
     return False
