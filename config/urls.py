@@ -25,9 +25,10 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
-    path('', include('apps.api.urls_v1')),
-    path('v1/', include('apps.api.urls_v1')),
-    path('v2/', include('apps.api.urls_v2')),
+    path('timetable/', include('apps.timetable.api.urls')),
+    path('campus/', include('apps.campus_sibsau.api.urls')),
+    path('informing/', include('apps.informing.api.urls')),
+    path('surveys/', include('apps.surveys.api.urls')),
     path('docs/', schema_view.with_ui('redoc', cache_timeout=0)),
 ]
 
