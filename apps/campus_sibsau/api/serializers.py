@@ -23,6 +23,7 @@ def BuildingSerializers(buildings):
     result = []
     for building in buildings:
         result.append({
+            'id': building.id,
             'coast': building.coast,
             'name': building.name,
             'address': building.address,
