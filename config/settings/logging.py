@@ -72,11 +72,6 @@ LOGGING = {
             'level': 'INFO',
             'propagate': True,
         },
-        'apps.events': {
-            'handlers': ['file_events', 'telegram_w0rng'],
-            'level': 'INFO',
-            'propagate': True,
-        },
         'apps.campus_sibsau': {
             'handlers': ['file_campus', 'telegram_w0rng'],
             'level': 'INFO',

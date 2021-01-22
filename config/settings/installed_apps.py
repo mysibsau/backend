@@ -17,7 +17,6 @@ INSTALLED_APPS = [
 LOCAL_APPS = [
     'apps.timetable',
     'apps.campus_sibsau',
-    'apps.events',
     'apps.surveys',
     'apps.informing'
 ]
