@@ -52,7 +52,7 @@ def join_to_union(request, union_id):
 def all_institutes(request):
     """
     All institutes
-    
+
     Возвращает список всех институтов ВУЗа.
 
     Поле rank служит для изменения порядка отображения элементов.
