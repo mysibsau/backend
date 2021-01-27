@@ -64,7 +64,7 @@ def all_institutes(request):
 
 @swagger_auto_schema(**docs.swagger_all_buildings)
 @api_view(['GET'])
-# @cache_page(60 * 60 * 2)
+@cache_page(60 * 60 * 2)
 def all_buildings(request):
     """
     Возвращает список всех корпусов ВУЗа.
