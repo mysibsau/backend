@@ -136,3 +136,4 @@ dmypy.json
 *.db
 /server/staticfiles
 /server/media
+.env.prod
