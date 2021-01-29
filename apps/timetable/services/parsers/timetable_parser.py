@@ -80,10 +80,10 @@ class Parser:
             subgroup = 0
             if sub_subject.find('i', {'class': 'fa-paperclip'}) is not None:
                 subgroup = self.get_int_subgroup(sub_subject.find_all('li')[-1].text)
-            
+
             if sub_subject.find('li', {'class': 'num_pdgrp'}) is not None:
                 subgroup = self.get_int_subgroup(sub_subject.find('li', {'class': 'num_pdgrp'}).text)
-            
+
             result.append(subgroup)
         return result
 
