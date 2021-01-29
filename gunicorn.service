@@ -8,6 +8,7 @@ User=w0rng
 Group=www-data
 WorkingDirectory=/home/w0rng/server
 ExecStart=/home/w0rng/.venv/bin/gunicorn \
+          --chdir src/ \
           --access-logfile - \
           --workers 3 \
           --max-requests 100 \
