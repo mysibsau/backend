@@ -60,7 +60,6 @@ def NotificationsSerializer(notification, context):
             'notification': {
                 'title': notification.title,
                 'body': notification.text,
-                'badge': 100
             },
             'to': f'/topics/{topic}',
             'priority': priority

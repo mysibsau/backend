@@ -95,6 +95,7 @@ swagger_all_buildings = {
             examples={
                 "application/json": [
                     {
+                        "id": 1,
                         "coast": 1,
                         "name": "Название корпуса",
                         "address": "Адрес корпуса",

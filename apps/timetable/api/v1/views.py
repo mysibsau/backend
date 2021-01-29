@@ -4,16 +4,15 @@ from apps.timetable.services import utils
 from . import serializers
 from apps.timetable import models
 from rest_framework.decorators import api_view, schema
+from apps.timetable.services.getters import get_groups_hash
 
 
 @api_view(['GET'])
 @schema(None)
 @cache_page(60 * 60)
 def groups_hash(request):
-    queryset = models.Group.objects.all()
-    data = serializers.GroupSerializers(queryset)
     return Response({
-        'hash': utils.generate_hash(str(data))
+        'hash': get_groups_hash()
     })
 
 
