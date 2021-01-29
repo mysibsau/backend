@@ -1,6 +1,6 @@
 from requests import post
 from random import randint
-from config.settings.env import env
+from config.settings import env
 
 
 URL_API = 'https://api.vk.com/method/'
@@ -8,7 +8,7 @@ URL_API = 'https://api.vk.com/method/'
 
 def send_message(text: str, peer_id: int) -> None:
     data = {
-        'access_token': env.str('VK_TOKEN'),
+        'access_token': env.VK_TOKEN,
         'random_id': randint(0, 10000000),
         'user_id': peer_id,
         'message': text,

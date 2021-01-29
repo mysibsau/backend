@@ -6,7 +6,7 @@ from json import loads
 
 headers = {
     'Content-Type': 'application/json',
-    'Authorization': f'key={env.str("FIREBASE_TOKEN")}',
+    'Authorization': f'key={env.FIREBASE_TOKEN}',
 }
 
 

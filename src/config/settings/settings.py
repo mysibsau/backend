@@ -1,6 +1,6 @@
 from os import path
 from sentry_sdk.integrations.django import DjangoIntegration
-from .env import env
+from . import env
 from sys import argv
 
 
@@ -9,17 +9,17 @@ from sys import argv
 ##################################################################
 
 BASE_DIR = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = env.SECRET_KEY
 ROOT_URLCONF = 'config.urls'
 WSGI_APPLICATION = 'config.wsgi.application'
 ALLOWED_HOSTS = ['*']
-ADMIN_URL = env.str('ADMIN_URL', default='admin/')
+ADMIN_URL = env.ADMIN_URL
 
 ##################################################################
 # Настройки Debug
 ##################################################################
 
-DEBUG = env.bool('DEBUG', default=False)
+DEBUG = env.DEBUG
 TEMPLATE_DEBUG = DEBUG
 
 ##################################################################
@@ -29,11 +29,11 @@ TEMPLATE_DEBUG = DEBUG
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env.str('DATABASE_NAME'),
-        'USER': env.str('DATABASE_USER'),
-        'PASSWORD': env.str('DATABASE_PASSWORD'),
-        'HOST': env.str('DATABASE_HOST'),
-        'PORT': env.str('DATABASE_PORT'),
+        'NAME': env.DATABASE_NAME,
+        'USER': env.DATABASE_USER,
+        'PASSWORD': env.DATABASE_PASSWORD,
+        'HOST': env.DATABASE_HOST,
+        'PORT': env.DATABASE_PORT,
     }
 }
 
@@ -113,11 +113,11 @@ MEDIA_ROOT = path.join(BASE_DIR, 'media')
 # Настройки sentry
 ##################################################################
 
-if env.bool('SENTRY'):
+if env.SENTRY:
     import sentry_sdk
 
     sentry_sdk.init(
-        dsn=env.str('DSN'),
+        dsn=env.DSN,
         integrations=[DjangoIntegration()],
         traces_sample_rate=1.0,
         send_default_pii=True
@@ -132,5 +132,5 @@ REST_FRAMEWORK = {
 }
 
 REDOC_SETTINGS = {
-   'LAZY_RENDERING': False,
+    'LAZY_RENDERING': False,
 }
