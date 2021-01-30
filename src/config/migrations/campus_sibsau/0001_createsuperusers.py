@@ -1,19 +1,19 @@
 from django.db import migrations
 from django.utils import timezone
 from django.contrib.auth import get_user_model
-from config.settings.env import env
+from config.settings import env
 
 
 def create_superuser(apps, chema_editor):
-    for nick in env.list("SUPERUSERS"):
+    for nick in env.SUPERUSERS:
         superuser = get_user_model()(
-            is_active = True,
-            is_superuser = True,
-            is_staff = True,
-            username = nick,
-            last_login = timezone.localtime()
+            is_active=True,
+            is_superuser=True,
+            is_staff=True,
+            username=nick,
+            last_login=timezone.localtime()
         )
-        superuser.set_password(env.str('DEFAULT_PASSWORD'))
+        superuser.set_password(env.DEFAULT_PASSWORD)
         superuser.save()
 
 

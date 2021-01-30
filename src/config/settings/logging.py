@@ -1,9 +1,8 @@
-from .env import env
+from . import env
 import logging
 from sys import argv
 
 
-TG_TOKEN = env.str('TG_TOKEN')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -44,55 +43,41 @@ LOGGING = {
             'filename': 'logs/informing.log',
             'formatter': 'simple'
         },
-        'telegram_w0rng': {
+        'telegram': {
             'level': 'WARNING',
             'class': 'telegram_handler.TelegramHandler',
-            'token': TG_TOKEN,
-            'chat_id': env.str('TG_W0RNG'),
-            'formatter': 'simple'
-        },
-        'telegram_artoff': {
-            'level': 'WARNING',
-            'class': 'telegram_handler.TelegramHandler',
-            'token': TG_TOKEN,
-            'chat_id': env.str('TG_ARTOFF'),
-            'formatter': 'simple'
-        },
-        'telegram_kiri11_mi1': {
-            'level': 'WARNING',
-            'class': 'telegram_handler.TelegramHandler',
-            'token': TG_TOKEN,
-            'chat_id': env.str('TG_KIRI11MI1'),
+            'token': env.TG_TOKEN,
+            'chat_id': env.TG_DELVELOPER,
             'formatter': 'simple'
         },
     },
     'loggers': {
         'apps.surveys': {
-            'handlers': ['file_surveys', 'telegram_w0rng'],
+            'handlers': ['file_surveys', 'telegram'],
             'level': 'INFO',
             'propagate': True,
         },
         'apps.campus_sibsau': {
-            'handlers': ['file_campus', 'telegram_w0rng'],
+            'handlers': ['file_campus', 'telegram'],
             'level': 'INFO',
             'propagate': True,
         },
         'apps.informing': {
-            'handlers': ['file_informing', 'telegram_w0rng'],
+            'handlers': ['file_informing', 'telegram'],
             'level': 'INFO',
             'propagate': True,
         },
         'apps.timetable': {
-            'handlers': ['file_timetable', 'telegram_w0rng', 'telegram_kiri11_mi1'],
+            'handlers': ['file_timetable', 'telegram'],
             'level': 'INFO',
             'propagate': True,
         },
     },
 }
 
-if not env.bool('DEBUG', default=False):
+if not env.DEBUG:
     LOGGING['loggers']['django.request'] = {
-        'handlers': ['telegram_w0rng'],
+        'handlers': ['telegram'],
         'level': 'ERROR',
         'propagate': True,
     }

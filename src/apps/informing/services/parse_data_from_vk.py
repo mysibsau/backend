@@ -1,4 +1,4 @@
-from config.settings.env import env
+from config.settings import env
 from .. import models, logger
 from django.utils import timezone
 from datetime import timedelta
@@ -100,7 +100,7 @@ def parse(data):
     if data.get('type', 'no_confirmation') == 'confirmation':
         return confirmation(data.get('group_id', 0)), 200
 
-    if data.get('secret') != env.str('VK_SECRET_WORD'):
+    if data.get('secret') != env.VK_SECRET_WORD:
         logger.warning('Неправильный секретный ключ')
         return {'error': 'bad secret key'}, 418
 
