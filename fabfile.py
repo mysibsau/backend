@@ -19,7 +19,7 @@ def _get_time():
 
 def _media_backup(c):
     print('\tbackup media...')
-    c.run(f'tar -cf media_{_get_time()}.tar.gz {PATH}media')
+    c.run(f'tar -cf media_{_get_time()}.tar.gz {PATH}/media')
     print('\tOK media\n')
 
 
@@ -52,21 +52,24 @@ def backup(c):
 
 @task
 def deploy(c):
-
-    backup(c)
-
     print('Создание архива...')
-    c.run('cp -r src for_deploy')
-    c.run('rm -rf for_deploy/media')
-    c.run('rm -rf for_deploy/tests')
+    c.run('cp -r src deploy')
+    c.run('rm -rf deploy/media')
+    c.run('rm -rf deploy/tests')
 
-    c.run('tar -cjf deploy for_deploy')
-    c.run('rm -rf for_deploy')
+    c.run('tar -cjf deploy.bz2 deploy')
+    c.run('rm -rf deploy')
     print('Создание архива окончено')
 
     print('Загрузка архива...')
-    server.put('deploy')
+    server.put('deploy.bz2')
+    c.run('rm deploy.bz2')
     print('Загрузка архива окончена')
 
-    # c.run('tar -xf for_deploy.tar.bz2')
-    c.run('rm deploy')
+    server.run('tar -xf deploy.bz2')
+    server.run('rm deploy.bz2')
+
+    server.run(f'cp -r {PATH}/media deploy/')
+
+    # server.run('mv server server_old')
+    # server.run('mv deploy server')
