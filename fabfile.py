@@ -7,6 +7,7 @@ from invoke import Responder
 connect_kwargs = {'password': getenv('SERVER_PASSWORD')}
 server = Connection(
     getenv('SERVER'),
+    port=getenv('SERVER_PORT'),
     connect_kwargs=connect_kwargs
 )
 PATH = getenv('SERVER_PATH')
@@ -47,3 +48,25 @@ def backup(c):
     _db_backup(server)
 
     print('OK')
+
+
+@task
+def deploy(c):
+
+    backup(c)
+
+    print('Создание архива...')
+    c.run('cp -r src for_deploy')
+    c.run('rm -rf for_deploy/media')
+    c.run('rm -rf for_deploy/tests')
+
+    c.run('tar -cjf deploy for_deploy')
+    c.run('rm -rf for_deploy')
+    print('Создание архива окончено')
+
+    print('Загрузка архива...')
+    server.put('deploy')
+    print('Загрузка архива окончена')
+
+    # c.run('tar -xf for_deploy.tar.bz2')
+    c.run('rm deploy')
