@@ -10,6 +10,11 @@ psycopg2-binary = "*"
 pillow = "*"
 gunicorn = "*"
 drf-yasg = "*"
+sentry-sdk = "*"
+python-telegram-handler = "*"
+django-modeltranslation = "*"
+django-nested-inline = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 flake8 = "*"
