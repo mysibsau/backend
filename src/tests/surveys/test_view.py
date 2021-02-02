@@ -1,5 +1,6 @@
 from rest_framework.test import APIRequestFactory
-from apps.surveys import views, models
+from apps.surveys import models
+from apps.surveys.api import views
 from django.test import TestCase
 from django.utils import timezone
 
