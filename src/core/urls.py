@@ -31,6 +31,7 @@ urlpatterns = [
     path('v2/campus/', include('apps.campus_sibsau.api.urls')),
     path('v2/informing/', include('apps.informing.api.urls')),
     path('v2/surveys/', include('apps.surveys.api.urls')),
+    path('v2/support/', include('apps.support.api.urls')),
     path('docs/', schema_view.with_ui('redoc', cache_timeout=0)),
 ]
 
