@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from apps.support import models
 from apps.support.api import serializers, docs
 from rest_framework.decorators import api_view
-from django.db.models import Q
+from django.db.models import Q, F
 from drf_yasg.utils import swagger_auto_schema
 from json import loads as json_loads
 
@@ -15,6 +15,22 @@ def all_faq(request):
     """
     queryset = models.FAQ.objects.filter(~Q(answer=''))
     return Response(serializers.FAQSerializer(queryset, many=True).data)
+
+
+@swagger_auto_schema(**docs.swagger_view_faq)
+@api_view(['POST'])
+def view_faq(request, faq_id):
+    """
+    Увеличивает счетчик просмотров
+    """
+    faq = models.FAQ.objects.filter(id=faq_id)
+
+    if not faq or not faq.first().answer:
+        return Response({'error': 'Запись не найдена'}, 404)
+
+    faq.update(views=F('views') + 1)
+
+    return Response({'good': 'просмотр засчитан'}, 200)
 
 
 @swagger_auto_schema(**docs.swagger_create_ask)
