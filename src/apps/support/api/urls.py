@@ -4,4 +4,5 @@ from django.urls import path
 
 urlpatterns = [
     path('faq/', views.all_faq),
+    path('ask/', views.create_ask),
 ]
