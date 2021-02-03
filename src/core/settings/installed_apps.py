@@ -20,7 +20,8 @@ LOCAL_APPS = [
     'apps.timetable',
     'apps.campus_sibsau',
     'apps.surveys',
-    'apps.informing'
+    'apps.informing',
+    'apps.support',
 ]
 
 INSTALLED_APPS += LOCAL_APPS
