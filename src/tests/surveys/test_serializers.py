@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.utils import timezone
-from apps.surveys import models, serializers
+from apps.surveys import models
+from apps.surveys.api import serializers
 from random import randint
 
 
@@ -33,7 +34,7 @@ class SurveysSerializersTest(TestCase):
     def test_contains_expected_fields(self):
         """Проверяет, содержит ли сериализованный объект все нужные поля"""
         data = self.serializer[0]
-        self.assertEqual(set(data.keys()), set(['id', 'name', 'date_to']))
+        self.assertEqual(set(data.keys()), set(['id', 'name']))
 
     def test_id_field_content(self):
         """Проверка значения поля id"""
@@ -44,11 +45,6 @@ class SurveysSerializersTest(TestCase):
         """Проверка значения поля name"""
         data = self.serializer[0]
         self.assertEqual(data['name'], self.survey_attributes['name'])
-
-    def test_dateto_field_content(self):
-        """Проверка значения поля date_to"""
-        data = self.serializer[0]
-        self.assertEqual(data['date_to'], self.survey_attributes['date_to'])
 
 
 class ResponsesSerializerTest(TestCase):

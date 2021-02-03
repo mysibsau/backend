@@ -80,7 +80,7 @@ class SurveyAdminTest(TestCase):
         )
         result = response._container
         head = b'id,who,survey,question,answers\r\n'
-        row = b'1,123,Test,text,"Yes, No"\r\n'
+        row = b'1,123,Test2,text,"Yes, No"\r\n'
         self.assertEqual(result[1], head)
         self.assertEqual(result[2], row)
 

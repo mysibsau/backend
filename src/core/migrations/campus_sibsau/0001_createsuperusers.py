@@ -1,7 +1,7 @@
 from django.db import migrations
 from django.utils import timezone
 from django.contrib.auth import get_user_model
-from config.settings import env
+from core.settings import env
 
 
 def create_superuser(apps, chema_editor):

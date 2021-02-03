@@ -6,7 +6,7 @@ from typing import Optional
 def user_already_answered(uuid: str, survey_id: int) -> bool:
     """Проверяет, ответил ли пользователь на данный опрос"""
     answers = models.Answer.objects.filter(
-        who=uuid, 
+        who=uuid,
         survey__id=survey_id,
     ).exclude(survey__reanswer=True)
     return bool(answers.count())

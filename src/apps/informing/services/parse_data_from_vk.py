@@ -1,4 +1,4 @@
-from config.settings import env
+from constance import config
 from .. import models, logger
 from django.utils import timezone
 from datetime import timedelta
@@ -84,23 +84,13 @@ def filter_post(post):
     save_post(post)
 
 
-def confirmation(group_id):
-    """
-    Получение кода авторизации группы
-    """
-    GROUPS_AND_CODE = {
-        197960182: 'a4fc53fb',
-    }
-    return GROUPS_AND_CODE.get(group_id, '1')
-
-
 def parse(data):
     logger.info('Пришел новый запрос от vk')
 
-    if data.get('type', 'no_confirmation') == 'confirmation':
-        return confirmation(data.get('group_id', 0)), 200
+    if data.get('type', None) == 'confirmation':
+        return config.VK_REGISTER_GROUP, 200
 
-    if data.get('secret') != env.VK_SECRET_WORD:
+    if data.get('secret') != config.VK_SECRET_WORD:
         logger.warning('Неправильный секретный ключ')
         return {'error': 'bad secret key'}, 418
 

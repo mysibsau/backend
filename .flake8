@@ -1,5 +1,5 @@
 [flake8]
-ignore = E501, E265, F811, PT001, DJ05
+ignore = E501
 max-line-length = 160
 exclude =
       static,
@@ -7,3 +7,5 @@ exclude =
       frontend,
       .git,
       __pycache__
+      docs.py
+      fabfile.py
