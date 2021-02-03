@@ -12,6 +12,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'nested_inline',
     'drf_yasg',
+    'constance',
+    'constance.backends.database',
 ]
 
 LOCAL_APPS = [
