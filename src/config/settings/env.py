@@ -19,8 +19,3 @@ DSN = getenv('DSN')
 
 TG_TOKEN = getenv('TG_TOKEN')
 TG_DELVELOPER = getenv('TG_DELVELOPER')
-
-VK_TOKEN = getenv('VK_TOKEN')
-VK_SECRET_WORD = getenv('VK_SECRET_WORD', 'secret')
-
-FIREBASE_TOKEN = getenv('FIREBASE_TOKEN')

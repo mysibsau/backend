@@ -1,12 +1,12 @@
 import requests
-from config.settings import env
+from constance import config
 from ..api.serializers import NotificationsSerializer
 from json import loads
 
 
 headers = {
     'Content-Type': 'application/json',
-    'Authorization': f'key={env.FIREBASE_TOKEN}',
+    'Authorization': f'key={config.FIREBASE_TOKEN}',
 }
 
 
