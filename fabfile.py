@@ -19,7 +19,7 @@ def _get_time():
 
 def _media_backup(c):
     print('\tbackup media...')
-    c.run(f'tar -cf media_{_get_time()}.tar.gz {PATH}/media')
+    c.run(f'tar -cf backups/media_{_get_time()}.tar.gz {PATH}/media')
     print('\tOK media\n')
 
 
@@ -31,7 +31,7 @@ def _db_backup(c):
     )
     c.run(
         f'pg_dump -h 127.0.0.1 -U {getenv("DATABASE_USER")} -F t'
-        f' -f dump_db_{_get_time()}.tar {getenv("DATABASE_NAME")}',
+        f' -f backups/dump_db_{_get_time()}.tar {getenv("DATABASE_NAME")}',
         watchers=[db_password]
     )
     print('\tOK database')
@@ -43,7 +43,7 @@ def backup(c):
     Создание резервных копий
     """
     print('Run backup...')
-
+    server.run('mkdir -p backups')
     _media_backup(server)
     _db_backup(server)
 
@@ -64,13 +64,19 @@ def deploy(c):
     print('Загрузка архива...')
     server.put('deploy.bz2')
     c.run('rm deploy.bz2')
-    print('Загрузка архива окончена')
 
     server.run('tar -xf deploy.bz2')
     server.run('rm deploy.bz2')
 
     server.run(f'cp -r {PATH}/media deploy/')
+    print('Загрузка архива окончена')
+
+    print('Загрузка системных ресурсов...')
     server.put('.env.prod', 'env.deploy')
+    server.put('Pipfile')
+    server.put('Pipfile.lock')
+    print('Загрузка системных окончена')
+
 
     # server.run('mv server server_old')
     # server.run('mv deploy server')
