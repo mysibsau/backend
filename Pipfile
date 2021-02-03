@@ -17,6 +17,7 @@ django-nested-inline = "*"
 beautifulsoup4 = "*"
 django-constance = "*"
 django-picklefield = "*"
+django-environ = "*"
 
 [dev-packages]
 flake8 = "*"
