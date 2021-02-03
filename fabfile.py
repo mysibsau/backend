@@ -10,6 +10,10 @@ server = Connection(
     port=getenv('SERVER_PORT'),
     connect_kwargs=connect_kwargs
 )
+sudo_password = Responder(
+        pattern=r'\[sudo\] password:',
+        response=f'{getenv("SERVER_PASSWORD")}\n',
+    )
 PATH = getenv('SERVER_PATH')
 
 
@@ -38,10 +42,6 @@ def _db_backup(c):
 
 
 def _load_configs(c):
-    sudo_password = Responder(
-        pattern=r'\[sudo\] password:',
-        response=f'{getenv("SERVER_PASSWORD")}\n',
-    )
     server.sudo(
         'mv /etc/systemd/system/gunicorn.service /etc/systemd/system/gunicorn_old.service',
         watchers=[sudo_password]
@@ -72,6 +72,13 @@ def backup(c):
 
 @task
 def deploy(c):
+    print('Удаление старых версий...')
+    server.run('rm -rf server_old')
+    server.sudo(
+        'rm rm /etc/systemd/system/gunicorn_old.service',
+        watchers=[sudo_password]
+    )
+
     print('Создание архива...')
     c.run('cp -r src deploy')
     c.run('rm -rf deploy/media')
@@ -111,10 +118,6 @@ def deploy(c):
 
 @task
 def cancel(c):
-    sudo_password = Responder(
-        pattern=r'\[sudo\] password:',
-        response=f'{getenv("SERVER_PASSWORD")}\n',
-    )
     print('Откат папки проекта...')
     server.run('rm -rf server')
     server.run('mv server_old server')
