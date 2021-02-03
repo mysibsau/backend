@@ -12,3 +12,4 @@ class FAQ(models.Model):
     class Meta:
         verbose_name = 'FAQ'
         verbose_name_plural = 'FAQ'
+        ordering = ['views']
