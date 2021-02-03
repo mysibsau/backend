@@ -42,3 +42,22 @@ swagger_create_ask = {
     },
     'tags': ['Support']
 }
+
+swagger_view_faq = {
+    'operation_id': 'View FAQ',
+    'methods': ['POST'],
+    'manual_parameters': [
+        openapi.Parameter('faq_id', openapi.IN_PATH, "Id FAQ", type=openapi.TYPE_INTEGER, required=True),
+    ],
+    'responses': {
+        200: openapi.Response(
+            description="Просмотр засчитан",
+            examples={"application/json": {'good': 'просмотр засчитан'}}
+        ),
+        404: openapi.Response(
+            description="Объект не найден",
+            examples={"application/json": {'error': 'Запись не найдена'}}
+        ),
+    },
+    'tags': ['Support']
+}
