@@ -70,6 +70,7 @@ def deploy(c):
     server.run('rm deploy.bz2')
 
     server.run(f'cp -r {PATH}/media deploy/')
+    server.put('.env.prod', 'env.deploy')
 
     # server.run('mv server server_old')
     # server.run('mv deploy server')
