@@ -10,8 +10,8 @@ from sys import argv
 
 BASE_DIR = path.dirname(path.dirname(path.dirname(path.abspath(__file__))))
 SECRET_KEY = env.SECRET_KEY
-ROOT_URLCONF = 'config.urls'
-WSGI_APPLICATION = 'config.wsgi.application'
+ROOT_URLCONF = 'core.urls'
+WSGI_APPLICATION = 'core.wsgi.application'
 ALLOWED_HOSTS = ['*']
 ADMIN_URL = env.ADMIN_URL
 
