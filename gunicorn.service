@@ -7,13 +7,12 @@ After=network.target
 User=w0rng
 Group=www-data
 WorkingDirectory=/home/w0rng/server
-ExecStart=/home/w0rng/.venv/bin/gunicorn \
-          --chdir src/ \
+ExecStart=/home/w0rng/.local/share/virtualenvs/w0rng-W0sN0_hT/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
           --max-requests 100 \
           --bind unix:/run/gunicorn.sock \
-          config.wsgi:application
+          core.wsgi:application
 
 [Install]
 WantedBy=multi-user.target

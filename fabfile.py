@@ -19,7 +19,7 @@ def _get_time():
 
 def _media_backup(c):
     print('\tbackup media...')
-    c.run(f'tar -cf media_{_get_time()}.tar.gz {PATH}/media')
+    c.run(f'tar -cf backups/media_{_get_time()}.tar.gz {PATH}/media')
     print('\tOK media\n')
 
 
@@ -31,10 +31,30 @@ def _db_backup(c):
     )
     c.run(
         f'pg_dump -h 127.0.0.1 -U {getenv("DATABASE_USER")} -F t'
-        f' -f dump_db_{_get_time()}.tar {getenv("DATABASE_NAME")}',
+        f' -f backups/dump_db_{_get_time()}.tar {getenv("DATABASE_NAME")}',
         watchers=[db_password]
     )
     print('\tOK database')
+
+
+def _load_configs(c):
+    sudo_password = Responder(
+        pattern=r'\[sudo\] password:',
+        response=f'{getenv("SERVER_PASSWORD")}\n',
+    )
+    server.sudo(
+        'mv /etc/systemd/system/gunicorn.service /etc/systemd/system/gunicorn_old.service',
+        watchers=[sudo_password]
+    )
+    server.put('gunicorn.service')
+    server.sudo(
+        'mv gunicorn.service /etc/systemd/system/gunicorn.service',
+        watchers=[sudo_password]
+    )
+    server.sudo(
+        'systemctl restart gunicorn.service',
+        watchers=[sudo_password]
+    )
 
 
 @task
@@ -43,7 +63,7 @@ def backup(c):
     Создание резервных копий
     """
     print('Run backup...')
-
+    server.run('mkdir -p backups')
     _media_backup(server)
     _db_backup(server)
 
@@ -59,17 +79,56 @@ def deploy(c):
 
     c.run('tar -cjf deploy.bz2 deploy')
     c.run('rm -rf deploy')
-    print('Создание архива окончено')
 
     print('Загрузка архива...')
     server.put('deploy.bz2')
     c.run('rm deploy.bz2')
-    print('Загрузка архива окончена')
 
     server.run('tar -xf deploy.bz2')
     server.run('rm deploy.bz2')
 
+    print('Перенос папки медиа...')
     server.run(f'cp -r {PATH}/media deploy/')
 
-    # server.run('mv server server_old')
-    # server.run('mv deploy server')
+    print('Загрузка системных ресурсов...')
+    server.put('.env.prod', '.env')
+    server.put('Pipfile.lock')
+
+    print('Установка пакетов...')
+    server.run('python3 -m pipenv sync')
+
+    print('Перенос папки проекта')
+    server.run('mv server server_old')
+    server.run('mv deploy server')
+
+    print('Накатываение миграций...')
+    with server.cd('server/'):
+        server.run('python3 -m pipenv run python manage.py migrate')
+
+    print('Загрузка конфигов...')
+    _load_configs(c)
+
+
+@task
+def cancel(c):
+    sudo_password = Responder(
+        pattern=r'\[sudo\] password:',
+        response=f'{getenv("SERVER_PASSWORD")}\n',
+    )
+    print('Откат папки проекта...')
+    server.run('rm -rf server')
+    server.run('mv server_old server')
+
+    print('Откат конфигов')
+    server.sudo(
+        'rm /etc/systemd/system/gunicorn.service',
+        watchers=[sudo_password]
+    )
+    server.sudo(
+        'mv /etc/systemd/system/gunicorn_old.service /etc/systemd/system/gunicorn.service',
+        watchers=[sudo_password]
+    )
+    server.sudo(
+        'systemctl restart gunicorn.service',
+        watchers=[sudo_password]
+    )
