@@ -95,6 +95,7 @@ def load_all_configs(c):
     Деплой всех конфигов на сервер
     """
     load_configs_gunicorn(c)
+    load_config_nginx(c)
 
 
 @task
@@ -158,6 +159,9 @@ def deploy(c):
     print('Сбор статик файлов')
     with server.cd('server/'):
         server.run('python3 -m pipenv run python manage.py collectstatic --noinput')
+
+    print('Очистка папки...')
+    server.run('rm Pipfile.lock')
 
     print('Загрузка конфигов...')
     load_all_configs(c)
