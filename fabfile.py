@@ -41,7 +41,11 @@ def _db_backup(c):
     print('\tOK database')
 
 
-def _load_configs(c):
+def load_configs_gunicorn(c):
+    """
+    Деплой gunicorn конфига на сервер
+    """
+    print('Деплой gunicorn конфига...')
     server.sudo(
         'mv /etc/systemd/system/gunicorn.service /etc/systemd/system/gunicorn_old.service',
         watchers=[sudo_password]
@@ -55,6 +59,42 @@ def _load_configs(c):
         'systemctl restart gunicorn.service',
         watchers=[sudo_password]
     )
+
+
+@task
+def load_config_nginx(c):
+    """
+    Деплой nginx конфига на сервер
+    """
+    print('Деплой nginx конфига...')
+    server.sudo(
+        'mv /etc/nginx/sites-available/mysibsau /etc/nginx/sites-available/mysibsau_old',
+        watchers=[sudo_password]
+    )
+    server.sudo(
+        'rm /etc/nginx/sites-enabled/mysibsau',
+        watchers=[sudo_password]
+    )
+    server.put('nginx.conf')
+    server.sudo(
+        'mv nginx.conf /etc/nginx/sites-available/mysibsau',
+        watchers=[sudo_password]
+    )
+    server.sudo(
+        'sudo ln -s /etc/nginx/sites-available/mysibsau /etc/nginx/sites-enabled',
+        watchers=[sudo_password]
+    )
+    server.sudo(
+        'sudo nginx -t && sudo systemctl restart nginx',
+        watchers=[sudo_password]
+    )
+
+@task
+def load_all_configs(c):
+    """
+    Деплой всех конфигов на сервер
+    """
+    load_configs_gunicorn(c)
 
 
 @task
@@ -72,6 +112,9 @@ def backup(c):
 
 @task
 def deploy(c):
+    """
+    Деплой проекта на сервер
+    """
     print('Удаление старых версий...')
     server.run('rm -rf server_old')
     server.sudo(
@@ -112,12 +155,19 @@ def deploy(c):
     with server.cd('server/'):
         server.run('python3 -m pipenv run python manage.py migrate')
 
+    print('Сбор статик файлов')
+    with server.cd('server/'):
+        server.run('python3 -m pipenv run python manage.py collectstatic --noinput')
+
     print('Загрузка конфигов...')
-    _load_configs(c)
+    load_all_configs(c)
 
 
 @task
 def cancel(c):
+    """
+    Отменить последний деплой
+    """
     print('Откат папки проекта...')
     server.run('rm -rf server')
     server.run('mv server_old server')
