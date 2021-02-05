@@ -33,5 +33,5 @@ class UnionTranslationOptions(TranslationOptions):
 
 
 @register(models.SportClub)
-class UnionTranslationOptions(TranslationOptions):
+class SportClubTranslationOptions(TranslationOptions):
     fields = ('name', 'fio', 'address', 'dates')
