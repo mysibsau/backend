@@ -5,10 +5,12 @@ from rest_framework.decorators import api_view
 from django.db.models import Q, F
 from drf_yasg.utils import swagger_auto_schema
 from json import loads as json_loads
+from django.views.decorators.cache import cache_page
 
 
 @swagger_auto_schema(**docs.swagger_all_faq)
 @api_view(['GET'])
+@cache_page(60 * 60 * 2)
 def all_faq(request):
     """
     Возвращает все FAQ
