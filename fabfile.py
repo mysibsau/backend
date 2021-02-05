@@ -47,6 +47,10 @@ def load_configs_gunicorn(c):
     """
     print('Деплой gunicorn конфига...')
     server.sudo(
+        'rm /etc/systemd/system/gunicorn_old.service',
+        watchers=[sudo_password]
+    )
+    server.sudo(
         'mv /etc/systemd/system/gunicorn.service /etc/systemd/system/gunicorn_old.service',
         watchers=[sudo_password]
     )
@@ -67,6 +71,10 @@ def load_config_nginx(c):
     Деплой nginx конфига на сервер
     """
     print('Деплой nginx конфига...')
+    server.sudo(
+        'rm /etc/nginx/sites-available/mysibsau_old',
+        watchers=[sudo_password]
+    )
     server.sudo(
         'mv /etc/nginx/sites-available/mysibsau /etc/nginx/sites-available/mysibsau_old',
         watchers=[sudo_password]
@@ -118,10 +126,6 @@ def deploy(c):
     """
     print('Удаление старых версий...')
     server.run('rm -rf server_old')
-    server.sudo(
-        'rm rm /etc/systemd/system/gunicorn_old.service',
-        watchers=[sudo_password]
-    )
 
     print('Создание архива...')
     c.run('cp -r src deploy')
