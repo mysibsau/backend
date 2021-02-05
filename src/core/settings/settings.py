@@ -137,6 +137,6 @@ REDOC_SETTINGS = {
 
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
-        None: {}
+        None: {},
     },
 }
