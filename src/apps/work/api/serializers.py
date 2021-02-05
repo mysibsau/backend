@@ -17,7 +17,7 @@ def InfoSerializer(vacancy: models.Vacancy) -> dict:
     }
 
 
-def VacancySerialization(vacancies: List[models.Vacancy]) -> dict:
+def VacanciesSerialization(vacancies: List[models.Vacancy]) -> dict:
     result = []
     for vacancy in vacancies:
         result.append({
