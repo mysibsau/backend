@@ -22,6 +22,7 @@ LOCAL_APPS = [
     'apps.surveys',
     'apps.informing',
     'apps.support',
+    'apps.work',
 ]
 
 INSTALLED_APPS += LOCAL_APPS
