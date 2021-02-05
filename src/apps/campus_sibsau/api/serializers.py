@@ -110,6 +110,7 @@ def DesignOfficesSerializer(offices: List[models.DesignOffice]):
     for office in offices:
         result.append({
             'id': office.id,
+            'name': office.name,
             'address': office.address,
             'fio': office.fio,
             'email': office.email,
