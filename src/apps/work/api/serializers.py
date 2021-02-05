@@ -1,20 +1,19 @@
+from django.utils.translation import gettext
 from apps.work import models
-from typing import List
+from typing import List, Optional
 
 
 def InfoSerializer(vacancy: models.Vacancy) -> dict:
-    return {
-        vacancy._meta.get_field('company').verbose_name: vacancy.company,
-        vacancy._meta.get_field('company').verbose_name: vacancy.company,
-        vacancy._meta.get_field('duties').verbose_name: vacancy.duties,
-        vacancy._meta.get_field('requirements').verbose_name: vacancy.requirements,
-        vacancy._meta.get_field('conditions').verbose_name: vacancy.conditions,
-        vacancy._meta.get_field('schedule').verbose_name: vacancy.schedule,
-        vacancy._meta.get_field('address').verbose_name: vacancy.address,
-        vacancy._meta.get_field('add_info').verbose_name: vacancy.add_info,
-        vacancy._meta.get_field('contacts').verbose_name: vacancy.contacts,
-        vacancy._meta.get_field('publication_date').verbose_name: vacancy.publication_date,
-    }
+    fields = [
+        'company', 'company', 'duties',
+        'requirements', 'conditions', 'schedule',
+        'address', 'add_info', 'contacts', 'publication_date',
+    ]
+    result = dict()
+    for filed in fields:
+        if f := getattr(vacancy, filed):
+            result[vacancy._meta.get_field(filed).verbose_name] = f
+    return result
 
 
 def VacanciesSerialization(vacancies: List[models.Vacancy]) -> dict:
