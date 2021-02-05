@@ -13,5 +13,6 @@ LANGUAGES = (
 
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'ru'
 MODELTRANSLATION_TRANSLATION_FILES = [
-    'apps.campus_sibsau.translate'
+    'apps.campus_sibsau.translate',
+    'apps.support.translate',
 ]
