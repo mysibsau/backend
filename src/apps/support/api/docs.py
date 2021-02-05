@@ -48,6 +48,7 @@ swagger_view_faq = {
     'methods': ['POST'],
     'manual_parameters': [
         openapi.Parameter('faq_id', openapi.IN_PATH, "Id FAQ", type=openapi.TYPE_INTEGER, required=True),
+        openapi.Parameter('language', openapi.IN_QUERY, "Язык ответа. Может быть *ru* или *en*", type=openapi.TYPE_STRING, default='ru'),
     ],
     'responses': {
         200: openapi.Response(
