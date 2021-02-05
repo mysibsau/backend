@@ -103,3 +103,16 @@ def SportClubSerializer(clubs: List[models.SportClub]):
             'dates': club.dates,
         })
     return result
+
+
+def DesignOfficesSerializer(offices: List[models.DesignOffice]):
+    result = []
+    for office in offices:
+        result.append({
+            'id': office.id,
+            'address': office.address,
+            'fio': office.fio,
+            'email': office.email,
+            'about': office.about,
+        })
+    return result
