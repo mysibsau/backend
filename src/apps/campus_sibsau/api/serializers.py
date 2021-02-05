@@ -90,6 +90,7 @@ def SportClubSerializer(clubs):
     result = []
     for club in clubs:
         result.append({
+            'logo': club.logo.url,
             'name': club.name,
             'fio': club.fio,
             'phone': club.phone,
