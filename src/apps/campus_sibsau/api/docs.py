@@ -154,6 +154,7 @@ swagger_all_sport_clubs = {
             examples={
                 "application/json": [
                     {
+                        "logo": "/media/campus/sports/logo/name.jpg",
                         "name": "Название кружка",
                         "fio": "ФИО тренера",
                         "phone": "телефон тренера",
