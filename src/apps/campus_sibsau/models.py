@@ -136,6 +136,11 @@ class Union(models.Model):
 
 
 class SportClub(models.Model):
+    logo = models.ImageField(
+        verbose_name='Логотип',
+        upload_to='campus/sports/logo',
+        blank=True,
+    )
     name = models.CharField('Название кружка', max_length=200)
     fio = models.CharField('Тренер', max_length=200)
     phone = models.CharField('Телефон тренера', max_length=19)
