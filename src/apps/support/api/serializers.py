@@ -5,4 +5,4 @@ from rest_framework import serializers
 class FAQSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.FAQ
-        fields = '__all__'
+        fields = ('id', 'question', 'answer', 'views')
