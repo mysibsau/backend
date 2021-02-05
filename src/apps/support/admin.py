@@ -1,6 +1,7 @@
 from django.contrib import admin
 from apps.support import models
 from django.db.models import Q
+from modeltranslation.admin import TabbedTranslationAdmin
 
 
 class BlankAnswerFilter(admin.SimpleListFilter):
@@ -23,6 +24,6 @@ class BlankAnswerFilter(admin.SimpleListFilter):
 
 
 @admin.register(models.FAQ)
-class NewsAdmin(admin.ModelAdmin):
+class NewsAdmin(TabbedTranslationAdmin):
     list_display = ('id', 'question', 'answer', 'views')
     list_filter = [BlankAnswerFilter]
