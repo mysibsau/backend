@@ -167,3 +167,25 @@ swagger_all_sport_clubs = {
     },
     'tags': ['Campus']
 }
+
+swagger_all_design_office = {
+    'operation_id': 'All design offices',
+    'methods': ['GET'],
+    'responses': {
+        200: openapi.Response(
+            description="Вернулся список всех СКБ",
+            examples={
+                "application/json": [
+                    {
+                        "id": 0,
+                        "address": "Место расположения СКБ",
+                        "fio": "Руководитель (может отсутствовать)",
+                        "email": "Почта руководителя (может отсутствовать)",
+                        "about": "Описание",
+                    }
+                ]
+            }
+        ),
+    },
+    'tags': ['Campus']
+}

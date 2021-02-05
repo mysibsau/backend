@@ -42,3 +42,8 @@ class Union(TabbedTranslationAdmin):
 @admin.register(models.SportClub)
 class SportClub(TabbedTranslationAdmin):
     list_display = ('id', 'name', 'fio', 'phone', 'address', 'dates')
+
+
+@admin.register(models.DesignOffice)
+class DesignOffice(admin.ModelAdmin):
+    list_display = ('id', 'name', 'fio', 'address', 'email')

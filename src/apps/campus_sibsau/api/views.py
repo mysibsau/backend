@@ -84,3 +84,15 @@ def all_sport_clubs(request):
     logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех кружков")
     queryset = models.SportClub.objects.all()
     return Response(serializers.SportClubSerializer(queryset))
+
+
+@swagger_auto_schema(**docs.swagger_all_design_office)
+@api_view(['GET'])
+@cache_page(60 * 60 * 2)
+def all_design_office(request):
+    """
+    Возвращает список всех конструкторских бюро
+    """
+    logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех СКБ")
+    queryset = models.DesignOffice.objects.all()
+    return Response(serializers.DesignOfficesSerializer(queryset))

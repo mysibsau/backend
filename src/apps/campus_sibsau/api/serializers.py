@@ -1,4 +1,8 @@
-def UnionSerializers(unions):
+from apps.campus_sibsau import models
+from typing import List
+
+
+def UnionSerializers(unions: List[models.Union]):
     result = []
     for union in unions:
         result.append({
@@ -14,12 +18,12 @@ def UnionSerializers(unions):
             'phone': union.phone,
             'group_vk': union.group_vk,
             'page_vk': union.page_vk,
-            'about': union.about
+            'about': union.about,
         })
     return result
 
 
-def BuildingSerializers(buildings):
+def BuildingSerializers(buildings: List[models.Building]):
     result = []
     for building in buildings:
         result.append({
@@ -28,12 +32,12 @@ def BuildingSerializers(buildings):
             'name': building.name,
             'address': building.address,
             'link': building.link,
-            'type': building.type
+            'type': building.type,
         })
     return result
 
 
-def DirectorSerializers(directors):
+def DirectorSerializers(directors: List[models.Director]):
     result = []
     for director in directors:
         result.append({
@@ -41,12 +45,12 @@ def DirectorSerializers(directors):
             'name': director.name,
             'address': director.address,
             'phone': director.phone,
-            'mail': director.mail
+            'mail': director.mail,
         })
     return result
 
 
-def DepartmentSerializers(departments):
+def DepartmentSerializers(departments: List[models.Department]):
     result = []
     for department in departments:
         result.append({
@@ -54,12 +58,12 @@ def DepartmentSerializers(departments):
             'fio': department.fio,
             'address': department.address,
             'phone': department.phone,
-            'mail': department.mail
+            'mail': department.mail,
         })
     return result
 
 
-def SovietSerializers(soviets):
+def SovietSerializers(soviets: List[models.Soviet]):
     result = []
     for soviet in soviets:
         result.append({
@@ -67,12 +71,12 @@ def SovietSerializers(soviets):
             'fio': soviet.fio,
             'address': soviet.address,
             'phone': soviet.phone,
-            'mail': soviet.mail
+            'mail': soviet.mail,
         })
     return result
 
 
-def InstituteSerializers(institutes):
+def InstituteSerializers(institutes: List[models.Institute]):
     result = []
     for institute in institutes:
         result.append({
@@ -81,20 +85,34 @@ def InstituteSerializers(institutes):
             'short_name': institute.short_name,
             'director': DirectorSerializers([institute.director])[0],
             'departments': DepartmentSerializers(institute.departments.all()),
-            'soviet': SovietSerializers([institute.soviet])[0]
+            'soviet': SovietSerializers([institute.soviet])[0],
         })
     return result
 
 
-def SportClubSerializer(clubs):
+def SportClubSerializer(clubs: List[models.SportClub]):
     result = []
     for club in clubs:
         result.append({
+            'id': club.id,
             'logo': club.logo.url,
             'name': club.name,
             'fio': club.fio,
             'phone': club.phone,
             'address': club.address,
             'dates': club.dates,
+        })
+    return result
+
+
+def DesignOfficesSerializer(offices: List[models.DesignOffice]):
+    result = []
+    for office in offices:
+        result.append({
+            'id': office.id,
+            'address': office.address,
+            'fio': office.fio,
+            'email': office.email,
+            'about': office.about,
         })
     return result

@@ -152,3 +152,18 @@ class SportClub(models.Model):
     class Meta:
         verbose_name = u'Спортивный кружок'
         verbose_name_plural = u'Спортивные кружки'
+
+
+class DesignOffice(models.Model):
+    name = models.CharField('Название', max_length=255)
+    address = models.CharField('Адрес', max_length=255)
+    fio = models.CharField('Руководитель', max_length=128, blank=True)
+    email = models.EmailField('Почта', blank=True)
+    about = models.TextField('Описание')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Конструкторское бюро'
+        verbose_name_plural = 'Конструкторские бюро'
