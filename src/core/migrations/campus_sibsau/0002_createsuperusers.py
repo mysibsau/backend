@@ -18,5 +18,7 @@ def create_superuser(apps, chema_editor):
 
 
 class Migration(migrations.Migration):
-    dependencies = []
+    dependencies = [
+        ('campus_sibsau', '0001_initial'),
+    ]
     operations = [migrations.RunPython(create_superuser)]
