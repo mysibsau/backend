@@ -1,4 +1,5 @@
 from os import path, mkdir
+from django.conf import settings
 
 
 INSTALLED_APPS = [
@@ -14,8 +15,10 @@ INSTALLED_APPS = [
     'drf_yasg',
     'constance',
     'constance.backends.database',
-    'debug_toolbar',
 ]
+
+if settings.DEBUG:
+    INSTALLED_APPS.append('debug_toolbar')
 
 LOCAL_APPS = [
     'apps.timetable',
