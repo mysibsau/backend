@@ -14,6 +14,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'constance',
     'constance.backends.database',
+    'debug_toolbar',
 ]
 
 LOCAL_APPS = [

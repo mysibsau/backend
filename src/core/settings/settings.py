@@ -72,7 +72,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'middlewares.set_language.set_language'
+    'middlewares.set_language.set_language',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ##################################################################
@@ -140,3 +141,10 @@ SWAGGER_SETTINGS = {
         None: {},
     },
 }
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
