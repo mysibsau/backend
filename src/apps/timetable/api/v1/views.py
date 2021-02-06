@@ -11,9 +11,7 @@ from apps.timetable.services.getters import get_groups_hash
 @schema(None)
 @cache_page(60 * 60)
 def groups_hash(request):
-    return Response({
-        'hash': get_groups_hash()
-    })
+    return Response({'hash': get_groups_hash()})
 
 
 @api_view(['GET'])
@@ -29,7 +27,7 @@ def all_groups(request):
 @cache_page(60 * 60)
 def timetable_group(request, group_id):
     queryset = models.Timetable.objects.filter(
-        group__id=group_id
+        group__id=group_id,
     ).select_related()
     data = serializers.TimetableSerializers(queryset)
     return Response(data)

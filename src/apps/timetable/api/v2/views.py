@@ -159,7 +159,7 @@ def timetable_teacher(request, teacher_id):
 
 @swagger_auto_schema(**docs.swagger_timetable_place)
 @api_view(['GET'])
-@cache_page(60 * 60)
+@cache_page(60 * 30)
 def timetable_place(request, place_id):
     """
     Timetable place

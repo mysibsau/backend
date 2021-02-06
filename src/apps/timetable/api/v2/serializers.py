@@ -1,8 +1,6 @@
-from functools import lru_cache
 from apps.timetable.services import getters
 
 
-@lru_cache(maxsize=1024)
 def GroupSerializers(groups) -> list:
     result = []
     for group in groups:
@@ -13,7 +11,6 @@ def GroupSerializers(groups) -> list:
     return result
 
 
-@lru_cache(maxsize=1024)
 def TeacherSerializers(teachers) -> list:
     result = []
     for teacher in teachers:
@@ -25,7 +22,6 @@ def TeacherSerializers(teachers) -> list:
     return result
 
 
-@lru_cache(maxsize=1024)
 def PlaceSerializers(places) -> list:
     result = []
     for place in places:

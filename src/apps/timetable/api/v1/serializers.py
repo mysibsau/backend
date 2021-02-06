@@ -1,8 +1,6 @@
-from functools import lru_cache
 from apps.timetable.services import getters
 
 
-@lru_cache(maxsize=1024)
 def GroupSerializers(groups) -> list:
     result = []
     for group in groups:
