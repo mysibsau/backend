@@ -11,7 +11,7 @@ from multiprocessing import Process
 @admin.register(models.Group)
 class Group(admin.ModelAdmin):
     list_display = ('id', 'name', 'id_pallada')
-    change_list_template = 'admin/groups_import.html'
+    change_list_template = 'timetable/groups_import.html'
 
     def get_urls(self):
         urls = super().get_urls()
@@ -32,7 +32,7 @@ class TimetableAdmin(admin.ModelAdmin):
     # list_filter = ('group', 'teacher', 'place')
     list_display = ('id', 'group', 'supgroup', 'teacher', 'lesson',
                     'lesson_type', 'place', 'week', 'day', 'time')
-    change_list_template = 'admin/load_timetable.html'
+    change_list_template = 'timetable/load_timetable.html'
 
     def get_urls(self):
         urls = super().get_urls()
