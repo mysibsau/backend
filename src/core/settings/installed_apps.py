@@ -3,6 +3,7 @@ from django.conf import settings
 
 
 INSTALLED_APPS = [
+    'jazzmin',
     'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -27,6 +28,7 @@ LOCAL_APPS = [
     'apps.informing',
     'apps.support',
     'apps.work',
+    'apps.shop',
 ]
 
 INSTALLED_APPS += LOCAL_APPS

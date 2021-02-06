@@ -18,6 +18,7 @@ beautifulsoup4 = "*"
 django-constance = "*"
 django-picklefield = "*"
 django-environ = "*"
+django-jazzmin = "*"
 
 [dev-packages]
 flake8 = "*"
