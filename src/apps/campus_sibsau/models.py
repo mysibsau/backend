@@ -157,8 +157,8 @@ class SportClub(models.Model):
 class DesignOffice(models.Model):
     name = models.CharField('Название', max_length=255)
     address = models.CharField('Адрес', max_length=255)
-    fio = models.CharField('Руководитель', max_length=128, blank=True)
-    email = models.EmailField('Почта', blank=True)
+    fio = models.CharField('Руководитель', max_length=128, blank=True, null=True)
+    email = models.EmailField('Почта', blank=True, null=True)
     about = models.TextField('Описание')
 
     def __str__(self):
