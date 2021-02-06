@@ -1,5 +1,5 @@
 from apps.timetable.services.parsers.timetable_parser import Parser
-from apps.timetable.services.parsers.group_parser import GroupParser
+from apps.timetable.services.parsers.group_parser import get_groups
 from apps.timetable.models import Group, Lesson, Timetable, Teacher, Place
 from apps.timetable import logger
 from django.db import transaction
@@ -16,19 +16,20 @@ WEEKDAY = {
 TYPES = {
     'Лекция': 1,
     'Лабораторная работа': 2,
-    'Практика': 3
+    'Практика': 3,
 }
 
 
+@transaction.atomic
 def load_all_groups_from_pallada() -> None:
     '''
         Записывает в БД новые группы
     '''
     logger.info('Парсинг групп запущен')
-    groups = GroupParser().get_groups()
-    for id_, name in groups:
+    Group.objects.all().delete()
+    for id_, name in get_groups():
         Group.objects.get_or_create(name=name, id_pallada=id_)
-        logger.info(f'Добавлена группа {id_}')
+        logger.info(f'Добавлена группа {name}')
     logger.info('Парсинг групп завершен')
 
 
