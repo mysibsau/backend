@@ -1,6 +1,6 @@
 from django.contrib import admin
-from . import models
-from .services.send_notification import send_notification
+from apps.informing import models
+from apps.informing.services.send_notification import send_notification
 
 
 class AbstractInformationAdmin():

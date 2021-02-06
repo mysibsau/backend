@@ -1,6 +1,5 @@
-from django.utils.translation import gettext
 from apps.work import models
-from typing import List, Optional
+from typing import List
 
 
 def InfoSerializer(vacancy: models.Vacancy) -> dict:
