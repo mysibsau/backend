@@ -23,7 +23,7 @@ def _get_time():
 
 def _media_backup(c):
     print('\tbackup media...')
-    c.run(f'tar -cf backups/media_{_get_time()}.tar.gz {PATH}/media')
+    c.run(f'tar -cf backups/media_{_get_time()}.tar.gz {PATH}/resources/media')
     print('\tOK media\n')
 
 
@@ -129,7 +129,7 @@ def deploy(c):
 
     print('Создание архива...')
     c.run('cp -r src deploy')
-    c.run('rm -rf deploy/media')
+    c.run('rm -rf deploy/resources/media')
     c.run('rm -rf deploy/tests')
 
     c.run('tar -cjf deploy.bz2 deploy')
@@ -143,7 +143,7 @@ def deploy(c):
     server.run('rm deploy.bz2')
 
     print('Перенос папки медиа...')
-    server.run(f'cp -r {PATH}/media deploy/')
+    server.run(f'cp -r {PATH}/resources/media deploy/resources/')
 
     print('Загрузка системных ресурсов...')
     server.put('.env.prod', '.env')
