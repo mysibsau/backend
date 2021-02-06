@@ -29,9 +29,9 @@ class Group(admin.ModelAdmin):
 
 @admin.register(models.Timetable)
 class TimetableAdmin(admin.ModelAdmin):
-    # list_filter = ('group', 'teacher', 'place')
     list_display = ('id', 'group', 'supgroup', 'teacher', 'lesson',
                     'lesson_type', 'place', 'week', 'day', 'time')
+    search_fields = ('group__name', 'teacher__name', 'place__name')
     change_list_template = 'timetable/load_timetable.html'
 
     def get_urls(self):
