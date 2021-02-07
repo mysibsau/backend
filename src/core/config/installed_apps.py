@@ -15,12 +15,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'constance',
     'constance.backends.database',
-]
 
-if settings.DEBUG:
-    INSTALLED_APPS.append('debug_toolbar')
-
-LOCAL_APPS = [
     'apps.timetable',
     'apps.campus_sibsau',
     'apps.surveys',
@@ -30,4 +25,5 @@ LOCAL_APPS = [
     'apps.shop',
 ]
 
-INSTALLED_APPS += LOCAL_APPS
+if settings.DEBUG:
+    INSTALLED_APPS.append('debug_toolbar')
