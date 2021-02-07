@@ -8,7 +8,7 @@ jobs:
   run_tests:
     runs-on: [ubuntu-latest]
     env:
-      SECRET_KEY: ${{ mysibsau.SECRET_KEY }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
     steps:
       - uses: actions/checkout@main
       - uses: actions/setup-python@v1
