@@ -12,4 +12,5 @@ def all_vacancies(request):
     Возвращает все вакансий
     """
     queryset = models.Vacancy.objects.filter(hidden=False)
-    return Response(serializers.VacanciesSerialization(queryset))
+    serializer = serializers.VacanciesSerialization(queryset, many=True)
+    return Response(serializer.data)
