@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 
 from apps.surveys import models, logger
-from . import serializers, docs
+from apps.surveys.api import serializers, docs
 from apps.surveys.services import setters, check, getters
 import json
 from rest_framework.decorators import api_view

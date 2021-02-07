@@ -1,5 +1,5 @@
 from constance import config
-from .. import models, logger
+from apps.informing import models, logger
 from django.utils import timezone
 from datetime import timedelta
 from django.core.files import File

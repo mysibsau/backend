@@ -1,5 +1,5 @@
 from modeltranslation.translator import register, TranslationOptions
-from . import models
+from apps.campus_sibsau import models
 
 
 @register(models.Building)

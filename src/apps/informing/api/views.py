@@ -7,9 +7,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, schema
 from drf_yasg.utils import swagger_auto_schema
 
-from . import serializers, docs
-from .. import models
-from ..services import getters, setters, parse_data_from_vk
+from apps.informing.api import serializers, docs
+from apps.informing import models
+from apps.informing.services import getters, setters, parse_data_from_vk
 
 
 @swagger_auto_schema(**docs.swagger_all_events)

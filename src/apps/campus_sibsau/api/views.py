@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from apps.campus_sibsau import models, logger
 from apps.campus_sibsau.services.join_to_union import main as join_to_union_vk
-from . import docs, serializers
+from apps.campus_sibsau.api import docs, serializers
 
 
 @swagger_auto_schema(**docs.swagger_all_unions)

@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from apps.surveys.api import views
 
 
 urlpatterns = [

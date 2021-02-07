@@ -1,4 +1,4 @@
-from .. import models
+from apps.informing import models
 
 
 def like_it(uuid, information):

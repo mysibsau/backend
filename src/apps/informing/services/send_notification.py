@@ -1,6 +1,6 @@
 import requests
 from constance import config
-from ..api.serializers import NotificationsSerializer
+from apps.informing.api.serializers import NotificationsSerializer
 from json import loads
 
 

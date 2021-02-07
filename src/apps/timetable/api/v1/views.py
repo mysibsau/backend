@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from django.views.decorators.cache import cache_page
 from apps.timetable.services import utils
-from . import serializers
+from apps.timetable.api.v1 import serializers
 from apps.timetable import models
 from rest_framework.decorators import api_view, schema
 from apps.timetable.services.getters import get_groups_hash

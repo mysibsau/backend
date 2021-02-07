@@ -3,7 +3,7 @@ from apps.surveys import models
 from django.utils import timezone
 import csv
 from django.http import HttpResponse
-from . import logger
+from apps.surveys import logger
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
 
 

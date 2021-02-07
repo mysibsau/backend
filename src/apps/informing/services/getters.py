@@ -1,4 +1,4 @@
-from .. import models
+from apps.informing import models
 
 
 def get_ids_liked_information_for_uuid(uuid):
