@@ -7,11 +7,15 @@ class Information(models.Model):
     text = models.TextField('Текст')
     views = models.PositiveIntegerField('Просмотры', editable=False, default=0)
     date_to = models.DateTimeField('Действует до')
+    above = models.BooleanField('Запись закреплена', default=False)
 
     @property
     def likes(self):
         return Like.objects.filter(information__id=self.id).count()
     likes.fget.short_description = u'Лайки'
+
+    class Meta:
+        ordering = ['-above', '-id']
 
 
 class Event(Information):
@@ -24,7 +28,6 @@ class Event(Information):
     class Meta:
         verbose_name = u'Мероприятие'
         verbose_name_plural = u'Мероприятия'
-        ordering = ['-id']
 
 
 class News(Information):
@@ -40,7 +43,6 @@ class News(Information):
     class Meta:
         verbose_name = u'Новость'
         verbose_name_plural = u'Новости'
-        ordering = ['-id']
 
 
 class Like(models.Model):
