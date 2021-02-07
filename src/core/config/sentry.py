@@ -2,7 +2,7 @@ from core.config.environ import env
 from sentry_sdk.integrations.django import DjangoIntegration
 
 
-if env.bool('SENTRY'):
+if env.bool('SENTRY', False):
     import sentry_sdk
 
     sentry_sdk.init(

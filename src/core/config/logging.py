@@ -46,8 +46,8 @@ LOGGING = {
         'telegram': {
             'level': 'WARNING',
             'class': 'telegram_handler.TelegramHandler',
-            'token': env.str('TG_TOKEN'),
-            'chat_id': env.str('TG_DELVELOPER'),
+            'token': env.str('TG_TOKEN', '4tyrtew'),
+            'chat_id': env.str('TG_DELVELOPER', '5432'),
             'formatter': 'simple',
         },
     },

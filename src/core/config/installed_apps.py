@@ -1,4 +1,3 @@
-from os import path, mkdir
 from django.conf import settings
 
 
