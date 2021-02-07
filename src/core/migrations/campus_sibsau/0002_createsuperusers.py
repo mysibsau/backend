@@ -5,7 +5,7 @@ from core.settings import env
 
 
 def create_superuser(apps, chema_editor):
-    for nick in env.SUPERUSERS:
+    for nick in env.list('SUPERUSERS'):
         superuser = get_user_model()(
             is_active=True,
             is_superuser=True,
@@ -13,7 +13,7 @@ def create_superuser(apps, chema_editor):
             username=nick,
             last_login=timezone.localtime()
         )
-        superuser.set_password(env.DEFAULT_PASSWORD)
+        superuser.set_password(env.str('DEFAULT_PASSWORD'))
         superuser.save()
 
 
