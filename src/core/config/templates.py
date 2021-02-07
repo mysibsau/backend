@@ -7,7 +7,7 @@ TEMPLATE_DEBUG = settings.DEBUG
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(settings.BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(settings.BASE_DIR, 'resources/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
