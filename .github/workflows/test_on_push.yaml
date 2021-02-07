@@ -31,7 +31,9 @@ jobs:
           touch src/logs/informing.log
           touch src/logs/surveys.log
           touch src/logs/timetable.log
+      - name: pwd
+        run: pwd
       - name: Run tests
-        run: python3 -m pipenv run src/manage.py test
+        run: cd src && python3 -m pipenv run manage.py test
       - name: Tests report
         run: coverage report
