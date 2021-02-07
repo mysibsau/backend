@@ -12,7 +12,7 @@ include(
     'config/locale.py',
     'config/middleware.py',
     'config/constance.py',
-    # 'config/logging.py',
+    'config/logging.py',
     'config/drf.py',
     'config/docs.py',
     'config/jazzmin.py',
