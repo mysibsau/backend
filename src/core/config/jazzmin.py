@@ -4,6 +4,15 @@ JAZZMIN_SETTINGS = {
     "copyright": "DigitalHub",
     "navigation_expanded": False,
 
+    "topmenu_links": [
+        {
+            "name": "Health checks",
+            "url": "/healthchecks/",
+            "new_window": True,
+        },
+
+    ],
+
     "icons": {
         "auth": "fas fa-users-cog",
         "auth.user": "fas fa-user",

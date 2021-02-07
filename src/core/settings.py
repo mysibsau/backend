@@ -20,4 +20,5 @@ include(
     'config/static.py',
     'config/media.py',
     'config/templates.py',
+    'config/healthchecks.py',
 )

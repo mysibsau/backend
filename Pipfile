@@ -20,6 +20,7 @@ django-picklefield = "*"
 django-environ = "*"
 django-jazzmin = "*"
 django-split-settings = "*"
+django-healthchecks = "*"
 
 [dev-packages]
 flake8 = "*"
