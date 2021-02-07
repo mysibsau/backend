@@ -10,7 +10,8 @@ from multiprocessing import Process
 
 @admin.register(models.Group)
 class Group(admin.ModelAdmin):
-    list_display = ('id', 'name', 'id_pallada')
+    list_display = ('id', 'name', 'id_pallada', 'date_update')
+    search_fields = ('name', 'id_pallada', 'id')
     change_list_template = 'timetable/groups_import.html'
 
     def get_urls(self):
@@ -22,7 +23,7 @@ class Group(admin.ModelAdmin):
 
     def import_all(self, request):
         Process(
-            target=setters.load_all_groups_from_pallada
+            target=setters.load_all_groups_from_pallada,
         ).start()
         return HttpResponseRedirect("../")
 

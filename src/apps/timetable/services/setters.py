@@ -3,6 +3,8 @@ from apps.timetable.services.parsers.group_parser import get_groups
 from apps.timetable.models import Group, Lesson, Timetable, Teacher, Place
 from apps.timetable import logger
 from django.db import transaction
+from django.utils import timezone
+
 
 WEEKDAY = {
     'monday': 0,
@@ -14,7 +16,7 @@ WEEKDAY = {
 }
 
 TYPES = {
-    'Лекция': 1,
+    'Лекция': 1,.
     'Лабораторная работа': 2,
     'Практика': 3,
 }
@@ -34,7 +36,7 @@ def load_all_groups_from_pallada() -> None:
 
 
 @transaction.atomic
-def load_timtable_group(group):
+def load_timtable_group(group: Group):
     Timetable.objects.filter(group=group).delete()
     for line in Parser().get_timetable(group.id_pallada):
         for i in range(len(line['subgroups'])):
@@ -65,6 +67,8 @@ def load_timtable_group(group):
                 day=line['day'],
                 time=line['time']
             )
+        group.date_update = timezone.localtime()
+        group.save()
     logger.info(f'Добавлено расписание для группы {group.name}')
 
 
@@ -73,6 +77,6 @@ def load_timetable() -> None:
         Сохраняет расписание
     '''
     logger.info('Парсинг расписания запущен')
-    for group in Group.objects.all():
+    for group in Group.objects.all().order_by('-date_update'):
         load_timtable_group(group)
     logger.info('Парсинг групп завершен')
