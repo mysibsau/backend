@@ -1,6 +1,4 @@
 name: Run tests on any Push event
-# Запуск при любом push евенте в любой ветке, за исключением релизных тэгов.
-# Они будт тестироваться перед сборкой
 on:
   push:
     branches: [main]
@@ -11,7 +9,7 @@ jobs:
     runs-on: [ubuntu-latest]
     steps:
       # Чекаутим код
-      - uses: actions/checkout@min
+      - uses: actions/checkout@main
       # Устанавливаем python нужной версии
       - uses: actions/setup-python@v1
         with:
