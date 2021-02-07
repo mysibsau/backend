@@ -24,6 +24,13 @@ jobs:
         run: pip install pipenv
       - name: Install requirements
         run: python3 -m pipenv sync
+      - name: create logs file
+        run: |
+          touch src/logs/campus.log
+          touch src/logs/events.log
+          touch src/logs/informing.log
+          touch src/logs/surveys.log
+          touch src/logs/timetable.log
       - name: Run tests
         run: python3 -m pipenv run src/manage.py test
       - name: Tests report
