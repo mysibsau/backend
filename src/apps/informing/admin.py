@@ -21,13 +21,13 @@ class ImageAdmin(admin. TabularInline):
 
 @admin.register(models.Event)
 class EventAdmin(AbstractInformationAdmin, admin.ModelAdmin):
-    list_display = ('id', 'name', 'logo', 'author', 'date_to', 'views', 'likes')
-    fields = ('name', 'text', 'logo', 'date_to')
+    list_display = ('id', 'name', 'logo', 'author', 'date_to', 'views', 'above')
+    fields = ('name', 'text', 'logo', 'date_to', 'above')
 
 
 @admin.register(models.News)
 class NewsAdmin(AbstractInformationAdmin, admin.ModelAdmin):
-    list_display = ('id', 'author', 'date_to', 'views', 'likes')
+    list_display = ('id', 'author', 'date_to', 'views', 'above')
     inlines = [ImageAdmin, ]
 
 
