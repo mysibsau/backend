@@ -8,4 +8,4 @@ ROOT_URLCONF = 'core.urls'
 WSGI_APPLICATION = 'core.wsgi.application'
 
 ALLOWED_HOSTS = ['*']
-ADMIN_URL = env.str('ADMIN_URL')
+ADMIN_URL = env.str('ADMIN_URL', 'admin/')
