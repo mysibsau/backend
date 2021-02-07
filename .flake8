@@ -1,0 +1,11 @@
+[flake8]
+ignore = E501
+max-line-length = 160
+exclude =
+      static,
+      migrations,
+      frontend,
+      .git,
+      __pycache__
+      docs.py
+      fabfile.py

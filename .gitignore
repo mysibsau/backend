@@ -134,3 +134,6 @@ dmypy.json
 .vscode/
 .idea/
 *.db
+/server/staticfiles
+/server/media
+.env.prod
