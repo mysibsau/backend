@@ -104,9 +104,6 @@ if not DEBUG:
 
 STATIC_URL = '/static/'
 STATIC_ROOT = path.join(BASE_DIR, 'resources/static')
-STATICFILES_DIRS = [
-    'resources/fix_static_files',
-]
 
 
 MEDIA_URL = '/media/'
