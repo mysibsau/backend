@@ -33,7 +33,12 @@ jobs:
           touch src/logs/timetable.log
       - name: pwd
         run: pwd
+      - name: ls
+        run: ls -a
       - name: Run tests
-        run: cd src && python3 -m pipenv run manage.py test
+        run: |
+          pipenv shell
+          cd src
+          ./manage.py test
       - name: Tests report
         run: coverage report
