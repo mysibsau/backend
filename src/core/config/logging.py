@@ -1,4 +1,4 @@
-from . import env
+from core.config.environ import env
 import logging
 from sys import argv
 
@@ -17,38 +17,38 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': 'logs/surveys.log',
-            'formatter': 'simple'
+            'formatter': 'simple',
         },
         'file_events': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': 'logs/events.log',
-            'formatter': 'simple'
+            'formatter': 'simple',
         },
         'file_campus': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': 'logs/campus.log',
-            'formatter': 'simple'
+            'formatter': 'simple',
         },
         'file_timetable': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': 'logs/timetable.log',
-            'formatter': 'simple'
+            'formatter': 'simple',
         },
         'file_informing': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': 'logs/informing.log',
-            'formatter': 'simple'
+            'formatter': 'simple',
         },
         'telegram': {
             'level': 'WARNING',
             'class': 'telegram_handler.TelegramHandler',
-            'token': env.TG_TOKEN,
-            'chat_id': env.TG_DELVELOPER,
-            'formatter': 'simple'
+            'token': env.str('TG_TOKEN'),
+            'chat_id': env.str('TG_DELVELOPER'),
+            'formatter': 'simple',
         },
     },
     'loggers': {
@@ -75,7 +75,7 @@ LOGGING = {
     },
 }
 
-if not env.DEBUG:
+if not settings.DEBUG:
     LOGGING['loggers']['django.request'] = {
         'handlers': ['telegram'],
         'level': 'ERROR',

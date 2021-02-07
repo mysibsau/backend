@@ -19,6 +19,7 @@ django-constance = "*"
 django-picklefield = "*"
 django-environ = "*"
 django-jazzmin = "*"
+django-split-settings = "*"
 
 [dev-packages]
 flake8 = "*"
