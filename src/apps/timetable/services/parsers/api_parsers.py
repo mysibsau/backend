@@ -1,14 +1,15 @@
 from apps.timetable import models
+from django.utils import timezone
+from django.db import transaction
 
 
-def load_timtable_group_with_api(groups, api):
-    ids = [i.id_pallada for i in groups][:500]
-
-    models.Timetable.objects.all().delete()
+@transaction.atomic
+def load_timtable_group_with_api(group: models.Group, api):
+    models.Timetable.objects.filter(group=group).delete()
 
     all_timetable_id = api.read(
         'info.groups',
-        [5047],
+        [group.id_pallada],
         {
             'fields': [
                 'tt_current_year_second_ids',
@@ -28,7 +29,8 @@ def load_timtable_group_with_api(groups, api):
             'fields': [
                 'group',
                 'add_info',
-                'professor',
+                'person_id',
+                'employee_name_init',
                 'lesson',
                 'lesson_type_id',
                 'place',
@@ -39,25 +41,26 @@ def load_timtable_group_with_api(groups, api):
         },
     )
 
-    print(len(timetables))
-    print('---------------')
     for timetable in timetables:
         supgroup = int(timetable['add_info'])
+        teacher_name = timetable['person_id']
         teacher, _ = models.Teacher.objects.get_or_create(
-            name=timetable['professor'][1],
-            id_pallada=timetable['professor'][0],
+            name=timetable['employee_name_init'] if teacher_name else ' ',
+            id_pallada=timetable['person_id'][0] if teacher_name else -1,
         )
 
         lesson, _ = models.Lesson.objects.get_or_create(
             name_ru=timetable['lesson'][1],
         )
 
+        place_name = timetable['place']
+        if not place_name:
+            continue
+        tmp = place_name.split('"')
+        place_name = f'{tmp[0].strip()}-{tmp[1].strip()}'
         place, _ = models.Place.objects.get_or_create(
-            name=timetable['place'],
-
+            name=place_name,
         )
-
-        group = groups.filter(name=timetable['group'][1]).first()
 
         TYPES = {
             'Лекция': 1,
@@ -65,7 +68,7 @@ def load_timtable_group_with_api(groups, api):
             'Практика': 3,
         }
 
-        t = models.Timetable.objects.create(
+        models.Timetable.objects.create(
             group=group,
             supgroup=supgroup,
             teacher=teacher,
@@ -73,8 +76,8 @@ def load_timtable_group_with_api(groups, api):
             lesson_type=TYPES[timetable['lesson_type_id'][1]],
             place=place,
             week=int(timetable['week']),
-            day=int(timetable['day_week']),
+            day=int(timetable['day_week']) - 1,
             time=timetable['time'],
         )
-
-        print(t)
+    group.date_update = timezone.localtime()
+    group.save()

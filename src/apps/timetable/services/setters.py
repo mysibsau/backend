@@ -7,6 +7,7 @@ from apps.timetable.services.parsers import api_parsers
 from constance import config
 from django.db import transaction
 from django.utils import timezone
+from xmlrpc.client import ProtocolError
 
 WEEKDAY = {
     'monday': 0,
@@ -79,13 +80,22 @@ def load_timetable() -> None:
         Сохраняет расписание
     '''
     groups = Group.objects.all().order_by('-date_update')
-    if config.USE_PARSERS:
-        logger.info('Парсинг расписания запущен')
-        for group in groups:
-            load_timtable_group_with_parsers(group)
-    else:
-        logger.info('Получение расписания через API запущено')
+    try:
         api = API('timetable')
-        api_parsers.load_timtable_group_with_api(groups, api)
+    except:
+        logger.error('Не удалось запустит API')
+        return
+
+    logger.info('Парсинг расписания запущен')
+    for group in groups:
+        logger.info(f'Пытаюсь получить расписание для {group.name}')
+        if config.USE_PARSERS:
+            load_timtable_group_with_parsers(group)
+        else:
+            try:
+                api_parsers.load_timtable_group_with_api(group, api)
+            except (ProtocolError, TimeoutError):
+                logger.error('Паллада легла')
+                return
 
     logger.info('Парсинг групп завершен')
