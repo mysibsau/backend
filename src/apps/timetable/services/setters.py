@@ -1,10 +1,12 @@
-from apps.timetable.services.parsers.timetable_parser import Parser
-from apps.timetable.services.parsers.group_parser import get_groups
-from apps.timetable.models import Group, Lesson, Timetable, Teacher, Place
+from api_pallada import API
 from apps.timetable import logger
+from apps.timetable.models import Group, Lesson, Place, Teacher, Timetable
+from apps.timetable.services.parsers.group_parser import get_groups
+from apps.timetable.services.parsers.timetable_parser import Parser
+from apps.timetable.services.parsers import api_parsers
+from constance import config
 from django.db import transaction
 from django.utils import timezone
-
 
 WEEKDAY = {
     'monday': 0,
@@ -36,7 +38,7 @@ def load_all_groups_from_pallada() -> None:
 
 
 @transaction.atomic
-def load_timtable_group(group: Group):
+def load_timtable_group_with_parsers(group: Group):
     Timetable.objects.filter(group=group).delete()
     for line in Parser().get_timetable(group.id_pallada):
         for i in range(len(line['subgroups'])):
@@ -76,7 +78,14 @@ def load_timetable() -> None:
     '''
         Сохраняет расписание
     '''
-    logger.info('Парсинг расписания запущен')
-    for group in Group.objects.all().order_by('-date_update'):
-        load_timtable_group(group)
+    groups = Group.objects.all().order_by('-date_update')
+    if config.USE_PARSERS:
+        logger.info('Парсинг расписания запущен')
+        for group in groups:
+            load_timtable_group_with_parsers(group)
+    else:
+        logger.info('Получение расписания через API запущено')
+        api = API('timetable')
+        api_parsers.load_timtable_group_with_api(groups, api)
+
     logger.info('Парсинг групп завершен')
