@@ -21,7 +21,7 @@ def auth(request):
 
     api = API('portfolio', username, password)
 
-    if not api.uid:
+    if not (api.uid and username and password):
         return Response({'error': 'bad auth'}, 401)
 
     fio, group, average = getters.get_fio_group_and_average(api)
