@@ -15,7 +15,7 @@ class AbstractInformationAdmin():
 
 class ImageAdmin(admin. TabularInline):
     model = models.Image
-    extra = 0
+    extra = 1
     fk_name = 'news'
 
 
@@ -28,7 +28,7 @@ class EventAdmin(AbstractInformationAdmin, admin.ModelAdmin):
 @admin.register(models.News)
 class NewsAdmin(AbstractInformationAdmin, admin.ModelAdmin):
     list_display = ('id', 'author', 'date_to', 'views', 'above')
-    inlines = [ImageAdmin, ]
+    inlines = [ImageAdmin]
 
 
 @admin.register(models.Notification)
