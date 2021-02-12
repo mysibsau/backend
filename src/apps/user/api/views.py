@@ -23,6 +23,9 @@ def auth(request):
     if not (api.uid and username and password):
         return Response({'error': 'bad auth'}, 401)
 
+    if not username.isdigit():
+        return Response({'error': 'username is not gradebook'}, 418)
+
     gradebook = getters.get_gradebook(api)
     fio, group, average = getters.get_fio_group_and_average(api)
     token = utils.make_token(fio, gradebook, group)
