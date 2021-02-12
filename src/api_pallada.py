@@ -8,7 +8,7 @@ class API:
         self.login = login if login else config.PALLADA_USER
         self.password = password if password else config.PALLADA_PASSWORD
         self.url = f'https://{database}.pallada.sibsau.ru'
-        self.uid = self.__get_uid()
+        self.uid = self.__get_uid(self.login, self.password)
 
         self.__dict__ = {
             **self.__dict__,
@@ -19,12 +19,12 @@ class API:
             'search_read': self.__do('search_read'),
         }
 
-    def __get_uid(self) -> int:
+    def __get_uid(self, login, password) -> int:
         common = xmlrpc.client.ServerProxy(self.url + '/xmlrpc/2/common')
         return common.authenticate(
             self.db,
-            self.login,
-            self.password,
+            login,
+            password,
             {},
         )
 
