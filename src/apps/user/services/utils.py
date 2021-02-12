@@ -18,4 +18,4 @@ def make_token(fio: str, gradebook: str, group: str) -> str:
         token = sha256(token.encode('utf-8')).hexdigest()[:16]
         token += md5(settings.SECRET_KEY.encode('utf-8')).hexdigest()[:i]
 
-    return token[:16 - len(fio) % 16 + len(group)]
+    return token[:min(16 - len(fio) % 16, 8)]
