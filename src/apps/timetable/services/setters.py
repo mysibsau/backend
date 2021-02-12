@@ -1,10 +1,13 @@
-from apps.timetable.services.parsers.timetable_parser import Parser
-from apps.timetable.services.parsers.group_parser import get_groups
-from apps.timetable.models import Group, Lesson, Timetable, Teacher, Place
+from api_pallada import API
 from apps.timetable import logger
+from apps.timetable.models import Group, Lesson, Place, Teacher, Timetable
+from apps.timetable.services.parsers.group_parser import get_groups
+from apps.timetable.services.parsers.timetable_parser import Parser
+from apps.timetable.services.parsers import api_parsers
+from constance import config
 from django.db import transaction
 from django.utils import timezone
-
+from xmlrpc.client import ProtocolError
 
 WEEKDAY = {
     'monday': 0,
@@ -36,7 +39,7 @@ def load_all_groups_from_pallada() -> None:
 
 
 @transaction.atomic
-def load_timtable_group(group: Group):
+def load_timtable_group_with_parsers(group: Group):
     Timetable.objects.filter(group=group).delete()
     for line in Parser().get_timetable(group.id_pallada):
         for i in range(len(line['subgroups'])):
@@ -76,7 +79,23 @@ def load_timetable() -> None:
     '''
         Сохраняет расписание
     '''
+    groups = Group.objects.all().order_by('-date_update')
+    try:
+        api = API('timetable')
+    except:
+        logger.error('Не удалось запустит API')
+        return
+
     logger.info('Парсинг расписания запущен')
-    for group in Group.objects.all().order_by('-date_update'):
-        load_timtable_group(group)
+    for group in groups:
+        logger.info(f'Пытаюсь получить расписание для {group.name}')
+        if config.USE_PARSERS:
+            load_timtable_group_with_parsers(group)
+        else:
+            try:
+                api_parsers.load_timtable_group_with_api(group, api)
+            except (ProtocolError, TimeoutError):
+                logger.error('Паллада легла')
+                return
+
     logger.info('Парсинг групп завершен')

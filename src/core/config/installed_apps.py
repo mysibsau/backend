@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'apps.support',
     'apps.work',
     'apps.shop',
+    'apps.user',
 ]
 
 if settings.DEBUG:
