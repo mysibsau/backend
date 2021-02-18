@@ -9,27 +9,27 @@ def get_marks(api: API) -> list:
     tmp = api.search_read(
         'portfolio_science.grade_view',
         [[['ID_student', '!=', '']]],
-        {'fields': ['discipline', 'grade', 'term']},
+        {'fields': ['discipline', 'grade', 'term', 'test_type', 'coursework_theme']},
     )
+
     for discipline in tmp:
+        item = {
+            'name': discipline['discipline'].strip(),
+            'coursework': discipline['coursework_theme'] if discipline['coursework_theme'] else None,
+            'mark': discipline['grade'].strip(),
+            'type': discipline['test_type'].strip(),
+        }
         term = discipline['term'].strip()
-        mark = discipline['grade'].split('/')[0].strip()
         if term in tmp_result:
-            tmp_result[term].append({
-                'name': discipline['discipline'].strip(),
-                'mark': mark,
-            })
+            tmp_result[term].append(item)
         else:
-            tmp_result[term] = [{
-                'name': discipline['discipline'].strip(),
-                'mark': mark,
-            }]
+            tmp_result[term] = [item]
 
     result = []
     for term in sorted(tmp_result.keys()):
         result.append({
             'term': term,
-            'items': sorted(tmp_result[term], key=lambda x: x['mark']),
+            'items': sorted(tmp_result[term], key=lambda x: x['type']),
         })
     return result
 

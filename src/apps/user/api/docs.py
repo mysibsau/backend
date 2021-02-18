@@ -53,7 +53,9 @@ swagger_get_marks = {
                         'items': [
                             {
                                 'name': 'Математический анализ',
-                                'mark': '4'
+                                'mark': '4',
+                                'type': 'Экзамен',
+                                'coursework': None
                             }
                         ],
                     },
@@ -62,7 +64,15 @@ swagger_get_marks = {
                         'items': [
                             {
                                 'name': 'Культурология',
-                                'mark': 'Зачтено'
+                                'mark': 'Зачтено',
+                                'type': 'Зачет',
+                                'coursework': None
+                            },
+                            {
+                                'name': 'БД',
+                                'mark': '5/5',
+                                'type': 'Зачет с оценкой',
+                                'coursework': 'Какое-то название'
                             }
                         ]
                     }
