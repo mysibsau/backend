@@ -38,3 +38,55 @@ swagger_auth = {
     },
     'tags': ['User']
 }
+
+
+swagger_get_marks = {
+    'operation_id': 'get marks',
+    'methods': ['POST'],
+    'responses': {
+        200: openapi.Response(
+            description='Авторизация прошла успешно',
+            examples={
+                'application/json': [
+                    {
+                        "term": "1",
+                        "items": [
+                            {
+                                "name": "Математический анализ",
+                                "mark": "4"
+                            }
+                        ],
+                    },
+                    {
+                        "term": "2",
+                        "items": [
+                            {
+                                "name": "Культурология",
+                                "mark": "Зачтено"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ),
+        400: openapi.Response(
+            'Не передали json или одно из полей',
+            examples={
+                'application/json': {'error': 'bad request'}
+            }
+        ),
+        418: openapi.Response(
+            'Переданный username не является номером зачетки',
+            examples={
+                'application/json': {'error': 'username is not gradebook'}
+            }
+        ),
+        401: openapi.Response(
+            'Авторизация не пройдена',
+            examples={
+                'application/json': {'error': 'bad auth'}
+            }
+        ),
+    },
+    'tags': ['User']
+}

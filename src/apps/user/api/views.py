@@ -7,22 +7,7 @@ from drf_yasg.utils import swagger_auto_schema
 from apps.user.api import docs
 
 
-@swagger_auto_schema(**docs.swagger_auth)
-@api_view(['POST'])
-def auth(request):
-    """
-        Авторизация
-
-        Ожидает json с номером зачетки и паролем
-
-        ```
-            {
-                "username": "1234321",
-                "password": "w0rng классный" 
-            }
-        ```
-    """
-
+def basic_auth(request):
     if not request.body:
         return Response({'error': 'bad request'}, 400)
 
@@ -42,4 +27,52 @@ def auth(request):
     if not api.uid:
         return Response({'error': 'bad auth'}, 401)
 
-    return Response(getters.get_data(api), 200)
+    return api
+
+
+@swagger_auto_schema(**docs.swagger_auth)
+@api_view(['POST'])
+def auth(request):
+    """
+        Auth
+
+        Ожидает json с номером зачетки и паролем
+
+        ```
+            {
+                "username": "1234321",
+                "password": "w0rng классный"
+            }
+        ```
+    """
+
+    auth = basic_auth(request)
+
+    if type(auth) == Response:
+        return auth
+
+    return Response(getters.get_data(auth), 200)
+
+
+@swagger_auto_schema(**docs.swagger_get_marks)
+@api_view(['POST'])
+def get_marks(request):
+    """
+        Get marks
+
+        Ожидает json с номером зачетки и паролем
+
+        ```
+            {
+                "username": "1234321",
+                "password": "w0rng классный"
+            }
+        ```
+    """
+
+    auth = basic_auth(request)
+
+    if type(auth) == Response:
+        return auth
+
+    return Response(getters.get_marks(auth), 200)
