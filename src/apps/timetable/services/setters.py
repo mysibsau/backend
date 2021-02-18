@@ -9,6 +9,7 @@ from django.db import transaction
 from django.utils import timezone
 from xmlrpc.client import ProtocolError
 
+
 WEEKDAY = {
     'monday': 0,
     'tuesday': 1,
@@ -81,7 +82,7 @@ def load_timetable() -> None:
     '''
     groups = Group.objects.all().order_by('-date_update')
     try:
-        api = API('timetable')
+        api = API('timetable', config.PALLADA_USER, config.PALLADA_PASSWORD)
     except:
         logger.error('Не удалось запустит API')
         return

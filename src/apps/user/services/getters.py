@@ -1,6 +1,6 @@
 from api_pallada import API
 from apps.user.services import utils
-from typing import Set, Optional
+from typing import Optional
 
 
 def get_gradebook(api: API) -> Optional[str]:
@@ -16,7 +16,7 @@ def get_gradebook(api: API) -> Optional[str]:
             return nzkn
 
 
-def get_fio_group_and_average(api: API) -> Set[str, str, float]:
+def get_fio_group_and_average(api: API) -> tuple:
     tmp = api.search_read(
         'portfolio_science.grade_view',
         [[['ID_student', '!=', '']]],
@@ -44,7 +44,7 @@ def get_data(api: API) -> dict:
     fio, group, average = get_fio_group_and_average(api)
     token = utils.make_token(fio, gradebook, group)
 
-    utils.update_or_create_user()
+    utils.update_or_create_user(token, group, average)
 
     return {
         'token': token,

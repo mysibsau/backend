@@ -1,12 +1,11 @@
 import xmlrpc.client
-from constance import config
 
 
 class API:
-    def __init__(self, database: str, login: str = None, password: str = None):
+    def __init__(self, database: str, login: str, password: str):
         self.db = database
-        self.login = login if login else config.PALLADA_USER
-        self.password = password if password else config.PALLADA_PASSWORD
+        self.login = login
+        self.password = password
         self.url = f'https://{database}.pallada.sibsau.ru'
         self.uid = self.__get_uid(self.login, self.password)
 
