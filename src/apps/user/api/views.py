@@ -3,13 +3,28 @@ from rest_framework.decorators import api_view
 from json import loads as json_loads
 from api_pallada import API
 from apps.user.services import getters
+from drf_yasg.utils import swagger_auto_schema
+from apps.user.api import docs
 
 
+@swagger_auto_schema(**docs.swagger_auth)
 @api_view(['POST'])
 def auth(request):
+    """
+        Авторизация
+
+        Ожидает json с номером зачетки и паролем
+
+        ```
+            {
+                "username": "1234321",
+                "password": "w0rng классный" 
+            }
+        ```
+    """
 
     if not request.body:
-        return Response({'error': 'no data'}, 403)
+        return Response({'error': 'bad request'}, 400)
 
     data = json_loads(request.body)
 
@@ -27,4 +42,4 @@ def auth(request):
     if not api.uid:
         return Response({'error': 'bad auth'}, 401)
 
-    return Response(getters.get_data(api))
+    return Response(getters.get_data(api), 200)
