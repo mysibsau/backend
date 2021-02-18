@@ -76,3 +76,26 @@ def get_marks(request):
         return auth
 
     return Response(getters.get_marks(auth), 200)
+
+
+@swagger_auto_schema(**docs.swagger_get_attestation)
+@api_view(['POST'])
+def get_attestation(request):
+    """
+        Get attestation
+
+        Ожидает json с номером зачетки и паролем
+
+        ```
+            {
+                "username": "1234321",
+                "password": "w0rng классный"
+            }
+        ```
+    """
+    auth = basic_auth(request)
+
+    if type(auth) == Response:
+        return auth
+
+    return Response(getters.get_attestation(auth), 200)

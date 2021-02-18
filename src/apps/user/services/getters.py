@@ -3,7 +3,7 @@ from apps.user.services import utils
 from typing import Optional
 
 
-def get_marks(api: API) -> dict:
+def get_marks(api: API) -> list:
     tmp_result = dict()
 
     tmp = api.search_read(
@@ -30,6 +30,30 @@ def get_marks(api: API) -> dict:
         result.append({
             'term': term,
             'items': sorted(tmp_result[term], key=lambda x: x['mark']),
+        })
+    return result
+
+
+def get_attestation(api) -> list:
+    result = []
+    tmp = api.search_read(
+        'portfolio_science.grade_attistation_view',
+        [[['nzkn', '=', api.login]]],
+        {'fields': ['dis', 'forma', 'att1', 'att2', 'att3', 'att']}
+    )
+
+    for att in tmp:
+        att1 = att['att1'].split('/')[0].strip() if att.get('att1') else '-'
+        att2 = att['att2'].split('/')[0].strip() if att.get('att2') else '-'
+        att3 = att['att2'].split('/')[0].strip() if att.get('att3') else '-'
+        att_res = att['att'].split('/')[0].strip() if att.get('att') else '-'
+        result.append({
+            'name': att['dis'].strip(),
+            'type': att['forma'].strip(),
+            'att1': att1,
+            'att2': att2,
+            'att3': att3,
+            'att': att_res,
         })
     return result
 
