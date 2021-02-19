@@ -45,7 +45,7 @@ def get_attestation(api) -> list:
     for att in tmp:
         att1 = att['att1'].split('/')[0].strip() if att.get('att1') else '-'
         att2 = att['att2'].split('/')[0].strip() if att.get('att2') else '-'
-        att3 = att['att2'].split('/')[0].strip() if att.get('att3') else '-'
+        att3 = att['att3'].split('/')[0].strip() if att.get('att3') else '-'
         att_res = att['att'].split('/')[0].strip() if att.get('att') else '-'
         result.append({
             'name': att['dis'].strip(),
