@@ -2,11 +2,16 @@ import xmlrpc.client
 
 
 class API:
-    def __init__(self, database: str, login: str, password: str):
+    def __init__(self, database: str, login: str, password: str, private: bool = False):
         self.db = database
         self.login = login
         self.password = password
         self.url = f'https://{database}.pallada.sibsau.ru'
+        if private:
+            import ssl
+            context = ssl.SSLContext(ssl.PROTOCOL_TLS)
+            context.set_ciphers('DEFAULT:@SECLEVEL=1')
+            self.url = f'https://{database}.pallada.int.sibsau.ru'
         self.uid = self.__get_uid(self.login, self.password)
 
         self.__dict__ = {
