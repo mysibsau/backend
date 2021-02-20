@@ -7,6 +7,7 @@ from apps.user.services import getters
 from drf_yasg.utils import swagger_auto_schema
 from apps.user.api import docs
 from apps.user.services.utils import make_token
+from xmlrpc.client import ProtocolError
 
 
 def basic_auth(request):
@@ -22,9 +23,12 @@ def basic_auth(request):
         return Response({'error': 'bad request'}, 400)
 
     if not username.isdigit():
-        return Response({'error': 'username is not gradebook'}, 418)
+        return Response({'error': 'username is not gradebook'}, 401)
 
-    api = API('portfolio', username, password)
+    try:
+        api = API('portfolio', username, password)
+    except (ProtocolError, TimeoutError):
+        return Response({'error': 'error'}, 418)
 
     if not api.uid:
         return Response({'error': 'bad auth'}, 401)

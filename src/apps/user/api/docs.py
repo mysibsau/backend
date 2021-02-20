@@ -24,15 +24,15 @@ swagger_auth = {
             }
         ),
         403: openapi.Response(
-            'Авторизация не пройдена',
+            'Пользователь заблокирован',
             examples={
                 'application/json': {'error': 'banned'}
             }
         ),
         418: openapi.Response(
-            'Переданный username не является номером зачетки',
+            'Палада лежит',
             examples={
-                'application/json': {'error': 'username is not gradebook'}
+                'application/json': {'error': 'error'}
             }
         ),
         401: openapi.Response(
@@ -92,15 +92,15 @@ swagger_get_marks = {
             }
         ),
         403: openapi.Response(
-            'Авторизация не пройдена',
+            'Пользователь заблокирован',
             examples={
                 'application/json': {'error': 'banned'}
             }
         ),
         418: openapi.Response(
-            'Переданный username не является номером зачетки',
+            'Палада лежит',
             examples={
-                'application/json': {'error': 'username is not gradebook'}
+                'application/json': {'error': 'error'}
             }
         ),
         401: openapi.Response(
@@ -148,15 +148,15 @@ swagger_get_attestation = {
             }
         ),
         403: openapi.Response(
-            'Авторизация не пройдена',
+            'Пользователь заблокирован',
             examples={
                 'application/json': {'error': 'banned'}
             }
         ),
         418: openapi.Response(
-            'Переданный username не является номером зачетки',
+            'Палада лежит',
             examples={
-                'application/json': {'error': 'username is not gradebook'}
+                'application/json': {'error': 'error'}
             }
         ),
         401: openapi.Response(
