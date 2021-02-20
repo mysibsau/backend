@@ -23,6 +23,12 @@ swagger_auth = {
                 'application/json': {'error': 'bad request'}
             }
         ),
+        403: openapi.Response(
+            'Авторизация не пройдена',
+            examples={
+                'application/json': {'error': 'banned'}
+            }
+        ),
         418: openapi.Response(
             'Переданный username не является номером зачетки',
             examples={
@@ -85,6 +91,12 @@ swagger_get_marks = {
                 'application/json': {'error': 'bad request'}
             }
         ),
+        403: openapi.Response(
+            'Авторизация не пройдена',
+            examples={
+                'application/json': {'error': 'banned'}
+            }
+        ),
         418: openapi.Response(
             'Переданный username не является номером зачетки',
             examples={
@@ -133,6 +145,12 @@ swagger_get_attestation = {
             'Не передали json или одно из полей',
             examples={
                 'application/json': {'error': 'bad request'}
+            }
+        ),
+        403: openapi.Response(
+            'Авторизация не пройдена',
+            examples={
+                'application/json': {'error': 'banned'}
             }
         ),
         418: openapi.Response(

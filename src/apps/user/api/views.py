@@ -2,9 +2,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from json import loads as json_loads
 from api_pallada import API
+from apps.user import models
 from apps.user.services import getters
 from drf_yasg.utils import swagger_auto_schema
 from apps.user.api import docs
+from apps.user.services.utils import make_token
 
 
 def basic_auth(request):
@@ -26,6 +28,11 @@ def basic_auth(request):
 
     if not api.uid:
         return Response({'error': 'bad auth'}, 401)
+
+    token = make_token(username, api.uid)
+    user = models.User.objects.filter(token=token).first()
+    if user and user.banned:
+        return Response({'error': 'banned'}, 403)
 
     return api
 
@@ -51,7 +58,12 @@ def auth(request):
     if type(auth) == Response:
         return auth
 
-    return Response(getters.get_data(auth), 200)
+    result = getters.get_data(auth)
+
+    if result == 'banned':
+        return Response({'error': 'banned'}, 403)
+
+    return Response(result, 200)
 
 
 @swagger_auto_schema(**docs.swagger_get_marks)

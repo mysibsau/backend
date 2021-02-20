@@ -4,26 +4,25 @@ from apps.user import models
 from django.utils import timezone
 
 
-def make_token(fio: str, gradebook: str, group: str) -> str:
+def make_token(username: str, uid: int) -> str:
 
     token = sha256(
         (
-            md5(group.encode('utf-8')).hexdigest() +
-            md5(gradebook.encode('utf-8')).hexdigest() +
-            md5(fio.encode('utf-8')).hexdigest()
+            md5(username.encode('utf-8')).hexdigest() +
+            md5(str(uid).encode('utf-8')).hexdigest()
         ).encode('utf-8'),
     ).hexdigest()
 
     token += md5(settings.SECRET_KEY.encode('utf-8')).hexdigest()
 
-    for i in range(len(group)):
+    for i in range(int(username[-2:])):
         token = sha256(token.encode('utf-8')).hexdigest()[:16]
         token += md5(settings.SECRET_KEY.encode('utf-8')).hexdigest()[:i]
 
-    return token[:max(16 - len(fio) % 16, 8)]
+    return token[:max(int(username[-2:]), 8)]
 
 
-def update_or_create_user(token: str, group: str, average: float):
+def update_or_create_user(token: str, group: str, average: float) -> str:
     user = models.User.objects.filter(token=token).first()
     if not user:
         models.User.objects.create(
