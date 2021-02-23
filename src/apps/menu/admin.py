@@ -14,4 +14,4 @@ class TypeAdmin(admin.ModelAdmin):
 
 @admin.register(models.Menu)
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'price', 'type', 'date')
+    list_display = ('id', 'name', 'price', 'type', 'room')
