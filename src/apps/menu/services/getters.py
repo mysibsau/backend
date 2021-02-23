@@ -7,7 +7,7 @@ from django.db import transaction
 
 @transaction.atomic
 def _load_menu():
-    data = get('https://int.mysibsau.ru/menu/test/').text
+    data = get('https://int.mysibsau.ru/menu/').text
     data = json_loads(data)
     if type(data) is dict and data.get('error') == 'menu is empty':
         return []
