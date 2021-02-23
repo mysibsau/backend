@@ -20,6 +20,7 @@ def _load_menu():
             name=dish['name'],
             weight=dish['weight'],
             price=dish['price'],
+            included=dish['included'],
             type=type_,
             room=room,
         )

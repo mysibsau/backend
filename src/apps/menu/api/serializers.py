@@ -6,6 +6,7 @@ def diner_serializer(diner: models.Menu) -> dict:
         'diner_name': diner.name,
         'weight': diner.weight,
         'price': diner.price,
+        'included': diner.included,
     }
 
 
