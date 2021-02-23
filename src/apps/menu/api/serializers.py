@@ -10,8 +10,8 @@ def diner_serializer(diner: models.Menu) -> dict:
 
 
 def menu_serializers(diners: list) -> list:
-    dining_rooms = models.DiningRoom.objects.values_list('name', flat=True)
-    types = models.Type.objects.values_list('name', flat=True)
+    dining_rooms = set(d.room.name for d in diners)
+    types = set(d.type.name for d in diners)
     result = list()
 
     for dining_room in dining_rooms:
