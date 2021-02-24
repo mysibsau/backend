@@ -19,7 +19,9 @@ def make_token(username: str, uid: int) -> str:
         token = sha256(token.encode('utf-8')).hexdigest()[:16]
         token += md5(settings.SECRET_KEY.encode('utf-8')).hexdigest()[:i]
 
-    return token[:max(int(username[-2:]), 8)]
+    lenght = max(8, min(16, int(username[-2:])))
+
+    return token[:lenght]
 
 
 def update_or_create_user(token: str, group: str, average: float) -> str:
