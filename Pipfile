@@ -21,6 +21,7 @@ django-environ = "*"
 django-jazzmin = "*"
 django-split-settings = "*"
 django-healthchecks = "*"
+requests-toolbelt = "*"
 
 [dev-packages]
 flake8 = "*"
