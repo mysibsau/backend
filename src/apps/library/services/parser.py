@@ -4,16 +4,16 @@ import re
 
 def get_book_quantities(soup):
     """Получение книг на странице"""
-    return len(soup.select(
-        '#irbis > tbody > tr > td > table:nth-child(8) > tbody'
-    )[0].find_all('table', {'width': '100%'}))
+    return len(soup.find_all('input', {'name': "MFN"}))
+
+
+def get_parent(soup):
+    return soup.find_all('input', {'name': "MFN"})[0].parent.parent.text
 
 
 def get_text(soup, num):
     """Получение текста под названием книги"""
-    return soup.select(
-        f'#irbis > tbody > tr > td > table:nth-child(8) > tbody > tr:nth-child({num}) > td:nth-child(3) > table > tbody > tr:nth-child(1) > td'
-    )[0].text
+    return soup.find_all('input', {'name': "MFN"})[num].parent.parent.text
 
 
 def get_name_book(soup, num):
@@ -27,22 +27,16 @@ def get_name_book(soup, num):
 
 
 def get_link(soup, num):
-    if link := soup.select(
-        f'#irbis > tbody > tr > td > table:nth-child(8) > tbody > tr:nth-child({num}) > td:nth-child(3) > table > tbody > tr:nth-child(2) > td:nth-child(1) > b > a'
-    ):
+    if link := soup.find_all('input', {'name': "MFN"})[num].parent.parent.find_all('a', {'target': '_blank'}):
         return link[0]['href']
     else:
         return None
 
 
 def get_author_name(soup, num):
-    if name := soup.select(
-        f'#irbis > tbody > tr > td > table:nth-child(8) > tbody > tr:nth-child({num}) > td:nth-child(3) > table > tbody > tr:nth-child(1) > td > a'
-    ):
+    if name := soup.find_all('input', {'name': "MFN"})[num].parent.parent.find_all('a', {'class':"term_hyper"}):
         return name[0].text
-    elif (name := soup.select(
-        f'#irbis > tbody > tr > td > table:nth-child(8) > tbody > tr:nth-child({num}) > td:nth-child(3) > table > tbody > tr:nth-child(1) > td > b:nth-child(5)'
-    )) and name[0].text:
+    elif name := soup.find_all('input', {'name': "MFN"})[num].parent.parent.select('b:nth-child(5)'):
         return name[0].text
     else:
         return None
@@ -50,7 +44,7 @@ def get_author_name(soup, num):
 
 def get_all_books(html):
     soup = BeautifulSoup(html, 'html.parser')
-    for num in range(1, get_book_quantities(soup) + 1):
+    for num in range(get_book_quantities(soup)):
         yield {
             'author': get_author_name(soup, num),
             'name': get_name_book(soup, num),
