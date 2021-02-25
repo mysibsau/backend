@@ -35,6 +35,7 @@ urlpatterns = [
     path('v2/work/', include('apps.work.api.urls')),
     path('v2/user/', include('apps.user.api.urls')),
     path('v2/menu/', include('apps.menu.api.urls')),
+    path('v2/library/', include('apps.library.api.urls')),
     path('docs/', schema_view.with_ui('redoc', cache_timeout=0)),
     path('healthchecks/', include('django_healthchecks.urls')),
 ]
