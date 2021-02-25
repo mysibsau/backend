@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'apps.shop',
     'apps.user',
     'apps.menu',
+    'apps.library'
 ]
 
 if settings.DEBUG:
