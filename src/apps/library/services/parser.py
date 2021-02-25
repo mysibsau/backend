@@ -48,13 +48,15 @@ def get_author_name(soup, num):
         return None
 
 
-def get_all_books(html_file):
-    soup = BeautifulSoup(open(html_file, encoding='cp1251'), 'html.parser')
-    for num in list(range(1, get_book_quantities(soup) + 1)):
+def get_all_books(html):
+    soup = BeautifulSoup(html, 'html.parser')
+    for num in range(1, get_book_quantities(soup) + 1):
         yield {
             'author': get_author_name(soup, num),
             'name': get_name_book(soup, num),
-            'url': get_link(soup, num)
+            'url': get_link(soup, num),
+            'place': 'Л 208',
+            'count': 42,
         }
 
 
