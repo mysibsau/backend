@@ -26,6 +26,37 @@ def get_name_book(soup, num):
         .split(':')[0].strip()
 
 
+def get_place(soup, num):
+    '''Получение местоположения книги'''
+    tickets = {
+        'УА': 'Л 208',
+        'СЭА': 'Л 203',
+        'НА': 'Л 204',
+        'ХА': 'Л 208',
+        'ХР': 'Л 208'
+    }
+    place = soup.find_all('input', {'name': "MFN"})[num].parent.parent.text\
+            .split('Имеются экземпляры в отделах: ')[-1]\
+            .split(')')[0]\
+            .split('(')[0]
+
+    return tickets.get(place, None)
+
+
+def get_count(soup, num):
+    '''Получение количества книг в хранилище'''
+    try:
+        count = int(
+            soup.find_all('input', {'name': "MFN"})[num].parent.parent.text\
+                .split('Имеются экземпляры в отделах: ')[-1]\
+                .split(')')[0]\
+                .split('(')[-1]
+        )
+    except ValueError:
+        return 0
+    return count
+
+
 def get_link(soup, num):
     if link := soup.find_all('input', {'name': "MFN"})[num].parent.parent.find_all('a', {'target': '_blank'}):
         return link[0]['href']
