@@ -4,6 +4,7 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 URL = 'http://biblioteka.sibsau.ru/jirbis/index2.php?option=com_irbis&Itemid=306'
 
+
 def get_books_from_library(key_words: str) -> str:
     mp_encoder = MultipartEncoder(
         fields={

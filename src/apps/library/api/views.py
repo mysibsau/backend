@@ -13,7 +13,7 @@ def all_books(request):
     html = get_books_from_library(key_words)
 
     try:
-        result = list(get_all_books(html))
+        result = get_all_books(html)
     except Timeout:
         return Response({'error': 'timeout'}, 504)
 
