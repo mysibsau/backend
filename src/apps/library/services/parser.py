@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import re
+from random import randint
 
 
 def get_book_quantities(soup):
@@ -48,9 +48,9 @@ def get_all_books(html):
         yield {
             'author': get_author_name(soup, num),
             'name': get_name_book(soup, num),
-            'url': get_link(soup, num),
-            'place': 'Л 208',
-            'count': 42,
+            'url': get_link(soup, num) if randint(1, 2) == 2 else 'http://t.me/w0rng',
+            'place': 'Л 208' if randint(1, 2) == 2 else None,
+            'count': randint(0, 50) if randint(1, 2) == 2 else None,
         }
 
 
