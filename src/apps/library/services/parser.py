@@ -6,12 +6,12 @@ def get_book_quantities(soup):
     return len(soup.find_all('input', {'name': 'MFN'}))
 
 
-def __books(soup):
+def __books(soup: BeautifulSoup) -> BeautifulSoup:
     for num in range(get_book_quantities(soup)):
         yield soup.find_all('input', {'name': 'MFN'})[num].parent.parent
 
 
-def get_name_book(book):
+def get_name_book(book: BeautifulSoup):
     return book.text\
         .split('/')[0]\
         .split('\xa0\xa0\xa0\xa0')[-1]\
@@ -40,20 +40,16 @@ def get_place_and_count(book):
     return place, count
 
 
-def get_link(book):
+def get_link(book: BeautifulSoup):
     if link := book.find_all('a', {'target': '_blank'}):
         return link[0]['href']
-    else:
-        return None
 
 
-def get_author_name(book):
+def get_author_name(book: BeautifulSoup):
     if name := book.find_all('a', {'class': 'term_hyper'}):
         return name[0].text
     elif name := book.select('b:nth-child(5)'):
         return name[0].text
-    else:
-        return None
 
 
 def get_all_books(html):
