@@ -10,6 +10,7 @@ def all_books(request):
     key_words = request.GET.get('q')
     if not key_words:
         return Response({'error': 'search field is empty'}, 400)
+    key_words = key_words.strip().lower()
     html = get_books_from_library(key_words)
 
     try:
