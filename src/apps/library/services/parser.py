@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from random import randint
 
 
 def get_book_quantities(soup):
@@ -26,35 +25,27 @@ def get_name_book(soup, num):
         .split(':')[0].strip()
 
 
-def get_place(soup, num):
-    '''Получение местоположения книги'''
-    tickets = {
-        'УА': 'Л 208',
-        'СЭА': 'Л 203',
-        'НА': 'Л 204',
-        'ХА': 'Л 208',
-        'ХР': 'Л 208'
-    }
-    place = soup.find_all('input', {'name': "MFN"})[num].parent.parent.text\
-            .split('Имеются экземпляры в отделах: ')[-1]\
-            .split(')')[0]\
-            .split('(')[0]
-
-    return tickets.get(place, None)
-
-
-def get_count(soup, num):
+def get_place_and_count(soup: BeautifulSoup, num):
     '''Получение количества книг в хранилище'''
-    try:
-        count = int(
-            soup.find_all('input', {'name': "MFN"})[num].parent.parent.text\
-                .split('Имеются экземпляры в отделах: ')[-1]\
-                .split(')')[0]\
-                .split('(')[-1]
-        )
-    except ValueError:
-        return 0
-    return count
+    text = soup.find_all(
+        name='input',
+        attrs={'name': "MFN"},
+    )[num].parent.parent.text
+
+    places = {
+        'УА': 'Л-208',
+        'СЭА': 'Л-203',
+        'НА': 'Л-204',
+        'ХА': 'Л-208',
+        'ХР': 'Л-208',
+    }
+
+    count = text.split('отделах: ')[-1].split(')')[0].split('(')[1]
+    count = int(count) if count.isdigit() else 0
+    place = text.split('отделах: ')[-1].split(')')[0].split('(')[0]
+    place = places.get(place, place)
+
+    return place, count
 
 
 def get_link(soup, num):
@@ -77,22 +68,22 @@ def get_all_books(html):
     soup = BeautifulSoup(html, 'html.parser')
     result = {'digital': [], 'physical': []}
     for num in range(get_book_quantities(soup)):
+        author = get_author_name(soup, num)
+        name = get_name_book(soup, num)
+        place, count = get_place_and_count(soup, num)
+
+        if not all((author, name, place, count)):
+            continue
+
         result['physical'].append({
-            'author': get_author_name(soup, num),
-            'name': get_name_book(soup, num),
-            'place': f'Л {randint(1, 100)}',
-            'count': randint(0, 50),
+            'author': author,
+            'name': name,
+            'place': place,
+            'count': count,
         })
         result['digital'].append({
-            'author': get_author_name(soup, num),
-            'name': get_name_book(soup, num),
+            'author': author,
+            'name': name,
             'url': 'https://t.me/w0rng',
         })
     return result
-
-
-if __name__ == '__main__':
-    for book in get_all_books('IZDV.html'):
-        for key, value in book.items():
-            print(key, ":", value)
-        print()
