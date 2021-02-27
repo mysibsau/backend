@@ -48,19 +48,23 @@ def save_post(post):
         author=f'group{from_id}',
         text=post['text'],
         date_to=timezone.localtime() + timedelta(7),
-        id_vk=post['id']
+        id_vk=post['id'],
     )
     for photo_photo in get_all_photos_from_post(post):
-        img_temp = NamedTemporaryFile(delete=True, dir='media/informing/news/', suffix='.jpg')
+        # Загружа картинку по ссылке из вк
+        img_temp = NamedTemporaryFile(
+            delete=True,
+            suffix='.jpg',
+        )
         img_temp.write(urlopen(photo_photo).read())
         img_temp.flush()
 
-        name = img_temp.name.split('media/informing/news/')[1]
-        img_temp.name = 'media/informing/news/' + name
+        img_temp.name = img_temp.name.split('/')[-1]
 
+        # Создаю модель изображения
         models.Image.objects.create(
             image=File(img_temp),
-            news=news
+            news=news,
         )
 
 
