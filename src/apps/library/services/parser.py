@@ -93,10 +93,3 @@ def get_digital_books(html: str) -> list:
         })
 
     return result
-
-
-def get_all_books(html_physical, html_digital):
-    return {
-        'digital': get_digital_books(html_digital),
-        'physical': get_physical_books(html_physical),
-    }
