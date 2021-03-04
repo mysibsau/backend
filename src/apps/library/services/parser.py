@@ -52,9 +52,10 @@ def get_author_name(book: BeautifulSoup):
         return name[0].text
 
 
-def get_all_books(html):
+def get_physical_books(html: str) -> list:
     soup = BeautifulSoup(html, 'html.parser')
-    result = {'digital': [], 'physical': []}
+    result = []
+
     for book in __books(soup):
         author = get_author_name(book)
         name = get_name_book(book)
@@ -63,15 +64,32 @@ def get_all_books(html):
         if not all((author, name, place, count)):
             continue
 
-        result['physical'].append({
+        result.append({
             'author': author,
             'name': name,
             'place': place,
             'count': count,
         })
-        result['digital'].append({
+
+    return result
+
+
+def get_digital_books(html: str) -> list:
+    soup = BeautifulSoup(html, 'html.parser')
+    result = []
+
+    for book in __books(soup):
+        author = get_author_name(book)
+        name = get_name_book(book)
+        url = get_link(book)
+
+        if not all((author, name, url)):
+            continue
+
+        result.append({
             'author': author,
             'name': name,
-            'url': 'https://t.me/w0rng',
+            'url': url,
         })
+
     return result

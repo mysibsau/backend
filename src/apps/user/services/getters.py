@@ -99,7 +99,7 @@ def get_data(api: API) -> dict:
     fio, group, average = get_fio_group_and_average(api)
     token = utils.make_token(api.login, api.uid)
 
-    utils.update_or_create_user(token, group, average)
+    utils.update_or_create_user(token, group, fio, average)
 
     return {
         'token': token,
