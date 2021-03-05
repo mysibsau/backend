@@ -76,9 +76,9 @@ def filter_post(post):
     if not post:
         logger.info('Пост не передан')
         return
-    if post.get('marked_as_ads', 1):
-        logger.info('Пост отмечен, как рекламный')
-        return
+    # if post.get('marked_as_ads', 1):
+    #     logger.info('Пост отмечен, как рекламный')
+    #     return
     if post.get('post_type', 'no_post') != 'post':
         logger.info('Пост имеет не подходящий тип')
         return
