@@ -89,10 +89,13 @@ def filter_post(post):
 
 
 def parse(data):
-    logger.info('Пришел новый запрос от vk')
+    logger.info(f'Пришел новый запрос от vk {data.get("type", None)}')
 
     if data.get('type', None) == 'confirmation':
         return config.VK_REGISTER_GROUP, 200
+
+    if data.get('type', None) != 'wall_post_new':
+        return 'ok', 200
 
     if data.get('secret') != config.VK_SECRET_WORD:
         logger.warning('Неправильный секретный ключ')
