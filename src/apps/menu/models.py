@@ -31,7 +31,7 @@ class Menu(models.Model):
     type = models.ForeignKey(Type, models.CASCADE, verbose_name='Тип')
     room = models.ForeignKey(DiningRoom, models.CASCADE, verbose_name='Столовая')
     included = models.CharField('Ингредиенты', max_length=256, blank=True, null=True)
-    date = models.DateTimeField('Дата', editable=False, default=timezone.localtime())
+    date = models.DateTimeField('Дата', editable=False, default=timezone.now)
 
     def __str__(self):
         return self.name
