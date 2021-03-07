@@ -34,3 +34,7 @@ class Purchase(models.Model):
     class Meta:
         verbose_name = 'Покупка'
         verbose_name_plural = 'Покупки'
+
+
+# Костыль для загрузки моделей из другого файла
+__import__('apps.shop.theaters.models')

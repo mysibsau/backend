@@ -31,7 +31,7 @@ class Concert(models.Model):
     datetime = models.DateTimeField('Начало')
     with_place = models.BooleanField('Билеты с местами', default=True)
     hall = models.CharField('Зал', max_length=64)
-    performance = models.ForeignKey('Спектакль', models.CASCADE)
+    performance = models.ForeignKey(Performance, models.CASCADE, verbose_name='Спектакль')
     count = models.PositiveSmallIntegerField('Количество билетов')
 
     def __str__(self) -> str:
