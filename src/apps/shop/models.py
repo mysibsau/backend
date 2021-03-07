@@ -25,6 +25,7 @@ class Purchase(models.Model):
     )
 
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='Покупатель')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='Товар')
     count = models.PositiveSmallIntegerField('Количество')
     datetime = models.DateTimeField('Дата', auto_now_add=True)
     code = models.CharField('Код', max_length=8, default=generate)
