@@ -5,6 +5,7 @@ from datetime import timedelta
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 from urllib.request import urlopen
+from json import dumps as json_dumps
 
 
 def check_contain_allowed_tags(text, group_id):
@@ -68,17 +69,20 @@ def save_post(post):
         )
 
 
-def filter_post(post):
+def filter_post(post: dict) -> None:
     """
     Фильтрует неподходящие посты
     """
+    # Записываем пришедшие посты для отладки
+    with open(str(timezone.now()) + '.json', 'w') as file:
+        file.writelines(json_dumps(post))
     group_id = abs(post.get('from_id', -1))
     if not post:
         logger.info('Пост не передан')
         return
-    # if post.get('marked_as_ads', 1):
-    #     logger.info('Пост отмечен, как рекламный')
-    #     return
+    if post.get('marked_as_ads'):
+        logger.info('Пост отмечен, как рекламный')
+        return
     if post.get('post_type', 'no_post') != 'post':
         logger.info('Пост имеет не подходящий тип')
         return
@@ -88,7 +92,7 @@ def filter_post(post):
     save_post(post)
 
 
-def parse(data):
+def parse(data: dict):
     logger.info(f'Пришел новый запрос от vk {data.get("type", None)}')
 
     if data.get('type', None) == 'confirmation':
