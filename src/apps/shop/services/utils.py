@@ -15,8 +15,6 @@ def generate_beautiful_code(lenght: int = 4) -> str:
     result = ''
     incrementing = randint(0, 1)
 
-    # print(f'{len_pattern=}\n{pattern=}\n{incrementing=}')
-
     for i in range(ceil(lenght / len_pattern)):
         if not incrementing:
             result += str(pattern)
