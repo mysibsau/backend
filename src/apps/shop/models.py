@@ -7,7 +7,7 @@ class Product(models.Model):
     name = models.CharField('Название', max_length=128)
     about = models.CharField('Описание', max_length=512, blank=True, null=True)
     count = models.PositiveSmallIntegerField('Количество')
-    price = models.DecimalField('Цена')
+    price = models.DecimalField('Цена', decimal_places=2, max_digits=4)
 
     def __str__(self) -> str:
         return self.name
