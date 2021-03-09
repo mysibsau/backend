@@ -611,11 +611,11 @@
         },
         "flake8-bugbear": {
             "hashes": [
-                "sha256:0c5b949dc1f33d2adae284294d39a81dd11534fbf689890fb22ee532cab959d9",
-                "sha256:ea08deb8922486e856b38c9338936de1e1de4ad9e7c912be142673d5afe5ac89"
+                "sha256:5d6ccb0c0676c738a6e066b4d50589c408dcc1c5bf1d73b464b18b73cd6c05c2",
+                "sha256:cadce434ceef96463b45a7c3000f23527c04ea4b531d16c7ac8886051f516ca0"
             ],
             "index": "pypi",
-            "version": "==21.3.1"
+            "version": "==21.3.2"
         },
         "flake8-commas": {
             "hashes": [
