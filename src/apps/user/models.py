@@ -11,7 +11,7 @@ class User(models.Model):
     banned = models.BooleanField('Заблокирован', default=False)
 
     def __str__(self):
-        return f'{self.name} {self.group}'
+        return f'{self.token[:5]} {self.group}'
 
     class Meta:
         pass
