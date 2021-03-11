@@ -1,28 +1,21 @@
-from rest_framework.response import Response
-from django.views.decorators.cache import cache_page
-
-from apps.shop.api import serializers, docs
 from apps.shop import models
+from apps.shop.api import serializers
 from apps.user.models import User
-
 from rest_framework.decorators import api_view
-from drf_yasg.utils import swagger_auto_schema
+from rest_framework.response import Response
 
 
 @api_view(['GET'])
-@cache_page(60 * 60)
 def user_ticket(request):
     '''Возвращает билеты текущего пользователя'''
-    id = request.GET.get('id')
+    token = request.GET.get('token')
 
     if not id:
-        return Response({'error': 'not id'}, status=400)
+        return Response({'error': 'not token'}, status=400)
 
-    try:
-        user = User.objects.get(id=id)
-    except:
+    user = User.objects.filter(token=token).first()
+    if not user:
         return Response({'error': 'user not found'}, status=404)
 
-    queryset = models.Purchase.objects.filter(buyer__id=user.id)
+    queryset = models.Purchase.objects.filter(buyer=user)
     return Response(serializers.UserTicketsSerializer(queryset))
-
