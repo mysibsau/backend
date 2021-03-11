@@ -1,17 +1,17 @@
 from typing import List
-from apps.shop.models import Purchase
+from apps.shop.theaters.models import Ticket
 
 
-def UserTicketsSerializer(purchases: List[Purchase]) -> List[dict]:
+def TicketsSerializer(tickets: List[Ticket]) -> List[dict]:
     result = []
-    for purchase in purchases:
+    for ticket in tickets:
         result.append({
-            'id': purchase.id,
-            'buyer': purchase.buyer,
-            'product': purchase.product,
-            'count': purchase.count,
-            'datetime': purchase.datetime,
-            'code': purchase.code,
-            'status': purchase.status,
+            'id': ticket.id,
+            'buyer': ticket.buyer,
+            'product': ticket.product,
+            'count': ticket.count,
+            'datetime': ticket.datetime,
+            'code': ticket.code,
+            'status': ticket.status,
         })
     return result

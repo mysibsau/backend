@@ -1,5 +1,5 @@
 from apps.shop import models
-from apps.shop.api import serializers
+from apps.shop.theaters.api import serializers
 from apps.user.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -18,4 +18,4 @@ def user_ticket(request):
         return Response({'error': 'user not found'}, status=404)
 
     queryset = models.Purchase.objects.filter(buyer=user)
-    return Response(serializers.UserTicketsSerializer(queryset))
+    return Response(serializers.TicketsSerializer(queryset))
