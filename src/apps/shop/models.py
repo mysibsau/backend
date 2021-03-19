@@ -3,18 +3,55 @@ from apps.user.models import User
 from apps.shop.services.utils import generate
 
 
-class Product(models.Model):
-    name = models.CharField('Название', max_length=128)
-    about = models.CharField('Описание', max_length=512, blank=True, null=True)
-    count = models.PositiveSmallIntegerField('Количество', default=1)
-    price = models.DecimalField('Цена', decimal_places=2, max_digits=4)
+class Theatre(models.Model):
+    name = models.CharField('Название', max_length=64)
 
     def __str__(self) -> str:
         return self.name
 
     class Meta:
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
+        verbose_name = u'Театр'
+        verbose_name_plural = u'Театры'
+
+
+class Performance(models.Model):
+    name = models.CharField('Название', max_length=128)
+    about = models.CharField('Описание', max_length=256)
+    logo = models.ImageField('Афиша', upload_to='shop/theatre/')
+    theatre = models.ForeignKey(Theatre, models.CASCADE, verbose_name='Театр')
+
+    def __str__(self) -> str:
+        return self.name
+
+    class Meta:
+        verbose_name = u'Спектакль'
+        verbose_name_plural = u'Спектакли'
+
+
+class Concert(models.Model):
+    datetime = models.DateTimeField('Начало')
+    with_place = models.BooleanField('Билеты с местами', default=True)
+    hall = models.CharField('Зал', max_length=64)
+    performance = models.ForeignKey(Performance, models.CASCADE, verbose_name='Спектакль')
+
+    def __str__(self) -> str:
+        return f'{self.performance.name} {self.datetime}'
+
+    class Meta:
+        verbose_name = u'Выступление'
+        verbose_name_plural = u'Выступления'
+
+
+class Ticket(models.Model):
+    count = models.PositiveSmallIntegerField('Количество', default=1, blank=True, null=True)
+    price = models.DecimalField('Цена', decimal_places=2, max_digits=6)
+    place = models.PositiveSmallIntegerField('Место', blank=True, null=True)
+    row = models.PositiveSmallIntegerField('Ряд', blank=True, null=True)
+    concert = models.ForeignKey(Concert, models.CASCADE, verbose_name='Концерт')
+
+    class Meta:
+        verbose_name = u'Билет'
+        verbose_name_plural = u'Билеты'
 
 
 class Purchase(models.Model):
@@ -24,17 +61,14 @@ class Purchase(models.Model):
         (3, 'Отменен'),
     )
 
-    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='Покупатель')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='Товар')
-    count = models.PositiveSmallIntegerField('Количество')
+    buyer = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Покупатель')
+    tickets = models.ManyToManyField(Ticket, verbose_name='Билеты')
+    count = models.PositiveSmallIntegerField('Количество', blank=True, null=True)
     datetime = models.DateTimeField('Дата', auto_now_add=True)
-    code = models.CharField('Код', max_length=8, default=generate)
+    code = models.CharField('Код', max_length=8, default=generate, editable=False)
     status = models.IntegerField('Статус', choices=STATUSES)
 
     class Meta:
         verbose_name = 'Покупка'
         verbose_name_plural = 'Покупки'
 
-
-# Костыль для загрузки моделей из другого файла
-__import__('apps.shop.theaters.models')
