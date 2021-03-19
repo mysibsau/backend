@@ -27,3 +27,17 @@ def TicketsSerializer(tickets):
             tmp['tickets'] = TicketSerializers(ticket.tickets.all())
         result.append(tmp)
     return result
+
+
+def PerfomancesSerializer(perfomances):
+    result = []
+
+    for perfomance in perfomances:
+        result.append({
+            'id': perfomance.id,
+            'name': perfomance.name,
+            'logo': perfomance.logo.url,
+            'theatre': perfomance.theatre.name,
+        })
+
+    return result

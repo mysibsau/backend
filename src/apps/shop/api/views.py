@@ -3,6 +3,8 @@ from apps.shop.api import serializers
 from apps.user.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from datetime import timedelta
+from django.utils import timezone
 
 
 @api_view(['GET'])
@@ -20,3 +22,13 @@ def user_ticket(request):
     queryset = models.Purchase.objects.filter(buyer=user)
 
     return Response(serializers.TicketsSerializer(queryset))
+
+
+@api_view(['GET'])
+def all_perfomances(request):
+    '''Возвращает все спектакли'''
+    date = timezone.localtime() - timedelta(3)
+    queryset = models.Concert.objects.filter(datetime__lte=date)
+    queryset = set(concert.performance for concert in queryset)
+
+    return Response(serializers.PerfomancesSerializer(queryset))
