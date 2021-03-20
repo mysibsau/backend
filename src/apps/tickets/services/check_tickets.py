@@ -23,10 +23,29 @@ def check_user_alredy_booked_two_tickets(ticket: Ticket, user: User) -> bool:
 
 
 def check_count_of_ticket_booked(tickets: List[Ticket]) -> bool:
+    """Проверка количества билетов, которые бронируются на один спектакль"""
     count_concerts = dict()
 
     for ticket in tickets:
         count_concerts[ticket.concert] = count_concerts.get(ticket.concert, 0) + 1
+
+    for concert in count_concerts:
+        if count_concerts[concert] > 2:
+            return True
+
+    return False
+
+
+def check_count_of_ticket_booked_with_alrady_booked(tickets: List[Ticket], user: User) -> bool:
+    """Проверка количества бронируемых билетов билетов вместе с уже забронированными"""
+    count_concerts = dict()
+
+    for ticket in tickets:
+        count_concerts[ticket.concert] = count_concerts.get(ticket.concert, 0) + 1
+
+    for purcase in Purchase.objects.filter(buyer=user):
+        for ticket in purcase.tickets.all():
+            count_concerts[ticket.concert] = count_concerts.get(ticket.concert, 0) + 1
 
     for concert in count_concerts:
         if count_concerts[concert] > 2:
@@ -54,5 +73,9 @@ def check_all_tickets(tickets_for_buy: List[Ticket], user: User) -> Optional[dic
             }
     if check_count_of_ticket_booked(tickets_for_buy):
         return {
-            'error': 'Вы пытаетесь забронировать больше двух билетов на один спектакль'
+            'error': 'Вы пытаетесь забронировать больше двух билетов на один спектакль',
+        }
+    if check_count_of_ticket_booked_with_alrady_booked(tickets_for_buy, user):
+        return {
+            'error': 'Вы пытаетесь забронировать больше двух билетов на один спектакль',
         }
