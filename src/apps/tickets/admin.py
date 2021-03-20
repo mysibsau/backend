@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.shop import models
+from apps.tickets import models
 
 
 @admin.register(models.Purchase)

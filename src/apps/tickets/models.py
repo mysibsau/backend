@@ -1,6 +1,6 @@
 from django.db import models
 from apps.user.models import User
-from apps.shop.services.utils import generate
+from apps.tickets.services.utils import generate
 
 
 class Theatre(models.Model):
