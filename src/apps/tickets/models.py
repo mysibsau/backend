@@ -71,4 +71,3 @@ class Purchase(models.Model):
     class Meta:
         verbose_name = 'Покупка'
         verbose_name_plural = 'Покупки'
-
