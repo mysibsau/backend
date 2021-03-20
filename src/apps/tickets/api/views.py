@@ -7,6 +7,8 @@ from datetime import timedelta
 from django.utils import timezone
 from json import loads as json_loads
 from apps.tickets.services import check_tickets
+from apps.tickets.services.setters import buy_tickets
+
 
 
 @api_view(['GET'])
@@ -65,4 +67,6 @@ def buy(request):
     if chech_error_code := check_tickets.check_all_tickets(queryset, user):
         return Response(chech_error_code, 405)
 
-    return Response(serializers.TicketSerializers(queryset))
+    buy_tickets(queryset, user)
+
+    return Response({'status': 'ok'})
