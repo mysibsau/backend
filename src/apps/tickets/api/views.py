@@ -27,8 +27,8 @@ def user_ticket(request):
 @api_view(['GET'])
 def all_perfomances(request):
     '''Возвращает все спектакли'''
-    date = timezone.localtime() - timedelta(3)
-    queryset = models.Concert.objects.filter(datetime__lte=date)
+    date = timezone.localtime() + timedelta(3)
+    queryset = models.Concert.objects.filter(datetime__gt=date)
     queryset = set(concert.performance for concert in queryset)
 
     return Response(serializers.PerfomancesSerializer(queryset))
