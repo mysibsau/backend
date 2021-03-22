@@ -1,39 +1,55 @@
 import requests
-from requests_toolbelt.multipart.encoder import MultipartEncoder
+from random import randint
 from apps.library.services import parser
 
+BASE_URL = 'http://biblioteka.sibsau.ru/jirbis2/components/com_irbis/ajax_provider.php'
 
-URL = 'http://biblioteka.sibsau.ru/jirbis/index2.php?option=com_irbis&Itemid=306'
+
+def get_random_req_id_client() -> int:
+    return randint(1, 900000)
 
 
 def get_books_from_library(key_words: str, physical: bool = True) -> str:
-    mp_encoder = MultipartEncoder(
-        fields={
-            'I21DBNAM': 'IBIS' if physical else 'EBCN',
-            'I21DBN': 'IBIS' if physical else 'EBCN',
-            'SUFFIX': 'STEX',
-            'S21FMT': 'fullwebr',
-            'X_S21P01': '1',
-            'X_S21P02': '1',
-            'X_S21LOG': '1',
-            'S21STN': '1',
-            'C21COM': 'S',
-            'S21CNR': '15',
-            'S21REF': 'avhead',
-            'S21ALL': f"(<.>K={key_words}<.>)",
-            'S21ALLTrm': f"K={key_words}|",
+    if not physical:
+        requests.get(
+            BASE_URL,
+            params={
+                'task': 'set_selected_bases',
+                'bl_id_array_selected[11]': 11,
+            }
+        )
+
+    req_id_client = get_random_req_id_client()
+
+    requests.post(
+        BASE_URL,
+        data={
+            'fasets': '',
+            'req_static': 1,
+            'keywords': key_words,
+            'task': 'search_broadcast',
+            'first_number': 1,
+            'req_id_client': req_id_client,
+            'selected_search_flag': 0,
         },
-        encoding='cp1251',
     )
 
-    response = requests.post(
-        URL,
-        data=mp_encoder,
-        headers={'Content-Type': mp_encoder.content_type},
-    )
-    response.encoding = 'cp1251'
+    response = requests.get(
+        BASE_URL,
+        params={
+            'task': 'show_results',
+            'req_id_client': req_id_client,
+            'first_number': 1,
+            'recs_outputed': 0,
+            'reqs_outputed': 0,
+            'last_output_time': 0,
+            'finish_flag': 'last'
 
-    return response.text
+        }
+    )
+
+    if response.status_code == 200:
+        return parser.delete_bo_lighting_tag(response.json()['recs'])
 
 
 def get_books(key_word: str, physical: bool = True) -> list:
