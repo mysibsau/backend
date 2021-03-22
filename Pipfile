@@ -22,6 +22,8 @@ django-jazzmin = "*"
 django-split-settings = "*"
 django-healthchecks = "*"
 requests-toolbelt = "*"
+lxml = "*"
+cssselect = "*"
 
 [dev-packages]
 flake8 = "*"
