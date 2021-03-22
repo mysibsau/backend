@@ -38,6 +38,7 @@ def PerfomancesSerializer(perfomances):
             'name': perfomance.name,
             'logo': perfomance.logo.url,
             'theatre': perfomance.theatre.name,
+            'about': perfomance.about,
         })
 
     return result
