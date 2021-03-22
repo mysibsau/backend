@@ -46,8 +46,6 @@ def generate_schem_hall(file_name: str, tickets: List[dict]) -> dict:
     with open(f'apps/tickets/halls/{file_name}') as f:
         hall = json_loads(f.read())
 
-    pprint(tickets)
-
     for ticket in tickets:
         for i, row in enumerate(hall[ticket['row'] - 1]):
             if not row or (row['place'] != ticket['place']):
