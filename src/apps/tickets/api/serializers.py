@@ -1,3 +1,7 @@
+from django.db.models import Min
+from apps.tickets.models import Ticket
+
+
 def TicketSerializers(tickets):
     result = []
 
@@ -39,6 +43,24 @@ def PerfomancesSerializer(perfomances):
             'logo': perfomance.logo.url,
             'theatre': perfomance.theatre.name,
             'about': perfomance.about,
+        })
+
+    return result
+
+
+def ConcertsSerializer(concerts: list) -> list:
+    result = []
+
+    # Мне очень стыдно за код, который находится ниже
+    # Я не ел трое суток, меня заставили так написать
+
+    for concert in concerts:
+        result.append({
+            'id': concert.id,
+            'date': concert.datetime.strftime('%d.%m'),
+            'time': concert.datetime.strftime('%H:%M'),
+            'hall': concert.hall,
+            'min_price': Ticket.objects.filter(concert=concert).aggregate(Min('price'))['price__min']
         })
 
     return result

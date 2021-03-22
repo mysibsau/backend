@@ -10,7 +10,6 @@ from apps.tickets.services import check_tickets
 from apps.tickets.services.setters import buy_tickets
 
 
-
 @api_view(['GET'])
 def user_ticket(request):
     '''Возвращает билеты текущего пользователя'''
@@ -73,3 +72,15 @@ def buy(request):
     buy_tickets(queryset, user)
 
     return Response({'status': 'ok'})
+
+
+@api_view(['GET'])
+def all_concerts(request):
+    performance_id = request.GET.get('id')
+
+    queryset = models.Concert.objects.filter(performance__id=performance_id)
+    if not queryset:
+        return Response({'error': 'Концерты не найдены'}, 404)
+
+    return Response(serializers.ConcertsSerializer(queryset))
+    
