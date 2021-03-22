@@ -6,5 +6,6 @@ urlpatterns = [
     path('my_tickets/', views.user_ticket),
     path('all_perfomances/', views.all_perfomances),
     path('all_concerts/', views.all_concerts),
+    path('concert/', views.get_concert),
     path('buy/', views.buy),
 ]

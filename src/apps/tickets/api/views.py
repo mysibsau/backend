@@ -83,4 +83,14 @@ def all_concerts(request):
         return Response({'error': 'Концерты не найдены'}, 404)
 
     return Response(serializers.ConcertsSerializer(queryset))
-    
+
+
+@api_view(['GET'])
+def get_concert(request):
+    concert_id = request.GET.get('id')
+
+    concert = models.Concert.objects.filter(id=concert_id).first()
+    if not concert:
+        return Response({'error': 'Концерт не найден'}, 404)
+
+    return Response(serializers.ConcertSerializer(concert))

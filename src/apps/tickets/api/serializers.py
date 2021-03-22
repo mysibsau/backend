@@ -1,5 +1,8 @@
 from django.db.models import Min
+from apps.tickets import models
 from apps.tickets.models import Ticket
+from typing import List
+from apps.tickets.services.utils import generate_schem_hall
 
 
 def TicketSerializers(tickets):
@@ -7,6 +10,7 @@ def TicketSerializers(tickets):
 
     for ticket in tickets:
         result.append({
+            'id': ticket.id,
             'row': ticket.row,
             'place': ticket.place,
             'price': ticket.price,
@@ -48,7 +52,7 @@ def PerfomancesSerializer(perfomances):
     return result
 
 
-def ConcertsSerializer(concerts: list) -> list:
+def ConcertsSerializer(concerts: List[models.Concert]) -> List[dict]:
     result = []
 
     # Мне очень стыдно за код, который находится ниже
@@ -64,3 +68,11 @@ def ConcertsSerializer(concerts: list) -> list:
         })
 
     return result
+
+
+def ConcertSerializer(concert: models.Concert):
+    tickets = models.Ticket.objects.filter(concert=concert, purchase__isnull=True)
+    hall_schem = concert.performance.theatre.file_name
+    tickets = TicketSerializers(tickets)
+
+    return generate_schem_hall(hall_schem, tickets)

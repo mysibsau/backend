@@ -63,7 +63,7 @@ class Purchase(models.Model):
     )
 
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Покупатель')
-    tickets = models.ManyToManyField(Ticket, verbose_name='Билеты')
+    tickets = models.ManyToManyField(Ticket, verbose_name='Билеты', related_name='purchase')
     count = models.PositiveSmallIntegerField('Количество', blank=True, null=True)
     datetime = models.DateTimeField('Дата', auto_now_add=True)
     code = models.CharField('Код', max_length=8, default=generate, editable=False)
