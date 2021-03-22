@@ -64,6 +64,9 @@ def buy(request):
 
     queryset = models.Ticket.objects.filter(id__in=data['tickets'])
 
+    if not queryset:
+        return Response({'error': 'Билеты не найдены'}, 404)
+
     if chech_error_code := check_tickets.check_all_tickets(queryset, user):
         return Response(chech_error_code, 405)
 
