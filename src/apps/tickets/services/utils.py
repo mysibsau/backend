@@ -1,5 +1,6 @@
 from secrets import randbelow
 from math import ceil
+from os import listdir
 
 
 TMP = []
@@ -30,3 +31,7 @@ def generate(lenght: int = 4) -> str:
         a = generate_beautiful_code(lenght)
     TMP.append(a)
     return a
+
+
+def get_choise_schem_halls():
+    return ((i, i) for i in listdir('apps/tickets/halls/'))

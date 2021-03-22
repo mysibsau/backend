@@ -5,6 +5,7 @@ from apps.tickets.services.utils import generate
 
 class Theatre(models.Model):
     name = models.CharField('Название', max_length=64)
+    file_name = models.CharField('Файл схемы', max_length=64)
 
     def __str__(self) -> str:
         return self.name
