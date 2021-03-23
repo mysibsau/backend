@@ -17,17 +17,10 @@ def user_ticket(request):
 
     возвращает все забронированные билеты пользователя
     """
-    token = request.GET.get('token')
+    user = request.student
 
-    if not token:
-        return Response({'error': 'not token'}, status=400)
-
-    user = User.objects.filter(token=token).first()
     if not user:
-        return Response({'error': 'user not found'}, status=404)
-
-    if user.banned:
-        return Response({'error': 'you are banned'}, 405)
+        return Response({'error': 'not token'}, status=400)
 
     queryset = models.Purchase.objects.filter(buyer=user)
 
@@ -60,17 +53,10 @@ def buy(request):
         }
     где tickets - массив id билетов, которые пользователь хочет забронировать
     """
-    token = request.GET.get('token')
+    user = request.GET.get('student')
 
-    if not token:
-        return Response({'error': 'not token'}, status=400)
-
-    user = User.objects.filter(token=token).first()
     if not user:
-        return Response({'error': 'user not found'}, status=404)
-
-    if user.banned:
-        return Response({'error': 'you are banned'}, 405)
+        return Response({'error': 'not token'}, status=400)
 
     if not request.body:
         return Response({'error': 'Не передан JSON'}, 400)
