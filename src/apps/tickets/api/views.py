@@ -75,9 +75,7 @@ def buy(request):
 
 
 @api_view(['GET'])
-def all_concerts(request):
-    performance_id = request.GET.get('id')
-
+def all_concerts(request, performance_id: int):
     queryset = models.Concert.objects.filter(performance__id=performance_id)
     if not queryset:
         return Response({'error': 'Концерты не найдены'}, 404)
@@ -86,9 +84,7 @@ def all_concerts(request):
 
 
 @api_view(['GET'])
-def get_concert(request):
-    concert_id = request.GET.get('id')
-
+def get_concert(request, concert_id: int):
     concert = models.Concert.objects.filter(id=concert_id).first()
     if not concert:
         return Response({'error': 'Концерт не найден'}, 404)
