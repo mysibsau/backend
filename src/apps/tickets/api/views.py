@@ -12,7 +12,11 @@ from apps.tickets.services.setters import buy_tickets
 
 @api_view(['GET'])
 def user_ticket(request):
-    '''Возвращает билеты текущего пользователя'''
+    """
+    user_ticket
+
+    возвращает все забронированные билеты пользователя
+    """
     token = request.GET.get('token')
 
     if not token:
@@ -32,7 +36,11 @@ def user_ticket(request):
 
 @api_view(['GET'])
 def all_perfomances(request):
-    '''Возвращает все спектакли'''
+    """
+    all_perfomances
+
+    получение всех спектаклей
+    """
     date = timezone.localtime() + timedelta(3)
     queryset = models.Concert.objects.filter(datetime__gt=date)
     queryset = set(concert.performance for concert in queryset)
@@ -42,6 +50,16 @@ def all_perfomances(request):
 
 @api_view(['POST'])
 def buy(request):
+    """
+    buy
+
+    Покупка всех билетов. Ожидает JSON следующей структуры:
+
+        {
+           "tickets": [1, 2, 3]
+        }
+    где tickets - массив id билетов, которые пользователь хочет забронировать
+    """
     token = request.GET.get('token')
 
     if not token:
@@ -76,6 +94,11 @@ def buy(request):
 
 @api_view(['GET'])
 def all_concerts(request, performance_id: int):
+    """
+    all_concerts
+
+    Получение всех выступлений спектакля с id = `performance_id`.
+    """
     queryset = models.Concert.objects.filter(performance__id=performance_id)
     if not queryset:
         return Response({'error': 'Концерты не найдены'}, 404)
@@ -85,6 +108,22 @@ def all_concerts(request, performance_id: int):
 
 @api_view(['GET'])
 def get_concert(request, concert_id: int):
+    """
+    get_concert
+
+    Получение структуры зала спектакля с id = `concert_id`.
+
+    Структура зала представляет из себя матрицу сущьностей билетов.
+    Билет имеет следующую структуру:
+
+        {
+            "id": 3,
+            "row": 1,
+            "place": 3,
+            "price": 345.0
+        }
+    Если цена отрецательная, то этот билет не продается.
+    """
     concert = models.Concert.objects.filter(id=concert_id).first()
     if not concert:
         return Response({'error': 'Концерт не найден'}, 404)
