@@ -61,7 +61,7 @@ def ConcertsSerializer(concerts: List[models.Concert]) -> List[dict]:
     for concert in concerts:
         result.append({
             'id': concert.id,
-            'date': concert.datetime.strftime('%d.%m'),
+            'date': concert.datetime.strftime('%d.%m.%Y'),
             'time': concert.datetime.strftime('%H:%M'),
             'hall': concert.hall,
             'min_price': Ticket.objects.filter(concert=concert).aggregate(Min('price'))['price__min']
