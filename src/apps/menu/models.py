@@ -4,6 +4,7 @@ from django.utils import timezone
 
 class DiningRoom(models.Model):
     name = models.CharField('Название', max_length=256)
+    short_name = models.CharField('Короткое название', max_length=128, blank=True)
 
     def __str__(self):
         return self.name
