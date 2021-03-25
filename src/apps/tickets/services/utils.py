@@ -47,9 +47,15 @@ def generate_schem_hall(file_name: str, tickets: List[dict]) -> dict:
         hall = json_loads(f.read())
 
     for ticket in tickets:
-        for i, row in enumerate(hall[ticket['row'] - 1]):
+        # Посреди зала находится ряд с номеро 0
+        # Поэтому не нужно сдвигать номера, которые идут после него
+        row_in_hall = ticket['row'] - 1 if ticket['row'] <= 7 else ticket['row']
+        # Если билет на этот нулевой ряд
+        # то берем индекс 7
+        row_in_hall = 7 if not ticket['row'] else row_in_hall
+        for num, row in enumerate(hall[row_in_hall]):
             if not row or (row['place'] != ticket['place']):
                 continue
-            hall[ticket['row'] - 1][i] = ticket
+            hall[row_in_hall][num] = ticket
 
     return hall
