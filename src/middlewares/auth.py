@@ -1,25 +1,23 @@
 from apps.user.models import User
-import json
+from rest_framework.response import Response
 
 
 def auth(get_response):
     def middleware(request):
         user_token = request.GET.get("token")
-        response = get_response(request)
 
         if not user_token:
-            return response
+            return get_response(request)
 
         user = User.objects.filter(token=user_token).first()
 
         if not user:
-            response.data = {'error': 'user not found'}
-            response.content = json.dumps(response.data)
-        elif user.banned:
-            response.data = {'error': 'you are banned'}
-            response.content = json.dumps(response.data)
-        else:
-            request.GET['student'] = user
-        return response
+            return Response({'error': 'user not found'}, 405)
+        if user.banned:
+            Response({'error': 'you are banned'}, 405)
+        
+        request.student = user
+    
+        return get_response(request)
 
     return middleware
