@@ -6,6 +6,7 @@ from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 from urllib.request import urlopen
 from json import dumps as json_dumps
+from apps.informing.services.utils import replace_vk_links_on_markdown
 
 
 def check_contain_allowed_tags(text, group_id):
@@ -47,7 +48,7 @@ def save_post(post):
     from_id = abs(post['from_id'])
     news = models.News.objects.create(
         author=f'group{from_id}',
-        text=post['text'],
+        text=replace_vk_links_on_markdown(post['text']),
         date_to=timezone.localtime() + timedelta(7),
         id_vk=post['id'],
     )
