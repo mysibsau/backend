@@ -1,5 +1,5 @@
 from secrets import randbelow
-from math import ceil
+from math import ceil, pi
 from os import listdir
 from typing import List
 from json import loads as json_loads
@@ -49,10 +49,10 @@ def generate_schem_hall(file_name: str, tickets: List[dict]) -> dict:
     for ticket in tickets:
         # Посреди зала находится ряд с номеро 0
         # Поэтому не нужно сдвигать номера, которые идут после него
-        row_in_hall = ticket['row'] - 1 if ticket['row'] <= 7 else ticket['row']
+        row_in_hall = ticket['row'] - 1 if ticket['row'] <= 7 else ticket['row'] + 1
         # Если билет на этот нулевой ряд
-        # то берем индекс 7
-        row_in_hall = 7 if not ticket['row'] else row_in_hall
+        # то берем индекс 8
+        row_in_hall = 8 if ticket['row'] == 0 else row_in_hall
         for num, row in enumerate(hall[row_in_hall]):
             if not row or (row['place'] != ticket['place']):
                 continue
