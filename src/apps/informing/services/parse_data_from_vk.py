@@ -14,8 +14,8 @@ def check_contain_allowed_tags(text, group_id):
     Проверяет содержит ли текст теги, посты с которыми необходимо опубликовать.
     """
     ALLOWED_TAGS_FOR_GROUPS = {
-        168099: ['#Reshetnev_University'],
-        189994777: ['#МойСибгу']
+        168099: ['#Reshetnev_University', '#Reshetnev_University', '#ReshU'],
+        189994777: ['#МойСибгу'],
     }
 
     for tag in ALLOWED_TAGS_FOR_GROUPS.get(group_id, []):
