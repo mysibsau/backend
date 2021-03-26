@@ -44,7 +44,6 @@ class Concert(models.Model):
 
 
 class Ticket(models.Model):
-    count = models.PositiveSmallIntegerField('Количество', default=1, blank=True, null=True)
     price = models.DecimalField('Цена', decimal_places=2, max_digits=6)
     place = models.PositiveSmallIntegerField('Место', blank=True, null=True)
     row = models.PositiveSmallIntegerField('Ряд', blank=True, null=True)

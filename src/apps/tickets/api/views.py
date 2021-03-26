@@ -53,7 +53,7 @@ def buy(request):
         }
     где tickets - массив id билетов, которые пользователь хочет забронировать
     """
-    user = request.GET.get('student')
+    user = request.student
 
     if not user:
         return Response({'error': 'not token'}, status=400)
