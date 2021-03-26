@@ -3,12 +3,22 @@ from io import StringIO
 import re
 import time
 from functools import partial
-from multiprocessing.dummy import Pool as ThreadPool
 import requests
 
 
 def get_book_holders(url_part: str) -> str:
-    response = requests.get('http://biblioteka.sibsau.ru' + url_part)
+    headers = {
+        'Accept': "*/*",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept-Language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Connection": "keep-alive",
+        "Cookie": "_ga=GA1.2.636315675.1608545000; f_search_mode=STEASY; JSESS3=7ecc3798b86b9b879eef0360f4e63a7b; cltid=1529; trcusr=155; e7b861d63c4aad58e88ad02684ae99d0=9c3ae27386f8e67fdda04ce675048c56; js_vsid=4917",
+        "Host": "biblioteka.sibsau.ru",
+        "Referer": "http://biblioteka.sibsau.ru/jirbis2/",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.190 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest",
+    }
+    response = requests.get(url='http://biblioteka.sibsau.ru' + url_part, headers=headers)
     if response.status_code == 200:
         return response.text
 
@@ -68,15 +78,10 @@ def get_physical_books(content: str) -> list:
     root = html.parse(StringIO(content)).getroot()
     result = []
 
-    pool = ThreadPool()
-
-    books_count = range(get_book_quantities(root))
-    books_storage = pool.map(partial(get_place_and_count, root), books_count)
-
-    for num in books_count:
+    for num in range(get_book_quantities(root)):
         author = get_author_name(root, num)
         name = get_name_book(root, num)
-        place, count = books_storage[num]
+        place, count = get_place_and_count(root, num)
 
         if not all((author, name, place, count)):
             continue
