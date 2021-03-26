@@ -22,10 +22,10 @@ INSTALLED_APPS = [
     'apps.informing',
     'apps.support',
     'apps.work',
-    'apps.shop',
+    'apps.tickets',
     'apps.user',
     'apps.menu',
-    'apps.library'
+    'apps.library',
 ]
 
 if settings.DEBUG:

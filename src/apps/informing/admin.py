@@ -13,7 +13,7 @@ class AbstractInformationAdmin():
         obj.save()
 
 
-class ImageAdmin(admin. TabularInline):
+class ImageAdmin(admin.TabularInline):
     model = models.Image
     extra = 1
     fk_name = 'news'

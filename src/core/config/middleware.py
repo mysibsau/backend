@@ -10,6 +10,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'middlewares.set_language.set_language',
+    'middlewares.auth.auth',
 ]
 
 if settings.DEBUG:

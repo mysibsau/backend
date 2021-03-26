@@ -5,7 +5,6 @@ from django.utils import timezone
 
 
 def make_token(username: str, uid: int) -> str:
-
     token = sha256(
         (
             md5(username.encode('utf-8')).hexdigest() +
@@ -24,18 +23,12 @@ def make_token(username: str, uid: int) -> str:
     return token[:lenght]
 
 
-def make_short_fio(fio: str) -> str:
-    surname, *other = fio.split(' ')
-    return surname + ' ' + '. '.join(list(map(lambda x: x[0], other)))
-
-
-def update_or_create_user(token: str, group: str, fio: str, average: float) -> str:
+def update_or_create_user(token: str, group: str, average: float) -> str:
     user = models.User.objects.filter(token=token).first()
     if not user:
         models.User.objects.create(
             token=token,
             group=group,
-            name=make_short_fio(fio),
             average=average,
             last_entry=timezone.localtime(),
         )
@@ -43,6 +36,5 @@ def update_or_create_user(token: str, group: str, fio: str, average: float) -> s
     else:
         user.average = average
         user.last_entry = timezone.localtime()
-        user.name = make_short_fio(fio)
         user.save()
         return 'update'

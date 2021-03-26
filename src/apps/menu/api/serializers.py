@@ -11,7 +11,7 @@ def diner_serializer(diner: models.Menu) -> dict:
 
 
 def menu_serializers(diners: list) -> list:
-    dining_rooms = set(d.room.name for d in diners)
+    dining_rooms = set(d.room.short_name if d.room.short_name else d.room.name for d in diners)
     types = set(d.type.name for d in diners)
     result = list()
 
@@ -28,7 +28,7 @@ def menu_serializers(diners: list) -> list:
 
     for diner in diners:
         for room in result:
-            if room['name'] != diner.room.name:
+            if room['name'] not in (diner.room.name, diner.room.short_name):
                 continue
             for menu in room['menu']:
                 if menu['type'] != diner.type.name:
