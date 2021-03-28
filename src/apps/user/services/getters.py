@@ -87,7 +87,10 @@ def get_fio_group_and_average(api: API) -> tuple:
         average += int(i['grade'][0])
         count += 1
 
-    average = round(average / count, 2)
+    if count:
+        average = round(average / count, 2)
+    else:
+        average = 0
 
     return tmp[0]['ID_student'], tmp[0]['display_name'], average
 
