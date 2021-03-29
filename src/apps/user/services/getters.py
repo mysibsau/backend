@@ -13,9 +13,11 @@ def get_marks(api: API) -> list:
     )
 
     for discipline in tmp:
+        if not discipline['discipline']:
+            continue
         item = {
             'name': discipline['discipline'].strip(),
-            'coursework': discipline['coursework_theme'] if discipline['coursework_theme'] else None,
+            'coursework': discipline.get('coursework_theme'),
             'mark': discipline['grade'].strip(),
             'type': discipline['test_type'].strip(),
         }
