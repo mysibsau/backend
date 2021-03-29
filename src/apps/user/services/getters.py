@@ -83,6 +83,9 @@ def get_fio_group_and_average(api: API) -> tuple:
     average = 0
     count = 0
 
+    if not tmp:
+        return '-', '-', 0
+
     for i in tmp:
         if not i['grade'][0].isdigit():
             continue
