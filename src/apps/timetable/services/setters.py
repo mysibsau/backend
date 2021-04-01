@@ -26,13 +26,11 @@ TYPES = {
 }
 
 
-@transaction.atomic
 def load_all_groups_from_pallada() -> None:
     '''
         Записывает в БД новые группы
     '''
     logger.info('Парсинг групп запущен')
-    Group.objects.all().delete()
     for id_, name in get_groups():
         Group.objects.get_or_create(name=name, id_pallada=id_)
         logger.info(f'Добавлена группа {name}')
