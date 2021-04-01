@@ -66,6 +66,10 @@ def load_timtable_group_with_api(group: models.Group, api):
             'Лекция': 1,
             'Лабораторная работа': 2,
             'Практика': 3,
+            'Лабораторная работа (уст.)': 2,
+            'Лекция (уст.)': 1,
+            'Практика (уст.)': 1,
+
         }
 
         models.Timetable.objects.create(
