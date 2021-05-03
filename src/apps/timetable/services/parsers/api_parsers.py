@@ -37,6 +37,7 @@ def load_timtable_group_with_api(group: models.Group, api):
                 'week',
                 'day_week',
                 'time',
+                'date',
             ]
         },
     )
@@ -82,6 +83,7 @@ def load_timtable_group_with_api(group: models.Group, api):
             week=int(timetable['week']),
             day=int(timetable['day_week']) - 1,
             time=timetable['time'],
+            date=None if not timetable['date'] else timetable['date'],
         )
     group.date_update = timezone.localtime()
     group.save()
