@@ -1,5 +1,6 @@
 from rest_framework.response import Response
 from django.views.decorators.cache import cache_page
+from django.utils import timezone
 
 from apps.timetable.services import getters
 from apps.timetable.api.v2 import serializers, docs
@@ -7,6 +8,7 @@ from apps.timetable import models
 
 from rest_framework.decorators import api_view
 from drf_yasg.utils import swagger_auto_schema
+import datetime
 
 
 @swagger_auto_schema(**docs.swagger_groups_hash)
@@ -128,11 +130,21 @@ def timetable_group(request, group_id):
     2. Лабораторная работа;
     3. Практика.
     """
-    queryset = models.Timetable.objects.filter(
-        group__id=group_id
+    q_1 = models.Timetable.objects.filter(
+        group__id=group_id,
+        date=None
     ).select_related()
-    if not queryset:
+
+    q_2 = models.Timetable.objects.filter(
+        group__id=group_id,
+        date=timezone.localtime()
+    ).select_related()
+
+    if not q_1 and not q_2:
         return Response({'error': 'Расписание не доступно'}, 404)
+    
+    queryset = list(q_1) + list(q_2)
+
     data = serializers.TimetableSerializers(queryset, 'group')
     return Response(data)
 
