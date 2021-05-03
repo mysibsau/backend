@@ -147,7 +147,6 @@ def timetable_group(request, group_id):
 
     if not timetable_without_date or not timetable_with_date:
         return Response({'error': 'Расписание не доступно'}, 404)
-
     queryset = list(timetable_without_date) + list(timetable_with_date)
 
     data = serializers.TimetableSerializers(queryset, 'group')
