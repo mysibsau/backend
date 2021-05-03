@@ -130,20 +130,20 @@ def timetable_group(request, group_id):
     2. Лабораторная работа;
     3. Практика.
     """
-    q_1 = models.Timetable.objects.filter(
+    timetable_without_date = models.Timetable.objects.filter(
         group__id=group_id,
         date=None
     ).select_related()
 
-    q_2 = models.Timetable.objects.filter(
+    timetable_with_date = models.Timetable.objects.filter(
         group__id=group_id,
         date=timezone.localtime()
     ).select_related()
 
-    if not q_1 and not q_2:
+    if not timetable_without_date and not timetable_with_date:
         return Response({'error': 'Расписание не доступно'}, 404)
     
-    queryset = list(q_1) + list(q_2)
+    queryset = list(timetable_without_date) + list(timetable_with_date)
 
     data = serializers.TimetableSerializers(queryset, 'group')
     return Response(data)
