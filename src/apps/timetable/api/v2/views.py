@@ -137,7 +137,7 @@ def timetable_group(request, group_id):
 
     today = timezone.localtime()
     last_monday = today - datetime.timedelta(days=today.weekday())
-    next_sunday = today + datetime.timedelta(days=6, weeks=1)
+    next_sunday = today + datetime.timedelta(days=6-today.weekday(), weeks=1)
 
     timetable_with_date = models.Timetable.objects.filter(
         group__id=group_id,
