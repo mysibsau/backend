@@ -18,3 +18,5 @@ if len(argv) > 1 and argv[1] == 'test':
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': ':memory:',
     }
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
