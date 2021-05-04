@@ -132,7 +132,7 @@ def timetable_group(request, group_id):
     """
     timetable_without_date = models.Timetable.objects.filter(
         group__id=group_id,
-        date=None
+        date=None,
     ).select_related()
 
     today = timezone.localtime()
@@ -145,7 +145,7 @@ def timetable_group(request, group_id):
         date__lte=next_sunday,
     ).select_related()
 
-    if not timetable_without_date or not timetable_with_date:
+    if not (timetable_without_date or timetable_with_date):
         return Response({'error': 'Расписание не доступно'}, 404)
     queryset = list(timetable_without_date) + list(timetable_with_date)
 
