@@ -7,6 +7,7 @@ from django.core.files.temp import NamedTemporaryFile
 from urllib.request import urlopen
 from json import dumps as json_dumps
 from apps.informing.services.utils import replace_vk_links_on_markdown
+from apps.informing.services.utils import from_tags_to_links
 
 
 def check_contain_allowed_tags(text, group_id):
@@ -51,14 +52,17 @@ def save_post(post):
     if not photos:
         return
 
+    text = replace_vk_links_on_markdown(post['text'])
+    text = from_tags_to_links(text)
+
     news = models.News.objects.create(
         author=f'group{from_id}',
-        text=replace_vk_links_on_markdown(post['text']),
+        text=text,
         date_to=timezone.localtime() + timedelta(7),
         id_vk=post['id'],
     )
     for photo_photo in photos:
-        # Загружа картинку по ссылке из вк
+        # Загружаю картинку по ссылке из вк
         img_temp = NamedTemporaryFile(
             delete=True,
             suffix='.jpg',
