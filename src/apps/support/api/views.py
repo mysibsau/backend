@@ -15,7 +15,7 @@ def all_faq(request):
     """
     Возвращает все FAQ
     """
-    queryset = models.FAQ.objects.filter(~Q(answer=''))
+    queryset = models.FAQ.objects.filter(~Q(answer=None))
     return Response(serializers.FAQSerializer(queryset, many=True).data)
 
 
