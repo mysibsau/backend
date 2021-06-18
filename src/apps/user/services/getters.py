@@ -49,9 +49,10 @@ def get_attestation(api) -> list:
         att2 = att['att2'].split('/')[0].strip() if att.get('att2') else '-'
         att3 = att['att3'].split('/')[0].strip() if att.get('att3') else '-'
         att_res = att['att'].split('/')[0].strip() if att.get('att') else '-'
+        forma = att['forma'].strip() if isinstance(att['forma'], str) else '-'
         result.append({
             'name': att['dis'].strip(),
-            'type': att['forma'].strip(),
+            'type': forma,
             'att1': att1,
             'att2': att2,
             'att3': att3,
