@@ -117,11 +117,11 @@
         },
         "django-nested-inline": {
             "hashes": [
-                "sha256:45c3a91e530ec479359727be4a89ef2446e3dd6424f9574aac038ebfd55c38bf",
-                "sha256:a54ea7c39ef5d82c536d2a8eb7ec375dd08f11c04853046bb24e5415a69cd3ed"
+                "sha256:d622d7cd1540e99810b28d44555cf5f145b1c139a18e8134873c0efd36aa583c",
+                "sha256:f6b3c5ca6cc934e18d47cd7adfdaa8300e7bbbb0f184f25c2912cca1155ab512"
             ],
             "index": "pypi",
-            "version": "==0.4.2"
+            "version": "==0.4.3"
         },
         "django-picklefield": {
             "hashes": [
