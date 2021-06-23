@@ -373,10 +373,10 @@
         },
         "python-telegram-handler": {
             "hashes": [
-                "sha256:0da65e9c9011b4269a339eb2cea778c82e4f3d5d92bda9a27f0fe3bb318e76f3"
+                "sha256:f6e9ca60e15fa4e4595e323cc57362fe20cca3ca16e06158ad726caa48b3b16e"
             ],
             "index": "pypi",
-            "version": "==2.2"
+            "version": "==2.2.1"
         },
         "pytz": {
             "hashes": [
