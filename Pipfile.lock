@@ -110,10 +110,10 @@
         },
         "django-modeltranslation": {
             "hashes": [
-                "sha256:9ef886d02a3c5613ebf1c1184f3b2f4065b1453ac7d4151a73d2243991a34956"
+                "sha256:4756dbcb68ed0e5ff09b4ba24d2617066ab5b96ae780786987845d5ae766b50d"
             ],
             "index": "pypi",
-            "version": "==0.17.1"
+            "version": "==0.17.2"
         },
         "django-nested-inline": {
             "hashes": [
