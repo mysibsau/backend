@@ -102,11 +102,11 @@
         },
         "django-jazzmin": {
             "hashes": [
-                "sha256:f3fcf9b3a92ad4c11fae3d035a094b3cf7d53f2139d1c40ded834752c7e229b9",
-                "sha256:fd80925d7dd95b482997a7ded0e83a32978efac6621a49ec76cc7de07a04e87d"
+                "sha256:585d0c998875d6ada49ffa7b1bc6c21dcb90a53ba4d0f42f6b0d8fcfc212fa4c",
+                "sha256:90f3ceee87517aa4183d22eef8ec34067588a37ef02484ac47502865be211148"
             ],
             "index": "pypi",
-            "version": "==2.4.6"
+            "version": "==2.4.7"
         },
         "django-modeltranslation": {
             "hashes": [
