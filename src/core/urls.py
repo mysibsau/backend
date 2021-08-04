@@ -39,7 +39,6 @@ urlpatterns = [
     path('v2/tickets/', include('apps.tickets.api.urls')),
     path('docs/', schema_view.with_ui('redoc', cache_timeout=0)),
     path('healthchecks/', include('django_healthchecks.urls')),
-    path('v3/support/', include('apps.support.api.v3.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
