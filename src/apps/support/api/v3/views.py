@@ -13,11 +13,11 @@ from django.views.decorators.cache import cache_page
 @swagger_auto_schema(**docs.swagger_all_faq)
 @api_view(['GET'])
 @cache_page(60 * 60 * 2)
-def all_faq(request):
+def all_user_faq(request):
     """
     Возвращает все FAQ конкретного пользователя
     """
-    queryset = models.FAQ.objects.filter(user=request.user)
+    queryset = models.FAQ.objects.filter(user=request.student)
     return Response(serializers.FAQSerializer(queryset, many=True).data)
 
 
@@ -42,6 +42,6 @@ def create_ask(request):
     if 'question' not in data:
         return Response({'error': 'нет вопроса'}, 401)
 
-    models.FAQ.objects.create(user=request.user, question=data['question'])
+    models.FAQ.objects.create(user=request.student, question=data['question'])
 
     return Response({'good': 'Вопрос добавлен'}, 200)
