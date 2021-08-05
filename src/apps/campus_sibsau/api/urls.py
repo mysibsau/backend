@@ -9,4 +9,5 @@ urlpatterns = [
     path('buildings/', views.all_buildings),
     path('sport_clubs/', views.all_sport_clubs),
     path('design_offices/', views.all_design_office),
+    path('ensembles/', views.EnsembleApiView.as_view()),
 ]

@@ -1,12 +1,12 @@
 from django.views.decorators.cache import cache_page
-from rest_framework.decorators import api_view
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from rest_framework.generics import ListAPIView
 
 from apps.campus_sibsau import models, logger
-from apps.campus_sibsau.services.join_to_union import main as join_to_union_vk
 from apps.campus_sibsau.api import docs, serializers
+from apps.campus_sibsau.services.join_to_union import main as join_to_union_vk
 
 
 @swagger_auto_schema(**docs.swagger_all_unions)
@@ -94,3 +94,8 @@ def all_design_office(request):
     logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех СКБ")
     queryset = models.DesignOffice.objects.all()
     return Response(serializers.DesignOfficesSerializer(queryset))
+
+
+class EnsembleApiView(ListAPIView):
+    queryset = models.Ensemble.objects.all()
+    serializer_class = serializers.EnsembleSerializer

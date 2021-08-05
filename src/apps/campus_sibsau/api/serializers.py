@@ -1,5 +1,8 @@
-from apps.campus_sibsau import models
 from typing import List
+
+from rest_framework.serializers import ModelSerializer
+
+from apps.campus_sibsau import models
 
 
 def UnionSerializers(unions: List[models.Union]):
@@ -117,3 +120,9 @@ def DesignOfficesSerializer(offices: List[models.DesignOffice]):
             'about': office.about,
         })
     return result
+
+
+class EnsembleSerializer(ModelSerializer):
+    class Meta:
+        model = models.Ensemble
+        fields = '__all__'
