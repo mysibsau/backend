@@ -33,7 +33,7 @@ swagger_join_to_union = {
             }
         ),
     },
-    'tags': ['Campus']
+    'tags': ['campus']
 }
 
 swagger_all_institutes = {
@@ -79,7 +79,7 @@ swagger_all_institutes = {
             }
         ),
     },
-    'tags': ['Campus']
+    'tags': ['campus']
 }
 
 
@@ -106,7 +106,7 @@ swagger_all_buildings = {
             }
         ),
     },
-    'tags': ['Campus']
+    'tags': ['campus']
 }
 
 
@@ -139,7 +139,7 @@ swagger_all_unions = {
             }
         ),
     },
-    'tags': ['Campus']
+    'tags': ['campus']
 }
 
 swagger_all_sport_clubs = {
@@ -165,7 +165,7 @@ swagger_all_sport_clubs = {
             }
         ),
     },
-    'tags': ['Campus']
+    'tags': ['campus']
 }
 
 swagger_all_design_office = {
@@ -188,5 +188,27 @@ swagger_all_design_office = {
             }
         ),
     },
-    'tags': ['Campus']
+    'tags': ['campus']
+}
+
+swagger_all_ensembles = {
+    'operation_id': 'All ensemble',
+    'responses': {
+        200: openapi.Response(
+            description="Вернулся список всех ансамблей",
+            examples={
+                "application/json": [
+                    {
+                        "id": 0,
+                        "name": "Название",
+                        "logo": "Логотип",
+                        "description": "Описание",
+                        "achievements": "Достижения",
+                        "contacts": "Контакты",
+                    }
+                ]
+            }
+        ),
+    },
+    'tags': ['campus']
 }
