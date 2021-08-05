@@ -167,3 +167,18 @@ class DesignOffice(models.Model):
     class Meta:
         verbose_name = 'Конструкторское бюро'
         verbose_name_plural = 'Конструкторские бюро'
+
+
+class Ensemble(models.Model):
+    name = models.CharField('Название', max_length=255)
+    logo = models.ImageField(
+        verbose_name='Логотип',
+        upload_to='campus/ensemble/logo',
+    )
+    description = models.TextField('Описание')
+    achievements = models.TextField('Достижения', blank=True)
+    contacts = models.TextField('Контакты')
+
+    class Meta:
+        verbose_name = 'Ансамбль'
+        verbose_name_plural = 'Ансамбли'
