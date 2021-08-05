@@ -47,3 +47,8 @@ class SportClub(TabbedTranslationAdmin):
 @admin.register(models.DesignOffice)
 class DesignOffice(admin.ModelAdmin):
     list_display = ('id', 'name', 'fio', 'address', 'email')
+
+
+@admin.register(models.Ensemble)
+class EnsembleAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
