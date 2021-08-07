@@ -56,4 +56,4 @@ class EnsembleAdmin(admin.ModelAdmin):
 
 @admin.register(models.JoiningEnsemble)
 class JoiningEnsembleAdmin(admin.ModelAdmin):
-    list_display = ('id', 'fio')
+    list_display = ('id', 'fio', 'ensemble', 'create_data')

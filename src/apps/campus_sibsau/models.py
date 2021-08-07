@@ -184,6 +184,9 @@ class Ensemble(models.Model):
         verbose_name = 'Ансамбль'
         verbose_name_plural = 'Ансамбли'
 
+    def __str__(self):
+        return self.name
+
 
 class JoiningEnsemble(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
