@@ -52,3 +52,8 @@ class DesignOffice(admin.ModelAdmin):
 @admin.register(models.Ensemble)
 class EnsembleAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
+
+
+@admin.register(models.JoiningEnsemble)
+class JoiningEnsembleAdmin(admin.ModelAdmin):
+    list_display = ('id', 'fio')
