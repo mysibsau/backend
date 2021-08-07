@@ -11,4 +11,5 @@ urlpatterns = [
     path('sport_clubs/', views.SportClubsAPIView.as_view()),
     path('design_offices/', views.DesignOfficeAPIView.as_view()),
     path('ensembles/', views.EnsembleApiView.as_view()),
+    path('ensembles/join/', views.JoiningEnsembleApiView.as_view()),
 ]

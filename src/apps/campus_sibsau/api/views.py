@@ -1,11 +1,12 @@
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.response import Response
 
 from apps.campus_sibsau import models
 from apps.campus_sibsau.api import docs, serializers
 from apps.campus_sibsau.services.join_to_union import main as join_to_union_vk
+from apps.user import permissions
 
 
 class UnionAPIView(ListAPIView):
@@ -60,3 +61,18 @@ class DesignOfficeAPIView(ListAPIView):
 class EnsembleApiView(ListAPIView):
     queryset = models.Ensemble.objects.all()
     serializer_class = serializers.EnsembleSerializer
+
+
+class JoiningEnsembleApiView(ListAPIView, CreateAPIView):
+    queryset = models.JoiningEnsemble.objects.all()
+    serializer_class = serializers.JoiningEnsembleSerializer
+    permission_classes = [permissions.IsStudentAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.queryset.filter(user=request.student)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def perform_create(self, serializer):
+        serializer.validated_data['user'] = self.request.student
+        serializer.save()
