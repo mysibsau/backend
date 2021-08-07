@@ -75,3 +75,11 @@ class EnsembleSerializer(ModelSerializer):
     class Meta:
         model = models.Ensemble
         fields = '__all__'
+
+
+class JoiningEnsembleSerializer(ModelSerializer):
+    create_data = fields.DateTimeField(read_only=True)
+
+    class Meta:
+        model = models.JoiningEnsemble
+        fields = ('ensemble', 'fio', 'phone', 'link_on_vk', 'experience', 'comment', 'create_data')
