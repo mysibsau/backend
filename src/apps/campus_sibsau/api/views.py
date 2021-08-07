@@ -1,25 +1,17 @@
-from django.views.decorators.cache import cache_page
-from rest_framework.decorators import api_view
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.decorators import api_view
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.response import Response
 
-
-from apps.campus_sibsau import models, logger
-from apps.campus_sibsau.services.join_to_union import main as join_to_union_vk
+from apps.campus_sibsau import models
 from apps.campus_sibsau.api import docs, serializers
+from apps.campus_sibsau.services.join_to_union import main as join_to_union_vk
+from apps.user import permissions
 
 
-@swagger_auto_schema(**docs.swagger_all_unions)
-@api_view(['GET'])
-@cache_page(60 * 60 * 2)
-def all_unions(request):
-    """
-    Возвращает список всех объединений.
-    """
-    logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех объединений")
+class UnionAPIView(ListAPIView):
     queryset = models.Union.objects.all()
-    data = serializers.UnionSerializers(queryset)
-    return Response(data)
+    serializer_class = serializers.UnionSerializers
 
 
 @swagger_auto_schema(**docs.swagger_join_to_union)
@@ -46,51 +38,41 @@ def join_to_union(request, union_id):
     return Response({'good': 'Ваша заявка отправлена'}, 200)
 
 
-@swagger_auto_schema(**docs.swagger_all_institutes)
-@api_view(['GET'])
-@cache_page(60 * 60 * 2)
-def all_institutes(request):
-    """
-    All institutes
-
-    Возвращает список всех институтов ВУЗа.
-
-    Поле rank служит для изменения порядка отображения элементов.
-    """
-    logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех институтов")
+class InstituteAPIView(ListAPIView):
     queryset = models.Institute.objects.all().select_related()
-    return Response(serializers.InstituteSerializers(queryset))
+    serializer_class = serializers.InstituteSerializers
 
 
-@swagger_auto_schema(**docs.swagger_all_buildings)
-@api_view(['GET'])
-@cache_page(60 * 60 * 2)
-def all_buildings(request):
-    """
-    Возвращает список всех корпусов ВУЗа.
-    """
-    logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех корпусов")
+class BuildingAPIView(ListAPIView):
     queryset = models.Building.objects.all()
-    return Response(serializers.BuildingSerializers(queryset))
+    serializer_class = serializers.BuildingSerializers
 
 
-@swagger_auto_schema(**docs.swagger_all_sport_clubs)
-@api_view(['GET'])
-def all_sport_clubs(request):
-    """
-    Возвращает список всех спортивных кружков
-    """
-    logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех кружков")
+class SportClubsAPIView(ListAPIView):
     queryset = models.SportClub.objects.all()
-    return Response(serializers.SportClubSerializer(queryset))
+    serializer_class = serializers.SportClubSerializer
 
 
-@swagger_auto_schema(**docs.swagger_all_design_office)
-@api_view(['GET'])
-def all_design_office(request):
-    """
-    Возвращает список всех конструкторских бюро
-    """
-    logger.info(f"{request.META.get('REMOTE_ADDR')} запросил список всех СКБ")
+class DesignOfficeAPIView(ListAPIView):
     queryset = models.DesignOffice.objects.all()
-    return Response(serializers.DesignOfficesSerializer(queryset))
+    serializer_class = serializers.DesignOfficesSerializer
+
+
+class EnsembleApiView(ListAPIView):
+    queryset = models.Ensemble.objects.all()
+    serializer_class = serializers.EnsembleSerializer
+
+
+class JoiningEnsembleApiView(ListAPIView, CreateAPIView):
+    queryset = models.JoiningEnsemble.objects.all()
+    serializer_class = serializers.JoiningEnsembleSerializer
+    permission_classes = [permissions.IsStudentAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.queryset.filter(user=request.student)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def perform_create(self, serializer):
+        serializer.validated_data['user'] = self.request.student
+        serializer.save()
