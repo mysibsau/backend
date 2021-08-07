@@ -1,4 +1,5 @@
 from django.db import models
+from apps.user.models import User
 
 
 class Building(models.Model):
@@ -182,3 +183,18 @@ class Ensemble(models.Model):
     class Meta:
         verbose_name = 'Ансамбль'
         verbose_name_plural = 'Ансамбли'
+
+
+class JoiningEnsemble(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    ensemble = models.ForeignKey(Ensemble, on_delete=models.CASCADE, verbose_name='Ансамбль')
+    fio = models.CharField('ФИО', max_length=31)
+    phone = models.CharField('Телефон', max_length=19)
+    link_on_vk = models.CharField('Ссылка на ВКонтакте', max_length=128)
+    experience = models.TextField('Опыт творческой деятельности')
+    comment = models.TextField('Комментарий')
+    create_data = models.DateTimeField('Дата вступления', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Заявка на вступление в ансамбль'
+        verbose_name_plural = 'Заявки на вступление в ансамбли'
