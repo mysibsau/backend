@@ -179,6 +179,11 @@ class Ensemble(models.Model):
     about = models.TextField('Описание')
     achievements = models.TextField('Достижения', blank=True)
     contacts = models.TextField('Контакты')
+    is_accept_participants = models.BooleanField(
+        'Принимает участников',
+        default=True,
+        help_text="Кнопка 'Подать заявку' не будет отбражаться при значении 'False'"
+    )
 
     class Meta:
         verbose_name = 'Ансамбль'
