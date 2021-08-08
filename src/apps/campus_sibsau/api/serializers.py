@@ -5,6 +5,15 @@ from apps.campus_sibsau import models
 
 
 class UnionSerializers(ModelSerializer):
+    logo = fields.SerializerMethodField()
+    photo = fields.SerializerMethodField()
+
+    def get_logo(self, obj):
+        return obj.logo.url
+
+    def get_photo(self, obj):
+        return obj.photo.url
+
     class Meta:
         model = models.Union
         fields = '__all__'
