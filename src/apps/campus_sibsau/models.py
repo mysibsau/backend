@@ -176,7 +176,7 @@ class Ensemble(models.Model):
         verbose_name='Логотип',
         upload_to='campus/ensemble/logo',
     )
-    description = models.TextField('Описание')
+    about = models.TextField('Описание')
     achievements = models.TextField('Достижения', blank=True)
     contacts = models.TextField('Контакты')
 
