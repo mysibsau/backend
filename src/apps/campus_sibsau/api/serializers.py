@@ -26,6 +26,11 @@ class BuildingSerializers(ModelSerializer):
 
 
 class DirectorSerializers(ModelSerializer):
+    image = fields.SerializerMethodField()
+
+    def get_image(self, obj):
+        return obj.image.url
+
     class Meta:
         model = models.Director
         fields = '__all__'
