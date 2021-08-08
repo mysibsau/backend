@@ -54,7 +54,7 @@ class InstituteSerializers(ModelSerializer):
     soviet = SovietSerializers()
 
     class Meta:
-        model = models.Department
+        model = models.Institute
         fields = '__all__'
 
 
