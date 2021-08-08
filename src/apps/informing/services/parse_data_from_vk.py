@@ -83,9 +83,6 @@ def filter_post(post: dict) -> None:
     """
     Фильтрует неподходящие посты
     """
-    # Записываем пришедшие посты для отладки
-    with open(str(timezone.now()) + '.json', 'w') as file:
-        file.writelines(json_dumps(post))
     group_id = abs(post.get('from_id', -1))
     if not post:
         logger.info('Пост не передан')
