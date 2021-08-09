@@ -1,5 +1,7 @@
-from apps.user.models import User
+from django.http import HttpResponse, JsonResponse
 from rest_framework.response import Response
+
+from apps.user.models import User
 
 
 def auth(get_response):
@@ -16,12 +18,12 @@ def auth(get_response):
         if token_type != 'Bearer':
             return get_response(request)
 
-        user = User.objects.filter(token=user_token).first()
+        user = User.objects.filter(token=token).first()
 
         if not user:
-            return Response({'error': 'user not found'}, 405)
+            return JsonResponse({'error': 'user not found'}, status=405)
         if user.banned:
-            Response({'error': 'you are banned'}, 405)
+            return JsonResponse({'error': 'you are banned'}, status=405)
         
         request.student = user
     
