@@ -21,6 +21,36 @@ def all_user_faq(request):
     return Response(serializers.FAQSerializer(queryset, many=True).data)
 
 
+@swagger_auto_schema(**docs.swagger_all_faq)
+@api_view(['GET'])
+@cache_page(60 * 60 * 2)
+def all_faq(request):
+    """
+    Возвращает все FAQ, на которые есть ответы
+    """
+    queryset = models.FAQ.objects.filter(~Q(answer=None))
+    return Response(serializers.FAQSerializer(queryset, many=True).data)
+
+
+@swagger_auto_schema(**docs.swagger_view_faq)
+@api_view(['POST'])
+def view_faq(request, faq_id):
+    """
+    Увеличивает счетчик просмотров
+    """
+    if not request.student:
+        return Response({'error': 'не авторизован'}, 401)
+
+    faq = models.FAQ.objects.filter(id=faq_id)
+
+    if not faq or not faq.first().answer:
+        return Response({'error': 'Запись не найдена'}, 404)
+
+    faq.update(views=F('views') + 1)
+
+    return Response({'good': 'просмотр засчитан'}, 200)
+
+
 @swagger_auto_schema(**docs.swagger_create_ask)
 @api_view(['POST'])
 def create_ask(request):
