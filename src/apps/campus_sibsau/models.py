@@ -179,15 +179,12 @@ class Ensemble(models.Model):
     about = models.TextField('Описание')
     achievements = models.TextField('Достижения', blank=True)
     contacts = models.TextField('Контакты')
-    is_accept_participants = models.BooleanField(
-        'Принимает участников',
-        default=True,
-        help_text="Кнопка 'Подать заявку' не будет отбражаться при значении 'False'"
-    )
+    vk_link = models.CharField('Ссылка на вк', max_length=128, blank=True, null=True)
+    instagram_link = models.CharField('Ссылка на инстаграм', max_length=128, blank=True, null=True)
 
     class Meta:
-        verbose_name = 'Ансамбль'
-        verbose_name_plural = 'Ансамбли'
+        verbose_name = 'Коллектив'
+        verbose_name_plural = 'Коллективы'
 
     def __str__(self):
         return self.name
@@ -204,5 +201,5 @@ class JoiningEnsemble(models.Model):
     create_data = models.DateTimeField('Дата вступления', auto_now_add=True)
 
     class Meta:
-        verbose_name = 'Заявка на вступление в ансамбль'
-        verbose_name_plural = 'Заявки на вступление в ансамбли'
+        verbose_name = 'Заявка в коллектив'
+        verbose_name_plural = 'Заявки в коллективы'
