@@ -1,7 +1,8 @@
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.response import Response
+from rest_framework import viewsets
 
 from apps.campus_sibsau import models
 from apps.campus_sibsau.api import docs, serializers
@@ -58,9 +59,15 @@ class DesignOfficeAPIView(ListAPIView):
     serializer_class = serializers.DesignOfficesSerializer
 
 
-class EnsembleApiView(ListAPIView):
+class EnsembleApiView(viewsets.ModelViewSet):
     queryset = models.Ensemble.objects.all()
     serializer_class = serializers.EnsembleSerializer
+
+    @action(detail=False, methods=['GET'])
+    def ktc_info(self, request):
+        ktc_queryset = models.Ensemble.objects.filter(name='Культурно-творческий центр').first()
+        serializer = self.get_serializer(ktc_queryset, many=False)
+        return Response(serializer.data)
 
 
 class JoiningEnsembleApiView(ListAPIView, CreateAPIView):
