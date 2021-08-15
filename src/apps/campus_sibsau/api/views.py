@@ -2,7 +2,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view, action
 from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 
 from apps.campus_sibsau import models
 from apps.campus_sibsau.api import docs, serializers
@@ -59,7 +59,7 @@ class DesignOfficeAPIView(ListAPIView):
     serializer_class = serializers.DesignOfficesSerializer
 
 
-class EnsembleApiView(viewsets.ModelViewSet):
+class EnsembleApiView(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = models.Ensemble.objects.all()
     serializer_class = serializers.EnsembleSerializer
 
