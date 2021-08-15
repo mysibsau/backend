@@ -1,10 +1,9 @@
-from django.urls import path
+from rest_framework.routers import SimpleRouter
+
 from . import views
 
+router = SimpleRouter()
+router.register('faq', views.FAQViewSet)
+router.register('themes', views.ThemeModelView)
 
-urlpatterns = [
-    path('my_faq/', views.all_user_faq),
-    path('faq/<int:faq_id>/view', views.view_faq),
-    path('faq/', views.мне_похуй_на_этот_проект_мне_за_нет_не_платят)
-]
-
+urlpatterns = router.urls
