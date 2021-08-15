@@ -1,6 +1,8 @@
 from django.contrib import admin
-from apps.campus_sibsau import models
 from modeltranslation.admin import TabbedTranslationAdmin
+
+from apps.campus_sibsau import models
+from apps.campus_sibsau.service.exporters import export_as_csv
 
 
 @admin.register(models.Building)
@@ -57,3 +59,10 @@ class EnsembleAdmin(admin.ModelAdmin):
 @admin.register(models.JoiningEnsemble)
 class JoiningEnsembleAdmin(admin.ModelAdmin):
     list_display = ('id', 'fio', 'ensemble', 'create_data')
+
+    actions = ['export_as_csv']
+
+    def export_as_csv(self, request, queryset):
+        return export_as_csv(queryset)
+
+    export_as_csv.short_description = 'Экспортировать в csv'
