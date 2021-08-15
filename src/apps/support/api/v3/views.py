@@ -9,9 +9,9 @@ from apps.user.permissions import IsStudentAuthenticated
 from . import serializers
 
 
-class FAQViewSet(mixins.CreateModelMixin,
-                 mixins.ListModelMixin,
-                 GenericViewSet):
+class FAQModelViewSet(mixins.CreateModelMixin,
+                      mixins.ListModelMixin,
+                      GenericViewSet):
     queryset = models.FAQ.objects.filter(answer__isnull=False)
     serializer_class = serializers.FAQSerializer
     permission_classes = (IsStudentAuthenticated, )
@@ -38,7 +38,7 @@ class FAQViewSet(mixins.CreateModelMixin,
         return Response({'good': 'просмотр засчитан'}, 200)
 
 
-class ThemeModelView(mixins.ListModelMixin,
-                     GenericViewSet):
+class ThemeModelViewSet(mixins.ListModelMixin,
+                        GenericViewSet):
     queryset = models.Theme.objects.all()
     serializer_class = serializers.ThemeModelSerializer
