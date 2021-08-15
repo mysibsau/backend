@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from apps.support import models
-from apps.support.api import serializers, docs
+from apps.support.api.v2 import docs, serializers
 from rest_framework.decorators import api_view
 from django.db.models import Q, F
 from drf_yasg.utils import swagger_auto_schema

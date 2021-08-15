@@ -1,4 +1,4 @@
-from apps.support.api import views
+from apps.support.api.v2 import views
 from django.urls import path
 
 
