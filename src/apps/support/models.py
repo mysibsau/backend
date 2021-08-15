@@ -1,5 +1,6 @@
+from django.contrib.auth.models import User, Permission
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from apps.user.models import User
 
 
 class Theme(models.Model):
@@ -8,6 +9,14 @@ class Theme(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        content_type = ContentType.objects.get(app_label='support', model='theme')
+        Permission.objects.create(codename=f'can_view_{self.slug}',
+                                   name=f'Может просматривать {self.title}',
+                                   content_type=content_type)
+        return super().save()
 
     @classmethod
     def get_default_id(cls) -> int:
