@@ -28,6 +28,7 @@ class FAQ(models.Model):
     views = models.PositiveIntegerField('Просмотры', editable=False, default=0)
     user = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
     theme = models.ForeignKey(Theme, on_delete=models.SET_DEFAULT, default=Theme.get_default_id, verbose_name='Тема')
+    is_public = models.BooleanField('Публичный', default=False)
 
     def __str__(self):
         return self.question

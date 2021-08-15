@@ -12,7 +12,7 @@ from . import serializers
 class FAQModelViewSet(mixins.CreateModelMixin,
                       mixins.ListModelMixin,
                       GenericViewSet):
-    queryset = models.FAQ.objects.filter(answer__isnull=False)
+    queryset = models.FAQ.objects.filter(answer__isnull=False, is_public=True)
     serializer_class = serializers.FAQSerializer
     permission_classes = (IsStudentAuthenticated, )
 
