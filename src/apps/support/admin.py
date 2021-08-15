@@ -24,6 +24,11 @@ class BlankAnswerFilter(admin.SimpleListFilter):
 
 
 @admin.register(models.FAQ)
-class NewsAdmin(TabbedTranslationAdmin):
-    list_display = ('id', 'question', 'answer', 'views')
+class FAQAdmin(TabbedTranslationAdmin):
+    list_display = ('id', 'question', 'theme', 'answer', 'views')
     list_filter = [BlankAnswerFilter]
+
+
+@admin.register(models.Theme)
+class ThemeAdmin(TabbedTranslationAdmin):
+    list_display = ('slug', 'title')
