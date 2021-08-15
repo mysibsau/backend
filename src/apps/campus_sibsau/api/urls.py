@@ -1,7 +1,13 @@
 from django.urls import path
 
 from apps.campus_sibsau.api import views
-from apps.campus_sibsau.api.routers import router
+from rest_framework.routers import SimpleRouter
+
+from . import views
+
+router = SimpleRouter()
+router.register(r'ensembles', views.EnsembleApiView)
+router.register(r'ensembles/join/', views.JoiningEnsembleApiView)
 
 
 urlpatterns = [
@@ -11,5 +17,4 @@ urlpatterns = [
     path('buildings/', views.BuildingAPIView.as_view()),
     path('sport_clubs/', views.SportClubsAPIView.as_view()),
     path('design_offices/', views.DesignOfficeAPIView.as_view()),
-    path('ensembles/join/', views.JoiningEnsembleApiView.as_view()),
 ] + router.urls

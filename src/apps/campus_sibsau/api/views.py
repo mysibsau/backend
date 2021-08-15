@@ -70,7 +70,9 @@ class EnsembleApiView(mixins.ListModelMixin, viewsets.GenericViewSet):
         return Response(serializer.data)
 
 
-class JoiningEnsembleApiView(ListAPIView, CreateAPIView):
+class JoiningEnsembleApiView(mixins.ListModelMixin,
+                             mixins.CreateModelMixin,
+                             viewsets.GenericViewSet):
     queryset = models.JoiningEnsemble.objects.all()
     serializer_class = serializers.JoiningEnsembleSerializer
     permission_classes = [permissions.IsStudentAuthenticated]
