@@ -5,7 +5,7 @@ from rest_framework import serializers, fields
 class FAQSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.FAQ
-        fields = ('id', 'question', 'theme', 'answer', 'views')
+        fields = ('id', 'question', 'theme', 'answer', 'views', 'is_public')
 
 
 class ThemeModelSerializer(serializers.ModelSerializer):

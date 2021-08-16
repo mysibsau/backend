@@ -28,7 +28,7 @@ class BlankAnswerFilter(admin.SimpleListFilter):
 
 @admin.register(models.FAQ)
 class FAQAdmin(TabbedTranslationAdmin):
-    list_display = ('id', 'question', 'theme', 'answer', 'views')
+    list_display = ('id', 'question', 'theme', 'answer', 'views', 'is_public')
     list_filter = [BlankAnswerFilter]
 
     def get_queryset(self, request):
