@@ -63,6 +63,7 @@ class EnsembleApiView(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = models.Ensemble.objects.all()
     serializer_class = serializers.EnsembleSerializer
 
+    @swagger_auto_schema(responses={200: serializers.EnsembleSerializer(many=False)})
     @action(detail=False, methods=['GET'])
     def ktc_info(self, request):
         ktc_queryset = models.Ensemble.objects.filter(name='Культурно-творческий центр').first()
