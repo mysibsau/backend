@@ -13,8 +13,13 @@ class FAQModelViewSet(mixins.CreateModelMixin,
                       mixins.ListModelMixin,
                       GenericViewSet):
     queryset = models.FAQ.objects.filter(answer__isnull=False, is_public=True)
-    serializer_class = serializers.FAQSerializer
     permission_classes = (IsStudentAuthenticated, )
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return serializers.FAQCreateSerializer
+        if self.action in ('list', 'my'):
+            return serializers.FAQReadSerializer
 
     def get_permissions(self):
         if self.action == 'list':
@@ -26,7 +31,7 @@ class FAQModelViewSet(mixins.CreateModelMixin,
 
     @action(detail=False, methods=['GET'])
     def my(self, request):
-        self.queryset = models.FAQ.objects.filter(user=request.student)
+        self.queryset = models.FAQ.objects.filter(user=request.student).order_by('-create_data')
         return super().list(request)
 
     @action(detail=True, methods=['POST'])

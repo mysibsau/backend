@@ -1,5 +1,6 @@
-from apps.user.models import User
 from django.db import models
+
+from apps.user.models import User
 
 
 class Theme(models.Model):
@@ -29,6 +30,7 @@ class FAQ(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE, null=True)
     theme = models.ForeignKey(Theme, on_delete=models.SET_DEFAULT, default=Theme.get_default_id, verbose_name='Тема')
     is_public = models.BooleanField('Публичный', default=False)
+    create_data = models.DateTimeField('Дата создания', auto_now_add=True)
 
     def __str__(self):
         return self.question
