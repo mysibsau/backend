@@ -28,6 +28,7 @@ urlpatterns = [
     path('v2/timetable/', include('apps.timetable.api.v2.urls')),
     path('v1/timetable/', include('apps.timetable.api.v1.urls')),
     path('', include('apps.timetable.api.v1.urls')),
+    path('download/', include('apps.download.api.urls')),
     path('v2/campus/', include('apps.campus_sibsau.api.urls')),
     path('v2/informing/', include('apps.informing.api.urls')),
     path('v2/surveys/', include('apps.surveys.api.urls')),

@@ -24,6 +24,7 @@ django-healthchecks = "*"
 requests-toolbelt = "*"
 lxml = "*"
 cssselect = "*"
+user-agents = "*"
 
 [dev-packages]
 flake8 = "*"
