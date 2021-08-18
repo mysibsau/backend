@@ -185,6 +185,7 @@ class Ensemble(models.Model):
     class Meta:
         verbose_name = 'Коллектив'
         verbose_name_plural = 'Коллективы'
+        ordering = ['id']
 
     def __str__(self):
         return self.name
