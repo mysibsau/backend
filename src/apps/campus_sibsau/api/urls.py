@@ -1,13 +1,11 @@
 from django.urls import path
-
-from apps.campus_sibsau.api import views
 from rest_framework.routers import SimpleRouter
 
 from . import views
 
 router = SimpleRouter()
 router.register(r'ensembles', views.EnsembleApiView)
-router.register(r'ensembles/join/', views.JoiningEnsembleApiView)
+router.register(r'ensembles/join', views.JoiningEnsembleApiView)
 
 
 urlpatterns = [
