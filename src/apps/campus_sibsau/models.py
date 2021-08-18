@@ -181,6 +181,14 @@ class Ensemble(models.Model):
     contacts = models.TextField('Контакты')
     vk_link = models.CharField('Ссылка на вк', max_length=128, blank=True, null=True)
     instagram_link = models.CharField('Ссылка на инстаграм', max_length=128, blank=True, null=True)
+    is_main_page = models.BooleanField('Главная страница', default=False)
+
+    def save(self, *args, **kwargs):
+        if self.is_main_page:
+            if Ensemble.objects.filter(is_main_page=True):
+                self.is_main_page = False
+                self.save()
+        super(Ensemble, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Коллектив'
