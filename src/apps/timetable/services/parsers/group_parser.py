@@ -1,7 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
+from constance import config
+
+from api_pallada import API
 from apps.timetable.services.utils import check_groups
-from apps.timetable import logger
 
 
 def get_name_group(soup: BeautifulSoup):
@@ -20,12 +22,24 @@ def get_group_by_id(id_group: int):
         return group
 
 
-def get_groups():
+def get_groups_from_parser():
     for group_id in range(600, 15_000):
         name = get_group_by_id(group_id)
         if not name:
             continue
-        if not check_groups(name):
-            logger.info(f'Пропущена группа {name}')
-            continue
-        yield group_id, name
+        yield group_id, name, not check_groups(name)
+
+
+def get_groups_from_api(api):
+    groups = api.search_read(
+        'info.groups', [[['name', '!=', False]]], {'fields': ['name']}
+    )
+    for group in groups:
+        yield group['id'], group['name'], not check_groups(group['name'])
+
+
+def get_groups():
+    if config.USE_PARSERS:
+        return get_groups_from_parser()
+    api = API('timetable', config.PALLADA_USER, config.PALLADA_PASSWORD)
+    return get_groups_from_api(api)
