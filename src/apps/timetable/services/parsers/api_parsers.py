@@ -1,6 +1,7 @@
-from apps.timetable import models
-from django.utils import timezone
 from django.db import transaction
+from django.utils import timezone
+
+from apps.timetable import models
 
 
 @transaction.atomic
@@ -12,7 +13,7 @@ def load_timtable_group_with_api(group: models.Group, api):
         [group.id_pallada],
         {
             'fields': [
-                'tt_current_year_second_ids',
+                'tt_current_year_first_ids',
             ],
         },
     )
@@ -20,7 +21,7 @@ def load_timtable_group_with_api(group: models.Group, api):
     tmp = []
 
     for i in all_timetable_id:
-        tmp += i['tt_current_year_second_ids']
+        tmp += i['tt_current_year_first_ids']
 
     timetables = api.read(
         'info.timetable',
