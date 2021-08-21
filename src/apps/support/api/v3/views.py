@@ -3,6 +3,7 @@ from rest_framework import mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
+from rest_framework.permissions import AllowAny
 
 from apps.support import models
 from apps.user.permissions import IsStudentAuthenticated
@@ -22,7 +23,7 @@ class FAQModelViewSet(mixins.CreateModelMixin,
             return serializers.FAQReadSerializer
 
     def get_permissions(self):
-        if self.action in ['list', 'view']:
+        if self.action == 'list':
             self.permission_classes = []
         return [permission() for permission in self.permission_classes]
 
@@ -34,7 +35,7 @@ class FAQModelViewSet(mixins.CreateModelMixin,
         self.queryset = models.FAQ.objects.filter(user=request.student).order_by('-create_data')
         return super().list(request)
 
-    @action(detail=True, methods=['POST'])
+    @action(detail=True, methods=['POST'], permission_classes=[AllowAny])
     def view(self, request, pk: int):
         faq = models.FAQ.objects.filter(pk=pk)
         if not faq:
