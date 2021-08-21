@@ -22,7 +22,7 @@ class FAQModelViewSet(mixins.CreateModelMixin,
             return serializers.FAQReadSerializer
 
     def get_permissions(self):
-        if self.action == 'list':
+        if self.action in ['list', 'view']:
             self.permission_classes = []
         return [permission() for permission in self.permission_classes]
 
