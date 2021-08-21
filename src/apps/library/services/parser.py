@@ -1,8 +1,6 @@
 from lxml import html
 from io import StringIO
 import re
-import time
-from functools import partial
 import requests
 
 
@@ -45,15 +43,18 @@ def get_text(root: html.HtmlElement, num: int) -> str:
 
 
 def get_name_book(root: html.HtmlElement, num: int) -> str:
-    return get_text(root, num)\
-        .split('>> ')[-1]\
-        .split('\xa0\xa0\xa0\xa0')[-1]\
-        .split(':')[0]\
-        .split('/')[0].strip()
+    text = re.sub(r'>> |>>> ', '', get_text(root, num))
+    return text \
+        .split('\xa0\xa0\xa0\xa0')[-1] \
+        .split(':')[0] \
+        .split('/')[0] \
+        .replace('. ', ' ') \
+        .strip()
+
 
 
 def get_place_and_count(root: html.HtmlElement, num: int) -> tuple:
-    '''Получение места хранения книги и их количество'''
+    """Получение места хранения книги и их количество"""
     url_part = root.cssselect("div.bo_tabs")[num].xpath('./ul/li[2]/a')[0].get('href')
     content = get_book_holders(url_part)
     if not content:
@@ -68,10 +69,10 @@ def get_place_and_count(root: html.HtmlElement, num: int) -> tuple:
 
 
 def get_link(root: html.HtmlElement, num: int) -> str:
-    '''Получение ссылки на полный текст'''
+    """Получение ссылки на полный текст"""
     text = get_text(root, num).strip()
     if protocol := re.findall(r"(http|https):", text):
-        return protocol[0] + text.split(protocol[0])[-1].split('(дата обращения')[0].strip()
+        return protocol[0] + text.split(protocol[0])[-1].split('(дата обращения')[0].split('. -')[0].strip()
 
 
 def get_physical_books(content: str) -> list:
