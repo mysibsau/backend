@@ -146,7 +146,20 @@ def timetable_group(request, group_id):
     ).select_related()
 
     if not (timetable_without_date or timetable_with_date):
-        return Response({'error': 'Расписание не доступно'}, 404)
+        return Response(
+                    {
+                        "object": "Нет группы",
+                        "even_week": [],
+                        "odd_week": [],
+                        "meta": {
+                            "groups_hash": "d033b",
+                            "teachers_hash": "b430c",
+                            "places_hash": "6462a",
+                            "current_week": 1
+                        }
+                    },
+                    200,
+                )
 
     queryset = list(timetable_without_date) + list(timetable_with_date)
 
@@ -169,7 +182,20 @@ def timetable_teacher(request, teacher_id):
         teacher__id=teacher_id
     ).select_related()
     if not queryset:
-        return Response({'error': 'Расписание не доступно'}, 404)
+        return Response(
+                    {
+                        "object": "Нет группы",
+                        "even_week": [],
+                        "odd_week": [],
+                        "meta": {
+                            "groups_hash": "d033b",
+                            "teachers_hash": "b430c",
+                            "places_hash": "6462a",
+                            "current_week": 1
+                        }
+                    },
+                    200,
+                )
     data = serializers.TimetableSerializers(queryset, 'teacher')
     return Response(data)
 
@@ -189,6 +215,19 @@ def timetable_place(request, place_id):
         place__id=place_id
     ).select_related()
     if not queryset:
-        return Response({'error': 'Расписание не доступно'}, 404)
+        return Response(
+                    {
+                        "object": "Нет группы",
+                        "even_week": [],
+                        "odd_week": [],
+                        "meta": {
+                            "groups_hash": "d033b",
+                            "teachers_hash": "b430c",
+                            "places_hash": "6462a",
+                            "current_week": 1
+                        }
+                    },
+                    200,
+                )
     data = serializers.TimetableSerializers(queryset, 'place')
     return Response(data)
