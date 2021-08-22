@@ -76,7 +76,6 @@ class JoiningEnsembleApiView(mixins.ListModelMixin,
                              viewsets.GenericViewSet):
     queryset = models.JoiningEnsemble.objects.all()
     serializer_class = serializers.JoiningEnsembleSerializer
-    permission_classes = [permissions.IsStudentAuthenticated]
 
     def get(self, request, *args, **kwargs):
         queryset = self.queryset.filter(user=request.student)
