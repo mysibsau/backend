@@ -60,13 +60,13 @@ class DesignOfficeAPIView(ListAPIView):
 
 
 class EnsembleApiView(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = models.Ensemble.objects.all()
+    queryset = models.Ensemble.objects.filter(is_main_page=False)
     serializer_class = serializers.EnsembleSerializer
 
     @swagger_auto_schema(responses={200: serializers.EnsembleSerializer(many=False)})
     @action(detail=False, methods=['GET'])
     def ktc_info(self, request):
-        ktc_queryset = models.Ensemble.objects.filter(name='Культурно-творческий центр').first()
+        ktc_queryset = models.Ensemble.objects.filter(is_main_page=True).first()
         serializer = self.get_serializer(ktc_queryset, many=False)
         return Response(serializer.data)
 

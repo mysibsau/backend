@@ -54,6 +54,14 @@ class DesignOffice(admin.ModelAdmin):
 @admin.register(models.Ensemble)
 class EnsembleAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
+    fields = ('name', 'logo', 'about', 'achievements',
+              'contacts', 'vk_link', 'instagram_link', 'is_main_page')
+
+    def get_fields(self, request, obj=None):
+        other = models.Ensemble.objects.filter(is_main_page=True).first()
+        if other and other != obj:
+            return [i for i in self.fields if i != 'is_main_page']
+        return self.fields
 
 
 @admin.register(models.JoiningEnsemble)
