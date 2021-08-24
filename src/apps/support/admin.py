@@ -43,6 +43,15 @@ class FAQAdmin(TabbedTranslationAdmin):
                 continue
             result |= qs.filter(theme__slug=slug)
         return result
+    
+    def save_model(self, request, obj, form, change):
+        update_fields = []
+        for key, value in form.cleaned_data.items():
+            if value != form.initial[key]:
+                update_fields.append(key)
+
+        obj.save(update_fields=update_fields)
+
 
 @admin.register(models.Theme)
 class ThemeAdmin(TabbedTranslationAdmin):
