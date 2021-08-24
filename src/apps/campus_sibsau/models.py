@@ -143,7 +143,7 @@ class SportClub(models.Model):
     )
     name = models.CharField('Название кружка', max_length=200)
     fio = models.CharField('Тренер', max_length=200)
-    phone = models.CharField('Телефон тренера', max_length=19)
+    phone = models.CharField('Телефон тренера', max_length=19, null=True, blank=True)
     address = models.TextField('Адрес')
     dates = models.TextField('В какие дни ведет')
 
