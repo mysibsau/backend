@@ -71,6 +71,7 @@ class SportClubSerializer(ModelSerializer):
 
     class Meta:
         model = models.SportClub
+        ref_name = 'OldSportSerializer'
         fields = '__all__'
 
 
