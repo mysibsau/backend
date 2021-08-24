@@ -65,6 +65,10 @@ class InstituteSerializers(ModelSerializer):
 
 class SportClubSerializer(ModelSerializer):
     logo = fields.SerializerMethodField()
+    phone = fields.SerializerMethodField()
+
+    def get_phone(self, obj):
+        return obj.phone if obj.phone else '-'
 
     def get_logo(self, obj):
         return obj.logo.url
