@@ -1,13 +1,13 @@
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework.decorators import api_view, action
-from rest_framework.generics import ListAPIView, CreateAPIView
-from rest_framework.response import Response
 from rest_framework import viewsets, mixins
+from rest_framework.decorators import api_view, action
+from rest_framework.generics import ListAPIView
+from rest_framework.response import Response
 
 from apps.campus_sibsau import models
-from apps.campus_sibsau.api import docs, serializers
 from apps.campus_sibsau.services.join_to_union import main as join_to_union_vk
 from apps.user import permissions
+from . import serializers, docs
 
 
 class UnionAPIView(ListAPIView):
