@@ -26,6 +26,7 @@ lxml = "*"
 cssselect = "*"
 user-agents = "*"
 whitenoise = "*"
+django-hosts = "*"
 
 [dev-packages]
 flake8 = "*"
