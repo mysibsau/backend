@@ -1,6 +1,7 @@
 from django.db import models
 
 from apps.user.models import User
+from apps.notifications.models import Notifications
 
 
 class Theme(models.Model):
@@ -23,7 +24,7 @@ class Theme(models.Model):
         verbose_name_plural = 'Темы'
 
 
-class FAQ(models.Model):
+class FAQ(Notifications, models.Model):
     question = models.TextField('Вопрос')
     answer = models.TextField('Ответ', blank=True, null=True)
     views = models.PositiveIntegerField('Просмотры', editable=False, default=0)
@@ -31,6 +32,11 @@ class FAQ(models.Model):
     theme = models.ForeignKey(Theme, on_delete=models.SET_DEFAULT, default=Theme.get_default_id, verbose_name='Тема')
     is_public = models.BooleanField('Публичный', default=False)
     create_data = models.DateTimeField('Дата создания', auto_now_add=True)
+
+    # Нужно для отправки уведомлений
+    CLICK_ACTION = 'MY_QUESTIONS'
+    TITLE = 'На ваш вопрос ответили'
+    FIELDS = ['answer_ru', 'answer_en']
 
     def __str__(self):
         return self.question
