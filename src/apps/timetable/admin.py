@@ -12,7 +12,7 @@ from multiprocessing import Process
 class Group(admin.ModelAdmin):
     list_display = ('id', 'name', 'id_pallada', 'date_update')
     search_fields = ('name', 'id_pallada', 'id')
-    change_list_template = 'timetable/groups_import.html'
+    change_list_template = 'groups_import.html'
 
     def get_urls(self):
         urls = super().get_urls()
@@ -33,7 +33,7 @@ class TimetableAdmin(admin.ModelAdmin):
     list_display = ('id', 'group', 'supgroup', 'teacher', 'lesson',
                     'lesson_type', 'place', 'week', 'day', 'time')
     search_fields = ('group__name', 'teacher__name', 'place__name')
-    change_list_template = 'timetable/load_timetable.html'
+    change_list_template = 'load_timetable.html'
 
     def get_urls(self):
         urls = super().get_urls()
