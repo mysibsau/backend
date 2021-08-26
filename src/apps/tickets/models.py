@@ -53,6 +53,9 @@ class Ticket(models.Model):
         verbose_name = u'Билет'
         verbose_name_plural = u'Билеты'
 
+    def __str__(self) -> str:
+        return f'{self.concert} за {self.price}'
+
 
 class Purchase(models.Model):
     STATUSES = (
@@ -71,3 +74,6 @@ class Purchase(models.Model):
     class Meta:
         verbose_name = 'Покупка'
         verbose_name_plural = 'Покупки'
+
+    def __str__(self) -> str:
+        return f'{self.buyer} {self.status} {self.count} {self.tickets}'

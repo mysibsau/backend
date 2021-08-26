@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from apps.campus_sibsau import models
 from apps.campus_sibsau.services.join_to_union import main as join_to_union_vk
 from apps.user import permissions
-from . import serializers, docs
+from apps.campus_sibsau.api.v2 import serializers, docs
 
 
 class UnionAPIView(ListAPIView):
@@ -27,7 +27,7 @@ def join_to_union(request, union_id):
         'group': request.POST.get('group'),
         'vk': request.POST.get('vk'),
         'hobby': request.POST.get('hobby'),
-        'reason': request.POST.get('reason')
+        'reason': request.POST.get('reason'),
     }
     if not all(data.values()):
         return Response({'error': 'Не все поля заполнены'}, 400)

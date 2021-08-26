@@ -1,4 +1,4 @@
-from .. import models
+from apps.informing import models
 
 
 def EventsSerializers(events, liked):
@@ -10,12 +10,12 @@ def EventsSerializers(events, liked):
             'logo': {
                 'url': event.logo.url,
                 'width': event.logo.width,
-                'height': event.logo.height
+                'height': event.logo.height,
             },
             'text': event.text,
             'views': event.views,
             'likes': event.likes,
-            'is_liked': event.id in liked
+            'is_liked': event.id in liked,
         })
     return result
 
@@ -26,7 +26,7 @@ def ImagesSerializer(images):
         result.append({
             'url': image.image.url,
             'width': image.image.width,
-            'height': image.image.height
+            'height': image.image.height,
         })
     return result
 
@@ -41,7 +41,7 @@ def NewsSerializer(news_queryset, liked):
             'views': news.views,
             'likes': news.likes,
             'is_liked': news.id in liked,
-            'images': ImagesSerializer(images)
+            'images': ImagesSerializer(images),
         })
     return result
 
@@ -51,7 +51,7 @@ def NotificationsSerializer(notification, context):
     result = []
     PRIORITIES = {
         5: 'normal',
-        10: 'high'
+        10: 'high',
     }
     for topic in notification.topics.all():
         priority = notification.priority
@@ -62,7 +62,7 @@ def NotificationsSerializer(notification, context):
                 'body': notification.text,
             },
             'to': f'/topics/{topic}',
-            'priority': priority
+            'priority': priority,
         })
         if notification.image:
             result[-1]['image'] = request.build_absolute_uri(notification.image.url)

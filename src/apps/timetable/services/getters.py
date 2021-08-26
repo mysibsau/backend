@@ -35,7 +35,7 @@ def get_meta() -> dict:
         'groups_hash': get_groups_hash(),
         'teachers_hash': get_teachers_hash(),
         'places_hash': get_places_hash(),
-        'current_week': utils.calculate_number_current_week()
+        'current_week': utils.calculate_number_current_week(),
     }
 
 
@@ -44,9 +44,9 @@ def select_day(queryset, day: int, week: int) -> list:
         Возвращает все пары, которые проходили в конкретный день
     '''
     result = []
-    for q in queryset:
-        if q.day == day and q.week == week:
-            result.append(q)
+    for lesson in queryset:
+        if lesson.day == day and lesson.week == week:
+            result.append(lesson)
 
     return result
 
@@ -56,8 +56,8 @@ def select_lessons(queryset, time: str) -> list:
         Возвращает все пары, которые проходили в конкретный час
     '''
     result = []
-    for q in queryset:
-        if q.time == time:
-            result.append(q)
+    for lesson in queryset:
+        if lesson.time == time:
+            result.append(lesson)
 
     return result

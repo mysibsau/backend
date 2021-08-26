@@ -39,7 +39,7 @@ def load_timtable_group_with_api(group: models.Group, api):
                 'day_week',
                 'time',
                 'date',
-            ]
+            ],
         },
     )
 

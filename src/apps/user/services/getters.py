@@ -41,7 +41,7 @@ def get_attestation(api) -> list:
     tmp = api.search_read(
         'portfolio_science.grade_attistation_view',
         [[['nzkn', '=', api.login]]],
-        {'fields': ['dis', 'forma', 'att1', 'att2', 'att3', 'att']}
+        {'fields': ['dis', 'forma', 'att1', 'att2', 'att3', 'att']},
     )
 
     for att in tmp:

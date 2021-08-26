@@ -75,7 +75,7 @@ LOGGING = {
     },
 }
 
-if not settings.DEBUG:
+if not env.bool('DEBUG'):
     LOGGING['loggers']['django.request'] = {
         'handlers': ['telegram'],
         'level': 'ERROR',

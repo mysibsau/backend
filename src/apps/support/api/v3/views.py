@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny
 
 from apps.support import models
 from apps.user.permissions import IsStudentAuthenticated
-from . import serializers
+from apps.support.api.v3 import serializers
 
 
 class FAQModelViewSet(mixins.CreateModelMixin,

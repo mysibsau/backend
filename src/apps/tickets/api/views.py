@@ -1,6 +1,5 @@
 from apps.tickets import models
 from apps.tickets.api import serializers
-from apps.user.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from datetime import timedelta

@@ -83,7 +83,7 @@ def timetable_group(request, group_id):
 
     Возвращает расписание группы **group_id**
 
-    Возрвращаемый JSON состоит из 4 частей:
+    Возвращаемый JSON состоит из 4 частей:
     * **object** - название той сущности, для которой запросили расписание.
     * **even_week** - пары первой недели.
     * **odd_week** - пары второй недели.
@@ -137,7 +137,7 @@ def timetable_group(request, group_id):
 
     today = timezone.localtime()
     last_monday = today - datetime.timedelta(days=today.weekday())
-    next_sunday = today + datetime.timedelta(days=6-today.weekday(), weeks=1)
+    next_sunday = today + datetime.timedelta(days=6 - today.weekday(), weeks=1)
 
     timetable_with_date = models.Timetable.objects.filter(
         group__id=group_id,
@@ -147,19 +147,19 @@ def timetable_group(request, group_id):
 
     if not (timetable_without_date or timetable_with_date):
         return Response(
-                    {
-                        "object": "Нет группы",
-                        "even_week": [],
-                        "odd_week": [],
-                        "meta": {
-                            "groups_hash": "d033b",
-                            "teachers_hash": "b430c",
-                            "places_hash": "6462a",
-                            "current_week": 1
-                        }
-                    },
-                    200,
-                )
+            {
+                "object": "Нет группы",
+                "even_week": [],
+                "odd_week": [],
+                "meta": {
+                    "groups_hash": "d033b",
+                    "teachers_hash": "b430c",
+                    "places_hash": "6462a",
+                    "current_week": 1,
+                },
+            },
+            200,
+        )
 
     queryset = list(timetable_without_date) + list(timetable_with_date)
 
@@ -178,24 +178,22 @@ def timetable_teacher(request, teacher_id):
 
     Структура ответа точно такая же, как и в случае с расписание группы.
     """
-    queryset = models.Timetable.objects.filter(
-        teacher__id=teacher_id
-    ).select_related()
+    queryset = models.Timetable.objects.filter(teacher__id=teacher_id).select_related()
     if not queryset:
         return Response(
-                    {
-                        "object": "Нет группы",
-                        "even_week": [],
-                        "odd_week": [],
-                        "meta": {
-                            "groups_hash": "d033b",
-                            "teachers_hash": "b430c",
-                            "places_hash": "6462a",
-                            "current_week": 1
-                        }
-                    },
-                    200,
-                )
+            {
+                "object": "Нет группы",
+                "even_week": [],
+                "odd_week": [],
+                "meta": {
+                    "groups_hash": "d033b",
+                    "teachers_hash": "b430c",
+                    "places_hash": "6462a",
+                    "current_week": 1,
+                },
+            },
+            200,
+        )
     data = serializers.TimetableSerializers(queryset, 'teacher')
     return Response(data)
 
@@ -211,23 +209,21 @@ def timetable_place(request, place_id):
 
     Структура ответа точно такая же, как и в случае с расписание группы.
     """
-    queryset = models.Timetable.objects.filter(
-        place__id=place_id
-    ).select_related()
+    queryset = models.Timetable.objects.filter(place__id=place_id).select_related()
     if not queryset:
         return Response(
-                    {
-                        "object": "Нет группы",
-                        "even_week": [],
-                        "odd_week": [],
-                        "meta": {
-                            "groups_hash": "d033b",
-                            "teachers_hash": "b430c",
-                            "places_hash": "6462a",
-                            "current_week": 1
-                        }
-                    },
-                    200,
-                )
+            {
+                "object": "Нет группы",
+                "even_week": [],
+                "odd_week": [],
+                "meta": {
+                    "groups_hash": "d033b",
+                    "teachers_hash": "b430c",
+                    "places_hash": "6462a",
+                    "current_week": 1,
+                },
+            },
+            200,
+        )
     data = serializers.TimetableSerializers(queryset, 'place')
     return Response(data)

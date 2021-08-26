@@ -5,7 +5,6 @@ from datetime import timedelta
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 from urllib.request import urlopen
-from json import dumps as json_dumps
 from apps.informing.services.utils import replace_vk_links_on_markdown
 from apps.informing.services.utils import from_tags_to_links
 
