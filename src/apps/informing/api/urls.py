@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from apps.informing.api import views
 
 
 urlpatterns = [
@@ -7,5 +7,5 @@ urlpatterns = [
     path('all_news/', views.all_news, name='informing_all_news'),
     path('like/<int:post_id>/', views.like, name='informing_like'),
     path('view/<int:post_id>/', views.view, name='informing_view'),
-    path('add_news/', views.add_news)
+    path('add_news/', views.add_news),
 ]

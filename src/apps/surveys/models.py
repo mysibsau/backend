@@ -19,7 +19,7 @@ class Question(models.Model):
     TYPES = (
         (0, 'Один ответ'),
         (1, 'Множество ответов'),
-        (2, 'Свой ответ')
+        (2, 'Свой ответ'),
     )
     survey = models.ForeignKey(Survey, models.CASCADE, verbose_name='Опрос')
     text = models.CharField('Текст вопроса', max_length=512)
@@ -39,7 +39,7 @@ class ResponseOption(models.Model):
     question = models.ForeignKey(
         Question,
         models.CASCADE,
-        verbose_name='Вопрос'
+        verbose_name='Вопрос',
     )
 
     text = models.CharField('Ответ', max_length=128)
@@ -59,15 +59,18 @@ class Answer(models.Model):
     question = models.ForeignKey(
         Question,
         models.CASCADE,
-        verbose_name='Вопрос'
+        verbose_name='Вопрос',
     )
     answers = models.ManyToManyField(
         ResponseOption,
         verbose_name='Ответы',
-        blank=True
+        blank=True,
     )
     text = models.TextField('Текст', blank=True, null=True)
 
     class Meta:
         verbose_name = u'Ответ'
         verbose_name_plural = u'Ответы'
+
+    def __str__(self) -> str:
+        return self.answers

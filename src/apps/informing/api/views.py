@@ -28,7 +28,7 @@ def all_events(request):
     Также имеет следующие поля:
     * **views** - количество просмотров;
     * **likes** - количество лайков;
-    * **is_liked** - лайкнул ли пост пользователь c уникальным индификатором *UUID*;
+    * **is_liked** - лайкнул ли пост пользователь c уникальным идентификатором *UUID*;
     """
     uuid = request.GET.get('uuid')
     if not uuid:
@@ -54,7 +54,7 @@ def all_news(request):
     Также имеет следующие поля:
     * **views** - количество просмотров;
     * **likes** - количество лайков;
-    * **is_liked** - лайкнул ли пост пользователь c уникальным индификатором *UUID*;
+    * **is_liked** - лайкнул ли пост пользователь c уникальным идентификатором *UUID*;
     """
     uuid = request.GET.get('uuid')
     if not uuid:
@@ -77,7 +77,7 @@ def like(request, post_id):
 
     information = models.Information.objects.filter(
         date_to__gt=timezone.localtime(),
-        id=post_id
+        id=post_id,
     ).first()
 
     if not information:
@@ -94,7 +94,7 @@ def view(request, post_id):
     """
     information = models.Information.objects.filter(
         date_to__gt=timezone.localtime(),
-        id=post_id
+        id=post_id,
     )
 
     if not information:

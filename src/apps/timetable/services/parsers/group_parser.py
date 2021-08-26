@@ -14,7 +14,7 @@ def get_name_group(soup: BeautifulSoup):
 
 def get_group_by_id(id_group: int):
     html = requests.get(
-        f'https://timetable.pallada.sibsau.ru/timetable/group/{id_group}'
+        f'https://timetable.pallada.sibsau.ru/timetable/group/{id_group}',
     ).text
 
     soup = BeautifulSoup(html, 'html.parser')
@@ -32,7 +32,7 @@ def get_groups_from_parser():
 
 def get_groups_from_api(api):
     groups = api.search_read(
-        'info.groups', [[['name', '!=', False]]], {'fields': ['name']}
+        'info.groups', [[['name', '!=', False]]], {'fields': ['name']},
     )
     for group in groups:
         yield group['id'], group['name'], not check_groups(group['name'])

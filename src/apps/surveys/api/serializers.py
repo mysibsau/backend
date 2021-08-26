@@ -6,7 +6,7 @@ def ResponsesSerializer(responses):
     for response in responses:
         result.append({
             'id': response.id,
-            'text': response.text
+            'text': response.text,
         })
     return result
 
@@ -21,7 +21,7 @@ def QuestionsSerializers(questions):
             'name': question.text,
             'necessarily': question.necessarily,
             'type': question.type,
-            'responses': ResponsesSerializer(responses)
+            'responses': ResponsesSerializer(responses),
         })
     return result
 
@@ -30,7 +30,7 @@ def SurveySerializers(survey):
     questions = models.Question.objects.filter(survey__id=survey.id).order_by('id')
     return {
         'name': survey.name,
-        'questions': QuestionsSerializers(questions)
+        'questions': QuestionsSerializers(questions),
     }
 
 
@@ -39,6 +39,6 @@ def SurveysSerializers(surveys):
     for survey in surveys:
         result.append({
             'id': survey.id,
-            'name': survey.name
+            'name': survey.name,
         })
     return result

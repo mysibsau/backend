@@ -52,7 +52,6 @@ def get_name_book(root: html.HtmlElement, num: int) -> str:
         .strip()
 
 
-
 def get_place_and_count(root: html.HtmlElement, num: int) -> tuple:
     """Получение места хранения книги и их количество"""
     url_part = root.cssselect("div.bo_tabs")[num].xpath('./ul/li[2]/a')[0].get('href')

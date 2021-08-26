@@ -2,8 +2,8 @@ from hashlib import md5
 from django.utils import timezone
 
 
-def generate_hash(s):
-    return md5(s.encode()).hexdigest()[:5]
+def generate_hash(string):
+    return md5(string.encode()).hexdigest()[:5]
 
 
 def calculate_number_current_week() -> int:

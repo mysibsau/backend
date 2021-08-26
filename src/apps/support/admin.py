@@ -44,6 +44,7 @@ class FAQAdmin(TabbedTranslationAdmin):
             result |= qs.filter(theme__slug=slug)
         return result
 
+
 @admin.register(models.Theme)
 class ThemeAdmin(TabbedTranslationAdmin):
     list_display = ('slug', 'title')
@@ -56,7 +57,7 @@ class ThemeAdmin(TabbedTranslationAdmin):
         Permission.objects.create(
             codename=f'can_view_{obj.slug}',
             name=f'Может просматривать {obj.title}',
-            content_type=content_type
+            content_type=content_type,
         )
 
         return super().save_model(request, obj, form, change)

@@ -38,5 +38,5 @@ def timetable_group(request, group_id):
 @cache_page(60 * 60)
 def current_week(request):
     return Response(
-        {'week': utils.calculate_number_current_week()}
+        {'week': utils.calculate_number_current_week()},
     )

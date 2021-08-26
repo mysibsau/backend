@@ -9,19 +9,19 @@ def set_answers(answers, survey_id):
         return error
     for question_json in answers['questions']:
         question = models.Question.objects.filter(
-            id=question_json['id']
+            id=question_json['id'],
         ).first()
         answer = models.Answer.objects.create(
             who=uuid,
             survey=question.survey,
             question=question,
-            text=question_json.get('text')
+            text=question_json.get('text'),
         )
         if question.type != 2:
             answer.answers.set(
                 models.ResponseOption.objects.filter(
-                    id__in=question_json.get('answers')
-                )
+                    id__in=question_json.get('answers'),
+                ),
             )
 
     return Response({'good': 'Ваши ответы записаны'}, 200)

@@ -1,7 +1,7 @@
 from rest_framework.generics import ListAPIView
 
 from apps.campus_sibsau import models
-from . import serializers
+from apps.campus_sibsau.api.v3 import serializers
 
 
 class SportClubsAPIView(ListAPIView):

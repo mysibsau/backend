@@ -1,6 +1,6 @@
 from rest_framework.routers import SimpleRouter
 
-from . import views
+from apps.support.api.v3 import views
 
 router = SimpleRouter()
 router.register('faq', views.FAQModelViewSet)

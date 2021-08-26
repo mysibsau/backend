@@ -6,11 +6,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'  # https://docs.djangoproject.
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': 'database',
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'postgres'),
-        'PORT': 5432,
+         'ENGINE': 'django.db.backends.postgresql',
+          'NAME': 'postgres',
+          'USER': 'postgres',
+          'HOST': 'database',
+          'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'postgres'),
+          'PORT': 5432,
     },
 }

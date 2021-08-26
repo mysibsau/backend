@@ -15,7 +15,7 @@ def user_already_answered(uuid: str, survey_id: int) -> bool:
 def check_type_question(question_json: dict) -> bool:
     """Проверяет, совпадает ли формат ответа с типом вопроса"""
     question = models.Question.objects.filter(id=question_json['id']).first()
-    
+
     # Если вопрос имеет варианты ответа
     # Но присланный json не содержит нужного поля
     if question.type in [0, 1] and 'answers' not in question_json:
@@ -37,7 +37,7 @@ def check_contain_answer_in_question(question_json: dict) -> bool:
     if question.type == 2:
         return True
     answers = models.ResponseOption.objects.filter(
-        id__in=question_json.get('answers')
+        id__in=question_json.get('answers'),
     )
     if not answers.count():
         return False
@@ -51,7 +51,7 @@ def check_contain_answer_necessarily_question(survey_id: int, questions: list) -
     """Проверяет, заполнены ли все обязательные вопросы"""
     questions_all = models.Question.objects.filter(survey__id=survey_id)
     necessarily_question = set(
-        [question.id for question in questions_all if question.necessarily]
+        [question.id for question in questions_all if question.necessarily],
     )
     questions_ids = set(question['id'] for question in questions)
     # Является ли множество обязательных ответов подмножеством данных ответов

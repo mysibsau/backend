@@ -32,10 +32,10 @@ def is_valid_vacancy(vacancy):
 def get_string_from_list(vacancy, num_field):
     field = vacancy.find_all('tr')[num_field].find('td')
     p_list = []
-    for p in field.find_all('p'):
-        for br in p.find_all('br'):
+    for tag_p in field.find_all('p'):
+        for br in tag_p.find_all('br'):
             br.replace_with('\r\n')
-        p_list.append(p.text)
+        p_list.append(tag_p.text)
     result = '\r\n'.join(p_list).strip()
     return result if result else None
 

@@ -7,8 +7,8 @@ from django.utils import timezone
 def make_token(username: str, uid: int) -> str:
     token = sha256(
         (
-            md5(username.encode('utf-8')).hexdigest() +
-            md5(str(uid).encode('utf-8')).hexdigest()
+            md5(username.encode('utf-8')).hexdigest()
+            + md5(str(uid).encode('utf-8')).hexdigest()
         ).encode('utf-8'),
     ).hexdigest()
 

@@ -2,7 +2,7 @@ from django.db.models import Min
 from apps.tickets import models
 from apps.tickets.models import Ticket
 from typing import List
-from apps.tickets.services.utils import generate_schem_hall
+from apps.tickets.services.utils import generate_scheme_hall
 
 
 def TicketSerializers(tickets):
@@ -64,7 +64,7 @@ def ConcertsSerializer(concerts: List[models.Concert]) -> List[dict]:
             'date': concert.datetime.strftime('%d.%m.%Y'),
             'time': concert.datetime.strftime('%H:%M'),
             'hall': concert.hall,
-            'min_price': Ticket.objects.filter(concert=concert).aggregate(Min('price'))['price__min']
+            'min_price': Ticket.objects.filter(concert=concert).aggregate(Min('price'))['price__min'],
         })
 
     return result
@@ -75,4 +75,4 @@ def ConcertSerializer(concert: models.Concert):
     hall_schem = concert.performance.theatre.file_name
     tickets = TicketSerializers(tickets)
 
-    return generate_schem_hall(hall_schem, tickets)
+    return generate_scheme_hall(hall_schem, tickets)

@@ -1,4 +1,4 @@
-from requests import post
+import requests
 from random import randint
 from constance import config
 
@@ -12,10 +12,9 @@ def send_message(text: str, peer_id: int) -> None:
         'random_id': randint(0, 10000000),
         'user_id': peer_id,
         'message': text,
-        'v': 5.103
+        'v': 5.103,
     }
-    p = post(f'{URL_API}messages.send', data=data)
-    print(p.status_code)
+    requests.post(f'{URL_API}messages.send', data=data)
 
 
 def get_text_message(data) -> str:

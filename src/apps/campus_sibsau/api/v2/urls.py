@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework.routers import SimpleRouter
 
-from . import views
+from apps.campus_sibsau.api.v2 import views
 
 router = SimpleRouter()
 router.register(r'ensembles', views.EnsembleApiView)

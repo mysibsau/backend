@@ -6,7 +6,7 @@ def GroupSerializers(groups) -> list:
     for group in groups:
         result.append({
             'id': group.id,
-            'name': group.name
+            'name': group.name,
         })
     return result
 
@@ -17,7 +17,7 @@ def TeacherSerializers(teachers) -> list:
         result.append({
             'id': teacher.id,
             'name': teacher.name,
-            'id_pallada': teacher.id_pallada
+            'id_pallada': teacher.id_pallada,
         })
     return result
 
@@ -28,7 +28,7 @@ def PlaceSerializers(places) -> list:
         result.append({
             'id': place.id,
             'name': place.name,
-            'address': place.address
+            'address': place.address,
         })
     return result
 
@@ -45,7 +45,7 @@ def SupgroupsSerializer(supgroups: dict) -> list:
             'group': supgroup.group.name,
             'group_id': supgroup.group.id,
             'place': supgroup.place.name,
-            'place_id': supgroup.place.id
+            'place_id': supgroup.place.id,
         })
     return result
 
@@ -59,18 +59,18 @@ def DaySerializer(day: list) -> list:
     return result
 
 
-def TimetableSerializers(lessons, type) -> dict:
+def TimetableSerializers(lessons, type_object) -> dict:
     types = {
         'teacher': lessons[0].teacher.name,
         'group': lessons[0].group.name,
-        'place': lessons[0].place.name
+        'place': lessons[0].place.name,
     }
 
     result = {
-        'object': types[type],
+        'object': types[type_object],
         'even_week': [],
         'odd_week': [],
-        'meta': getters.get_meta()
+        'meta': getters.get_meta(),
     }
 
     for week in range(1, 3):
