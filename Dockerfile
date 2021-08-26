@@ -8,4 +8,3 @@ COPY Pipfile* /
 RUN pipenv install --dev --deploy --system --ignore-pipfile
 
 COPY src /app
-CMD ./manage.py migrate
