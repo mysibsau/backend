@@ -21,4 +21,5 @@ include(
     'config/media.py',
     'config/templates.py',
     'config/healthchecks.py',
+    'config/hosts.py',
 )
