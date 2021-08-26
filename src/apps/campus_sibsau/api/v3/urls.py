@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from apps.campus_sibsau.api.v3 import views
 
 
 urlpatterns = [

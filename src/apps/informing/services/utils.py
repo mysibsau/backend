@@ -1,4 +1,4 @@
-from re import sub, findall
+from re import sub
 
 
 def replace_vk_links_on_markdown(text: str) -> str:

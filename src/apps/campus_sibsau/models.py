@@ -5,7 +5,7 @@ from apps.user.models import User
 class Building(models.Model):
     COASTS = (
         (0, 'Левый'),
-        (1, 'Правый')
+        (1, 'Правый'),
     )
     coast = models.PositiveSmallIntegerField('Берег', choices=COASTS)
     address = models.CharField('Адрес', max_length=256)
@@ -25,7 +25,7 @@ class Building(models.Model):
 class Director(models.Model):
     image = models.ImageField(
         verbose_name='Фотография',
-        upload_to='campus/directors/photos/'
+        upload_to='campus/directors/photos/',
     )
     name = models.CharField('ФИО', max_length=200)
     address = models.TextField('Адрес')
@@ -58,7 +58,7 @@ class Department(models.Model):
 class Soviet(models.Model):
     image = models.ImageField(
         verbose_name='Фотография',
-        upload_to='campus/soviets/photos/'
+        upload_to='campus/soviets/photos/',
     )
     fio = models.CharField('ФИО', max_length=200)
     address = models.TextField('Адрес')
@@ -79,14 +79,14 @@ class Institute(models.Model):
     director = models.ForeignKey(
         Director,
         on_delete=models.CASCADE,
-        verbose_name='Директор института'
+        verbose_name='Директор института',
     )
     departments = models.ManyToManyField(Department, verbose_name='Кафедры', blank=True)
     soviet = models.ForeignKey(
         Soviet,
         on_delete=models.CASCADE,
         verbose_name='Студенческий совет',
-        blank=True
+        blank=True,
     )
 
     def __str__(self):
@@ -103,15 +103,15 @@ class Union(models.Model):
     rank = models.PositiveIntegerField(
         verbose_name='Номер в списке',
         help_text='Чем меньше номер, тем выше по списку будет объединение',
-        default=0
+        default=0,
     )
     logo = models.ImageField(
         verbose_name='Логотип',
-        upload_to='campus/unions/logo/'
+        upload_to='campus/unions/logo/',
     )
     photo = models.ImageField(
         verbose_name='Фотография',
-        upload_to='campus/unions/photos'
+        upload_to='campus/unions/photos',
     )
     fio = models.CharField('ФИО', max_length=200)
     leader_rank = models.CharField('Должность', max_length=128, blank=True)
@@ -123,7 +123,7 @@ class Union(models.Model):
         blank=True,
         null=True,
         help_text='''Ссылка обязательно должна быть в формате https://vk.com/id1234.
-                       Если она будет иметь другой формат, то нельзя будет отправлять заявки на вступление'''
+                       Если она будет иметь другой формат, то нельзя будет отправлять заявки на вступление''',
     )
     about = models.TextField('Описание', blank=True)
 
@@ -212,3 +212,6 @@ class JoiningEnsemble(models.Model):
     class Meta:
         verbose_name = 'Заявка в коллектив'
         verbose_name_plural = 'Заявки в коллективы'
+
+    def __str__(self) -> str:
+        return f'{self.user} -> {self.ensemble}'

@@ -16,7 +16,7 @@ def get_books_from_library(key_words: str, physical: bool = True) -> str:
             params={
                 'task': 'set_selected_bases',
                 'bl_id_array_selected[11]': 11,
-            }
+            },
         )
 
     req_id_client = get_random_req_id_client()
@@ -43,9 +43,8 @@ def get_books_from_library(key_words: str, physical: bool = True) -> str:
             'recs_outputed': 0,
             'reqs_outputed': 0,
             'last_output_time': 0,
-            'finish_flag': 'last'
-
-        }
+            'finish_flag': 'last',
+        },
     )
 
     if response.status_code == 200:

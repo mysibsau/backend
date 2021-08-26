@@ -23,7 +23,7 @@ class QuestionInline(NestedStackedInline):
 @admin.register(models.Survey)
 class Survey(NestedModelAdmin):
     list_display = ('id', 'name', 'date_to', 'reanswer')
-    inlines = [QuestionInline, ]
+    inlines = [QuestionInline]
     actions = ['export_as_csv']
 
     def get_queryset(self, request):
@@ -37,8 +37,9 @@ class Survey(NestedModelAdmin):
         """Выгружает все ответы, связанные с выбранным опросом"""
         meta = self.model._meta
 
-        logger.info(f'{request.user} экспортировал ответы тестов: ' +
-            ', '.join(q.name for q in queryset)
+        logger.info(
+            f'{request.user} экспортировал ответы тестов: '
+            ', '.join(q.name for q in queryset),
         )
 
         response = HttpResponse(content_type='text/csv')
@@ -57,7 +58,7 @@ class Survey(NestedModelAdmin):
                     answer.who,
                     answer.survey,
                     answer.question,
-                    ans
+                    ans,
                 ])
 
         return response

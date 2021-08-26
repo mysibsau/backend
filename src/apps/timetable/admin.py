@@ -44,7 +44,7 @@ class TimetableAdmin(admin.ModelAdmin):
 
     def import_all(self, request):
         Process(
-            target=setters.load_timetable
+            target=setters.load_timetable,
         ).start()
         return HttpResponseRedirect("../")
 

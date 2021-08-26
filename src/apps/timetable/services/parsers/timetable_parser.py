@@ -11,16 +11,16 @@ class Parser:
             'wednesday': 2,
             'thursday': 3,
             'friday': 4,
-            'saturday': 5
+            'saturday': 5,
         }
 
         self.types_subject = {
-            'Лекция': 1, 
-            'Лабораторная работа': 2, 
-            'Практика': 3
+            'Лекция': 1,
+            'Лабораторная работа': 2,
+            'Практика': 3,
         }
 
-    def get_int_subgroup(self, string):
+    def get_int_subgroup(self, string: str):
         for symbol in string:
             if symbol.isdigit():
                 return int(symbol)
@@ -87,9 +87,9 @@ class Parser:
             result.append(subgroup)
         return result
 
-    def get_day_timetable(self, numb_week, day, id):
+    def get_day_timetable(self, numb_week, day, id_group):
         response = requests.get(
-            f'https://timetable.pallada.sibsau.ru/timetable/group/{id}'
+            f'https://timetable.pallada.sibsau.ru/timetable/group/{id_group}',
         ).text
         soup = BeautifulSoup(response, 'html.parser')
         return soup.select(f'#week_{numb_week}_tab > div.day.{day} > div.body')
@@ -97,10 +97,10 @@ class Parser:
     def is_weekend(self, day_timetable):
         return len(day_timetable) == 0
 
-    def get_timetable(self, id):
+    def get_timetable(self, id_group):
         for numb_week in range(1, 3):
             for day in self.days.keys():
-                day_timetable = self.get_day_timetable(numb_week, day, id)
+                day_timetable = self.get_day_timetable(numb_week, day, id_group)
 
                 if self.is_weekend(day_timetable):
                     continue

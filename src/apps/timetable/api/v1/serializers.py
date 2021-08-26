@@ -7,7 +7,7 @@ def GroupSerializers(groups) -> list:
         result.append({
             'id': group.id,
             'name': group.name,
-            'mail': ''
+            'mail': '',
         })
     return result
 
@@ -43,7 +43,7 @@ def TimetableSerializers(lessons) -> dict:
         'group': lessons[0].group.name,
         'even_week': [],
         'odd_week': [],
-        'hash': getters.get_meta()['groups_hash']
+        'hash': getters.get_meta()['groups_hash'],
     }
 
     for week in range(1, 3):

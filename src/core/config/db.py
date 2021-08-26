@@ -10,7 +10,7 @@ DATABASES = {
         'PASSWORD': env.str('DATABASE_PASSWORD'),
         'HOST': env.str('DATABASE_HOST'),
         'PORT': env.str('DATABASE_PORT'),
-    }
+    },
 }
 
 if len(argv) > 1 and argv[1] == 'test':
