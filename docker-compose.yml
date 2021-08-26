@@ -9,7 +9,8 @@ services:
             - ./volumes/db/data:/var/lib/database/data
 
     app:
-        image: mysibsau
+        build:
+            context: .
         container_name: backend
         env_file: src/.env
         restart: always
@@ -19,41 +20,31 @@ services:
             - ./volumes/static:/static
         depends_on:
             - database
-            - migrate
-            - collectstatic
-        command: gunicorn --bind 0.0.0.0:8000 --timeout 600 --log-level debug --reload --max-requests 100 --workers 4 core.wsgi:application
+        command: bash -c "
+            python manage.py migrate &&
+            python manage.py collectstatic --noinput &&
+            gunicorn --bind 0.0.0.0:8000 --timeout 600 --log-level debug --reload --max-requests 100 --workers 4 core.wsgi:application"
 
-
-    migrate:
-        build: .
-        image: mysibsau
-        command: python manage.py migrate --noinput
+    prometheus:
+        image: prom/prometheus:v2.14.0
+        container_name: prometheus
         volumes:
-            - ./src:/app
-        depends_on: 
-            - database
+            - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
 
-    collectstatic:
-        build: .
-        image: mysibsau
-        command: python manage.py collectstatic --noinput
-        volumes:
-            - ./src:/app
-            - ./volumes/static:/static
-        depends_on: 
-            - database
-            - migrate
+    grafana:
+        image: grafana/grafana:6.5.2
+        container_name: grafana
 
     nginx:
         container_name: nginx
         image: nginx:latest
         volumes:
-            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./configs/nginx.conf:/etc/nginx/conf.d/default.conf
             - ./volumes/static:/static
             - ./volumes/media:/media
-
         ports:
             - 80:80
-            - 8000:80
         depends_on:
             - app
+            - prometheus
+            - grafana
