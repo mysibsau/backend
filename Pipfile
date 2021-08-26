@@ -25,6 +25,7 @@ requests-toolbelt = "*"
 lxml = "*"
 cssselect = "*"
 user-agents = "*"
+whitenoise = "*"
 
 [dev-packages]
 flake8 = "*"
