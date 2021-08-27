@@ -21,5 +21,4 @@ include(
     'media.py',
     'templates.py',
     'healthchecks.py',
-    'hosts.py',
 )

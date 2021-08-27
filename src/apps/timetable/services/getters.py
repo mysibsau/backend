@@ -1,5 +1,5 @@
 from apps.timetable import models
-from apps.timetable.api.v2 import serializers
+from api.v2.timetable import serializers
 from apps.timetable.services import utils
 
 

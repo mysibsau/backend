@@ -15,7 +15,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     'constance',
     'constance.backends.database',
-    'django_hosts',
 
     'apps.timetable',
     'apps.campus_sibsau',
