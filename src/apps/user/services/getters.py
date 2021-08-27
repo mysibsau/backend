@@ -21,6 +21,8 @@ def get_marks(api: API) -> list:
             'mark': discipline['grade'].strip(),
             'type': discipline['test_type'].strip(),
         }
+        # Артем просил, чтоб прилетало не false, как это возвращает паллада, а null
+        item['coursework'] = item['coursework'] if item['coursework'] else None
         term = discipline['term'].strip()
         if term in tmp_result:
             tmp_result[term].append(item)
