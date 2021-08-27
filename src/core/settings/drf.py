@@ -8,7 +8,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'apps.user.authentication.BearerTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        'apps.user.authentication.TwoBearerTokenAuthentication',
     ],
 }
