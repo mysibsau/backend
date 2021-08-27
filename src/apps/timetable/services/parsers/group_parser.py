@@ -4,6 +4,7 @@ from constance import config
 
 from api_pallada import API
 from apps.timetable.services.utils import check_groups
+from apps.timetable import logger
 
 
 def get_name_group(soup: BeautifulSoup):
@@ -39,7 +40,9 @@ def get_groups_from_api(api):
 
 
 def get_groups():
-    if config.USE_PARSERS:
+    if not config.USE_PARSERS:
+        logger.info('Запуск парсеров')
         return get_groups_from_parser()
+    logger.info('Запуск api')
     api = API('timetable', config.PALLADA_USER, config.PALLADA_PASSWORD)
     return get_groups_from_api(api)
