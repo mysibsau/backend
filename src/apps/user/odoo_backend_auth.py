@@ -32,6 +32,8 @@ class OdooBackend(BaseBackend):
         user.fio = fio
         user.group = Group.objects.filter(name=group).first()
         user.token = make_token(username, uid=api.uid)
+        # Чистим базу от старых пользователей
+        User.objects.filter(username=user.token).delete()
         user.average = average
         user.set_password(password)
         user.save()

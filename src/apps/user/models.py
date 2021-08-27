@@ -13,7 +13,7 @@ class User(AbstractUser):
     average = models.FloatField('Средний балл', default=0.0)
     fio = models.CharField('ФИО', max_length=150, default='-')
     # TODO: удалить в будущих версиях
-    token = models.CharField('Токен', editable=False, max_length=16)
+    token = models.CharField('Токен', max_length=16, blank=True)
 
     def __str__(self) -> str:
         return ' '.join(self.fio.split()[1:])

@@ -40,7 +40,7 @@ def get_groups_from_api(api):
 
 
 def get_groups():
-    if not config.USE_PARSERS:
+    if config.USE_PARSERS:
         logger.info('Запуск парсеров')
         return get_groups_from_parser()
     logger.info('Запуск api')
