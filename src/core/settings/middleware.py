@@ -11,8 +11,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'middlewares.set_language.set_language',
-    'middlewares.auth.auth_header',
-    'middlewares.auth.auth_query',
+    #'middlewares.auth.auth_header',
+    #'middlewares.auth.auth_query',
 ]
 
 if settings.DEBUG:

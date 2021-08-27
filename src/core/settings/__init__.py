@@ -7,6 +7,7 @@ DEBUG = env.bool('DEBUG', default=False)
 
 include(
     'boilerplate.py',
+    'auth.py',
     'db.py',
     'installed_apps.py',
     'locale.py',

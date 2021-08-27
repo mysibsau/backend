@@ -10,7 +10,7 @@ admin.site.site_header = 'Мой СибГУ'
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     path('', include('api.urls')),
-    # path('', include('apps.timetable.api.v1.urls')),
+    path('', include('api.v1.timetable.urls')),
     path('', include('apps.pages.api.urls')),
     path('healthchecks/', include('django_healthchecks.urls')),
 ]

@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from apps.campus_sibsau import models
 from apps.campus_sibsau.services.join_to_union import main as join_to_union_vk
-from apps.user import permissions
+from rest_framework import permissions
 from api.v2.campus_sibsau import serializers, docs
 
 
@@ -76,13 +76,13 @@ class JoiningEnsembleApiView(mixins.ListModelMixin,
                              viewsets.GenericViewSet):
     queryset = models.JoiningEnsemble.objects.all()
     serializer_class = serializers.JoiningEnsembleSerializer
-    permission_classes = [permissions.IsStudentAuthenticated]
+    permission_classes = (permissions.IsAuthenticated, )
 
     def get(self, request, *args, **kwargs):
-        queryset = self.queryset.filter(user=request.student)
+        queryset = self.queryset.filter(user=request.user)
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
     def perform_create(self, serializer):
-        serializer.validated_data['user'] = self.request.student
+        serializer.validated_data['user'] = self.request.user
         serializer.save()

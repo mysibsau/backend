@@ -1,17 +1,19 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.utils import timezone
+
+from apps.timetable.models import Group
 
 
-class User(models.Model):
+class User(AbstractUser):
+    email = None
+    first_name = None
+    last_name = None
+
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, verbose_name='Группа')
+    average = models.FloatField('Средний балл', default=0.0)
+    fio = models.CharField('ФИО', max_length=150, default='-')
+    # TODO: удалить в будущих версиях
     token = models.CharField('Токен', editable=False, max_length=16)
-    group = models.CharField('Группа', max_length=16)
-    average = models.FloatField('Средний балл', default=5.0)
-    creation_date = models.DateField('Дата регистрации', default=timezone.now)
-    last_entry = models.DateTimeField('Последняя авторизация')
-    banned = models.BooleanField('Заблокирован', default=False)
 
-    def __str__(self):
-        return f'{self.token[:5]} {self.group}'
-
-    class Meta:
-        pass
+    def __str__(self) -> str:
+        return ' '.join(self.fio.split()[1:])

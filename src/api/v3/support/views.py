@@ -6,7 +6,7 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework.permissions import AllowAny
 
 from apps.support import models
-from apps.user.permissions import IsStudentAuthenticated
+from rest_framework import permissions
 from api.v3.support import serializers
 
 
@@ -14,7 +14,7 @@ class FAQModelViewSet(mixins.CreateModelMixin,
                       mixins.ListModelMixin,
                       GenericViewSet):
     queryset = models.FAQ.objects.filter(answer__isnull=False, is_public=True)
-    permission_classes = (IsStudentAuthenticated, )
+    permission_classes = (permissions.IsAuthenticated, )
 
     def get_serializer_class(self):
         if self.action == 'create':
@@ -28,11 +28,11 @@ class FAQModelViewSet(mixins.CreateModelMixin,
         return [permission() for permission in self.permission_classes]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.student)
+        serializer.save(user=self.request.user)
 
     @action(detail=False, methods=['GET'])
     def my(self, request):
-        self.queryset = models.FAQ.objects.filter(user=request.student).order_by('-create_data')
+        self.queryset = models.FAQ.objects.filter(user=request.user).order_by('-create_data')
         return super().list(request)
 
     @action(detail=True, methods=['POST'], permission_classes=[AllowAny])

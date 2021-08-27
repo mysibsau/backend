@@ -1,117 +1,43 @@
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from json import loads as json_loads
-from api_pallada import API
-from apps.user import models
+from api.v2.user import serializers
 from apps.user.services import getters
-from drf_yasg.utils import swagger_auto_schema
-from api.v2.user import docs
-from apps.user.services.utils import make_token
-from xmlrpc.client import ProtocolError
+from rest_framework.authtoken.models import Token
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
 
 
-def basic_auth(request):
-    if not request.body:
-        return Response({'error': 'bad request'}, 400)
+class UserViewSet(GenericViewSet):
 
-    data = json_loads(request.body)
+    def get_serializer_class(self):
+        if self.action == 'auth':
+            return serializers.UserSerializer
+        if self.action == 'marks':
+            return serializers.MarksSerializer
+        if self.action == 'attestation':
+            return serializers.AttestationSerializer
 
-    username = data.get('username')
-    password = data.get('password')
+    @action(methods=['POST'], detail=False)
+    def auth(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, _ = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'FIO': user.fio,
+            'averga': user.average,
+            'group': user.group.name,
+            'zachotka': user.username,
+        })
 
-    if not (username and password):
-        return Response({'error': 'bad request'}, 400)
+    @action(methods=['POST'], detail=False)
+    def marks(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(getters.get_marks(request.api), 200)
 
-    if not username.isdigit():
-        return Response({'error': 'username is not gradebook'}, 401)
-
-    try:
-        api = API('portfolio', username, password)
-    except (ProtocolError, TimeoutError):
-        return Response({'error': 'error'}, 418)
-
-    if not api.uid:
-        return Response({'error': 'bad auth'}, 401)
-
-    token = make_token(username, api.uid)
-    user = models.User.objects.filter(token=token).first()
-    if user and user.banned:
-        return Response({'error': 'banned'}, 403)
-
-    return api
-
-
-@swagger_auto_schema(**docs.swagger_auth)
-@api_view(['POST'])
-def auth(request):
-    """
-        Auth
-
-        Ожидает json с номером зачетки и паролем
-
-        ```
-            {
-                "username": "1234321",
-                "password": "w0rng классный"
-            }
-        ```
-    """
-
-    auth = basic_auth(request)
-
-    if type(auth) == Response:
-        return auth
-
-    result = getters.get_data(auth)
-
-    if result == 'banned':
-        return Response({'error': 'banned'}, 403)
-
-    return Response(result, 200)
-
-
-@swagger_auto_schema(**docs.swagger_get_marks)
-@api_view(['POST'])
-def get_marks(request):
-    """
-        Get marks
-
-        Ожидает json с номером зачетки и паролем
-
-        ```
-            {
-                "username": "1234321",
-                "password": "w0rng классный"
-            }
-        ```
-    """
-
-    auth = basic_auth(request)
-
-    if type(auth) == Response:
-        return auth
-
-    return Response(getters.get_marks(auth), 200)
-
-
-@swagger_auto_schema(**docs.swagger_get_attestation)
-@api_view(['POST'])
-def get_attestation(request):
-    """
-        Get attestation
-
-        Ожидает json с номером зачетки и паролем
-
-        ```
-            {
-                "username": "1234321",
-                "password": "w0rng классный"
-            }
-        ```
-    """
-    auth = basic_auth(request)
-
-    if type(auth) == Response:
-        return auth
-
-    return Response(getters.get_attestation(auth), 200)
+    @action(methods=['POST'], detail=False)
+    def attestation(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(getters.get_attestation(request.api), 200)

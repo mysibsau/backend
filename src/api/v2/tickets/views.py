@@ -16,7 +16,7 @@ def user_ticket(request):
 
     возвращает все забронированные билеты пользователя
     """
-    user = request.student
+    user = request.user
 
     if not user:
         return Response({'error': 'not token'}, status=400)
@@ -52,7 +52,7 @@ def buy(request):
         }
     где tickets - массив id билетов, которые пользователь хочет забронировать
     """
-    user = request.student
+    user = request.user
 
     if not user:
         return Response({'error': 'not token'}, status=400)

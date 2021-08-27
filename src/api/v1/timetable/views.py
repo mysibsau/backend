@@ -3,7 +3,7 @@ from django.views.decorators.cache import cache_page
 from apps.timetable.services import utils
 from api.v1.timetable import serializers
 from apps.timetable import models
-from rest_framework.decorators import api_view, schema
+from rest_framework.decorators import api_view
 from apps.timetable.services.getters import get_groups_hash
 
 
