@@ -1,5 +1,5 @@
 import os.path
-from core.config.environ import env
+from core.settings import env
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

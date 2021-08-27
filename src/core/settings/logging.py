@@ -1,4 +1,4 @@
-from core.config.environ import env
+from core.settings import env
 import logging
 from sys import argv
 

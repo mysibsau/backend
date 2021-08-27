@@ -1,4 +1,4 @@
-from core.config.environ import env
+from core.settings import env
 from sentry_sdk.integrations.django import DjangoIntegration
 
 
