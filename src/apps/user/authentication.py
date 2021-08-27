@@ -4,6 +4,7 @@ from apps.user.models import User
 
 class TwoBearerTokenAuthentication(BaseAuthentication):
     def get_token(self, request) -> str:
+        """Получение токена либо из заголовков, либо из get параметров"""
         if token := request.GET.get('token'):
             return token
         auth = request.headers.get('Authorization')

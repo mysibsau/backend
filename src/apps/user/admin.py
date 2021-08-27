@@ -4,4 +4,4 @@ from apps.user import models
 
 @admin.register(models.User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('fio', 'group', 'token')
+    list_display = ('fio', 'group')

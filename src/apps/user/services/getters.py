@@ -1,5 +1,4 @@
 from api_pallada import API
-from apps.user.services import utils
 from typing import Optional
 
 
@@ -101,21 +100,3 @@ def get_fio_group_and_average(api: API) -> tuple:
         average = 0
 
     return tmp[0]['ID_student'], tmp[0]['display_name'], average
-
-
-def get_data(api: API) -> dict:
-    gradebook = get_gradebook(api)
-    gradebook = gradebook if gradebook else api.login
-
-    fio, group, average = get_fio_group_and_average(api)
-    token = utils.make_token(api.login, api.uid)
-
-    utils.update_or_create_user(token, group, average)
-
-    return {
-        'token': token,
-        'FIO': fio,
-        'averga': average,
-        'group': group,
-        'zachotka': gradebook,
-    }

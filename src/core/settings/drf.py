@@ -9,5 +9,6 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'apps.user.authentication.TwoBearerTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
 }
