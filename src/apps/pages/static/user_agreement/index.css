@@ -1,0 +1,80 @@
+
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Oswald', sans-serif;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+
+.logo {
+    width: 200px;
+    height: 200px; 
+    object-fit: contain;
+    margin-top: 20px;
+    padding-right: 28px;
+}
+
+.title {
+    font-size: 80px;
+    color: #006ab3;
+    text-align: center;
+}
+
+.agreement-title {
+    font-size: 50px;
+    color: gray;
+    text-align: center;
+}
+
+.point-title {
+    text-align: left;
+    width: 80vw;
+    margin-top: 20px;
+    font-size: 30px;
+}
+
+.text {
+    text-align: left;
+    width: 80vw;
+    margin-top: 20px;
+    font-size: 25px;
+}
+
+.cursive {
+    font-style: italic;
+}
+
+@media (max-width: 799px) {
+    .logo {
+        width: 150px;
+        height: 150px;
+    }
+
+    .title {
+        font-size: 50px;
+    }
+
+    .agreement-title {
+        font-size: 30px;
+    }
+
+    .point-title {
+        font-size: 20px;
+    }
+
+    .text {
+        font-size: 15px;
+    }
+}
