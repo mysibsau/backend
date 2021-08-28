@@ -31,28 +31,6 @@ class FAQAdmin(TabbedTranslationAdmin):
     list_display = ('id', 'question', 'theme', 'answer', 'views', 'create_data', 'is_public')
     list_filter = [BlankAnswerFilter]
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        permissions_and_slug = [(f'support.can_view_{theme.slug}', theme.slug) for theme in models.Theme.objects.all()]
-        user = request.user
-        if user.is_superuser:
-            return qs
-        result = models.FAQ.objects.none()
-        for permission, slug in permissions_and_slug:
-            if not user.has_perm(permission):
-                continue
-            result |= qs.filter(theme__slug=slug)
-        return result
-    
-    def save_model(self, request, obj, form, change):
-        update_fields = []
-        for key, value in form.cleaned_data.items():
-            if value != form.initial[key]:
-                update_fields.append(key)
-
-        obj.save(update_fields=update_fields)
-
-
 
 @admin.register(models.Theme)
 class ThemeAdmin(TabbedTranslationAdmin):
