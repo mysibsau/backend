@@ -35,5 +35,6 @@ services:
             - ./volumes/media:/media
         ports:
             - 80:80
+            - 443:80
         depends_on:
             - app
