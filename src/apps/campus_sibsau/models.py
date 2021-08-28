@@ -200,7 +200,12 @@ class Ensemble(models.Model):
 
 
 class JoiningEnsemble(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    user = models.ForeignKey(
+        User,
+        default=User.get_default_id,
+        on_delete=models.SET_DEFAULT,
+        verbose_name='Пользователь'
+    )
     ensemble = models.ForeignKey(Ensemble, on_delete=models.CASCADE, verbose_name='Ансамбль')
     fio = models.CharField('ФИО', max_length=31)
     phone = models.CharField('Телефон', max_length=19)

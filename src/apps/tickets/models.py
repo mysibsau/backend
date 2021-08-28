@@ -64,7 +64,12 @@ class Purchase(models.Model):
         (3, 'Отменен'),
     )
 
-    buyer = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Покупатель')
+    buyer = models.ForeignKey(
+        User,
+        default=User.get_default_id,
+        on_delete=models.SET_DEFAULT,
+        verbose_name='Покупатель'
+    )
     tickets = models.ManyToManyField(Ticket, verbose_name='Билеты', related_name='purchase')
     count = models.PositiveSmallIntegerField('Количество', blank=True, null=True)
     datetime = models.DateTimeField('Дата', auto_now_add=True)
