@@ -28,15 +28,15 @@ def get_groups_from_parser():
         name = get_group_by_id(group_id)
         if not name:
             continue
-        yield group_id, name, not check_groups(name)
+        yield group_id, name, not check_groups(name), None
 
 
 def get_groups_from_api(api):
     groups = api.search_read(
-        'info.groups', [[['name', '!=', False]]], {'fields': ['name']},
+        'info.groups', [[['name', '!=', False]]], {'fields': ['name', 'institute_id']},
     )
     for group in groups:
-        yield group['id'], group['name'], not check_groups(group['name'])
+        yield group['id'], group['name'], not check_groups(group['name']), group['institute_id'][1]
 
 
 def get_groups():

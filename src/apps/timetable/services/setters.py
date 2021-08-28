@@ -32,13 +32,15 @@ def load_all_groups_from_pallada() -> None:
         Записывает в БД новые группы
     '''
     logger.info('Парсинг групп запущен')
-    for id_, name, delete in get_groups():
+    for id_, name, delete, institute in get_groups():
         if delete:
             _, deleted = Group.objects.filter(name=name, id_pallada=id_).delete()
             if deleted:
                 logger.info(f'Удалена группа {name}')
             continue
-        _, created = Group.objects.get_or_create(name=name, id_pallada=id_)
+        group, created = Group.objects.get_or_create(name=name, id_pallada=id_)
+        group.institute = institute
+        group.save()
         if created:
             logger.info(f'Добавлена группа {name}')
     logger.info('Парсинг групп завершен')

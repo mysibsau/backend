@@ -10,8 +10,8 @@ from multiprocessing import Process
 
 @admin.register(models.Group)
 class Group(admin.ModelAdmin):
-    list_display = ('id', 'name', 'id_pallada', 'date_update')
-    search_fields = ('name', 'id_pallada', 'id')
+    list_display = ('id', 'name', 'id_pallada', 'institute', 'date_update')
+    search_fields = ('name', 'id_pallada', 'id', 'institute')
     change_list_template = 'groups_import.html'
 
     def get_urls(self):
