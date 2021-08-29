@@ -16,3 +16,7 @@ def download(request):
 
 def user_agreement(request):
     return render(request, 'user_agreement/index.html')
+
+
+def not_found(request, exception):
+    return render(request, 'not_found/index.html', status=404)
