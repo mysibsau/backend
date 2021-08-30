@@ -14,6 +14,7 @@ repos:
       language: system
       types: [python]
       args: [
+        # TODO: удалить VNE003
           "--ignore=E501,DJ01,W503,VNE003",
           "--max-line-length=120",
           "--per-file-ignores=tests/*.py:S101"
