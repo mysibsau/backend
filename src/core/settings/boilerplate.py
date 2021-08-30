@@ -9,3 +9,4 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 ALLOWED_HOSTS = ['*']
 ADMIN_URL = env.str('ADMIN_URL', 'admin/')
+TEST_RUNNER = 'core.settings.disable_test_command_runner.DisableTestCommandRunner'
