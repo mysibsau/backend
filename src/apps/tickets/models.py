@@ -68,7 +68,7 @@ class Purchase(models.Model):
         User,
         default=User.get_default_id,
         on_delete=models.SET_DEFAULT,
-        verbose_name='Покупатель'
+        verbose_name='Покупатель',
     )
     tickets = models.ManyToManyField(Ticket, verbose_name='Билеты', related_name='purchase')
     count = models.PositiveSmallIntegerField('Количество', blank=True, null=True)

@@ -204,7 +204,7 @@ class JoiningEnsemble(models.Model):
         User,
         default=User.get_default_id,
         on_delete=models.SET_DEFAULT,
-        verbose_name='Пользователь'
+        verbose_name='Пользователь',
     )
     ensemble = models.ForeignKey(Ensemble, on_delete=models.CASCADE, verbose_name='Ансамбль')
     fio = models.CharField('ФИО', max_length=31)

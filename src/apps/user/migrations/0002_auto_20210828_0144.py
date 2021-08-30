@@ -100,7 +100,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='token',
-            field=models.CharField(blank=True, max_length=16, verbose_name='Токен')
+            field=models.CharField(blank=True, max_length=16, verbose_name='Токен'),
         ),
         migrations.AlterField(
             model_name='user',

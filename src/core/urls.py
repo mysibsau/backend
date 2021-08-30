@@ -19,7 +19,7 @@ schema_view_v1 = get_schema_view(
     ),
     public=True,
     permission_classes=(permissions.IsAdminUser,),
-    patterns=[path('v1/', include(('api.v1.urls', 'v1'), namespace='v1'))]
+    patterns=[path('v1/', include(('api.v1.urls', 'v1'), namespace='v1'))],
 )
 
 schema_view_v2 = get_schema_view(
@@ -33,7 +33,7 @@ schema_view_v2 = get_schema_view(
     ),
     public=True,
     permission_classes=(permissions.IsAdminUser,),
-    patterns=[path('v2/', include(('api.v1.urls', 'v2'), namespace='v2'))]
+    patterns=[path('v2/', include(('api.v1.urls', 'v2'), namespace='v2'))],
 )
 
 schema_view_v3 = get_schema_view(
@@ -46,7 +46,7 @@ schema_view_v3 = get_schema_view(
     ),
     public=True,
     permission_classes=(permissions.IsAdminUser,),
-    patterns=[path('v3/', include(('api.v3.urls', 'v3'), namespace='v3'))]
+    patterns=[path('v3/', include(('api.v3.urls', 'v3'), namespace='v3'))],
 )
 
 urlpatterns = [
