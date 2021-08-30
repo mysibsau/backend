@@ -26,6 +26,7 @@ lxml = "*"
 cssselect = "*"
 user-agents = "*"
 whitenoise = "*"
+django-prometheus = "*"
 
 [dev-packages]
 flake8 = "*"

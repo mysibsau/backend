@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'constance',
     'constance.backends.database',
+    'django_prometheus',
 
     'apps.timetable',
     'apps.campus_sibsau',
