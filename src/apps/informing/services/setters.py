@@ -4,7 +4,7 @@ from apps.informing import models
 def like_it(uuid, information):
     like = models.Like.objects.filter(
         uuid=uuid,
-        information=information
+        information=information,
     ).first()
 
     if like:
@@ -13,6 +13,6 @@ def like_it(uuid, information):
 
     models.Like.objects.create(
         uuid=uuid,
-        information=information
+        information=information,
     )
     return {'good': 'лайк поставлен'}, 200

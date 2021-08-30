@@ -137,3 +137,4 @@ dmypy.json
 /server/staticfiles
 /server/media
 .env.prod
+volumes/

@@ -1,51 +1,71 @@
-from django.contrib import admin
-from django.urls import path, include
-
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.contrib import admin
+from django.urls import include, path
+from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
-from drf_yasg import openapi
 
 
 admin.site.site_header = 'Мой СибГУ'
 
-
-schema_view = get_schema_view(
+schema_view_v1 = get_schema_view(
     openapi.Info(
         title=f"API {admin.site.site_header}",
-        default_version='v2.1',
+        default_version='v1',
+        version='v1',
+        description='Данная версия устарела. Пожалуйста, пользуйтесь v2 или v3.',
         license=openapi.License(name="GNU General Public License v3.0"),
     ),
     public=True,
     permission_classes=(permissions.IsAdminUser,),
+    patterns=[path('v1/', include(('api.v1.urls', 'v1'), namespace='v1'))],
 )
 
+schema_view_v2 = get_schema_view(
+    openapi.Info(
+        title=f"API {admin.site.site_header}",
+        default_version='v2',
+        version='v2',
+        description='Данная версия является актуальной, однако некоторые методы перенесены в v3.'
+                    'Перед началом работы, пожалуйста, убедитесь, что нужных методов нет в v3',
+        license=openapi.License(name="GNU General Public License v3.0"),
+    ),
+    public=True,
+    permission_classes=(permissions.IsAdminUser,),
+    patterns=[path('v2/', include(('api.v2.urls', 'v2'), namespace='v2'))],
+)
+
+schema_view_v3 = get_schema_view(
+    openapi.Info(
+        title=f"API {admin.site.site_header}",
+        default_version='v3',
+        version='v3',
+        description='Данная версия является самой последней.',
+        license=openapi.License(name="GNU General Public License v3.0"),
+    ),
+    public=True,
+    permission_classes=(permissions.IsAdminUser,),
+    patterns=[path('v3/', include(('api.v3.urls', 'v3'), namespace='v3'))],
+)
 
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
-    path('v2/timetable/', include('apps.timetable.api.v2.urls')),
-    path('v1/timetable/', include('apps.timetable.api.v1.urls')),
-    path('', include('apps.timetable.api.v1.urls')),
+    path('v1/', include(('api.v1.urls', 'v1'), namespace='v1')),
+    path('v2/', include(('api.v2.urls', 'v2'), namespace='v2')),
+    path('v3/', include(('api.v3.urls', 'v2'), namespace='v3')),
+    path('v1/docs/', schema_view_v1.with_ui('redoc', cache_timeout=0)),
+    path('v2/docs/', schema_view_v2.with_ui('redoc', cache_timeout=0)),
+    path('v3/docs/', schema_view_v3.with_ui('redoc', cache_timeout=0)),
+    path('', include('api.v1.timetable.urls')),
     path('', include('apps.pages.api.urls')),
-    path('v2/campus/', include('apps.campus_sibsau.api.v2.urls')),
-    path('v3/campus/', include('apps.campus_sibsau.api.v3.urls')),
-    path('v2/informing/', include('apps.informing.api.urls')),
-    path('v2/surveys/', include('apps.surveys.api.urls')),
-    path('v2/support/', include('apps.support.api.v2.urls')),
-    path('v3/support/', include('apps.support.api.v3.urls')),
-    path('v2/work/', include('apps.work.api.urls')),
-    path('v2/user/', include('apps.user.api.urls')),
-    path('v2/menu/', include('apps.menu.api.urls')),
-    path('v2/library/', include('apps.library.api.urls')),
-    path('v2/tickets/', include('apps.tickets.api.urls')),
-    path('docs/', schema_view.with_ui('redoc', cache_timeout=0)),
     path('healthchecks/', include('django_healthchecks.urls')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'apps.pages.api.views.not_found'
 
 if settings.DEBUG:
     import debug_toolbar

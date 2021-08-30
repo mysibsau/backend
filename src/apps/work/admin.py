@@ -10,7 +10,7 @@ from apps.work.services import setters
 @admin.register(models.Vacancy)
 class VacancyAdmin(admin.ModelAdmin):
     list_display = ('name', 'publication_date', 'hidden')
-    change_list_template = 'work/vacancies_import.html'
+    change_list_template = 'vacancies_import.html'
 
     def get_urls(self):
         urls = super().get_urls()

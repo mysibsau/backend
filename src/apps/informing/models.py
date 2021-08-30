@@ -17,6 +17,9 @@ class Information(models.Model):
     class Meta:
         ordering = ['-above', '-id']
 
+    def __str__(self) -> str:
+        return f'[Informing: {self.author}, {self.text[:15]}'
+
 
 class Event(Information):
     name = models.CharField('Название', max_length=512)
@@ -34,7 +37,7 @@ class News(Information):
     id_vk = PositiveIntegerField(
         'Номер записи в вк',
         editable=False,
-        default=0
+        default=0,
     )
 
     def __str__(self) -> str:
@@ -65,6 +68,9 @@ class Image(models.Model):
         verbose_name = u'Фото'
         verbose_name_plural = u'Фотографии'
 
+    def __str__(self) -> str:
+        return f'Image[{self.news}]'
+
 
 class Topic(models.Model):
     name = models.CharField('Название', max_length=32)
@@ -81,7 +87,7 @@ class Topic(models.Model):
 class Notification(models.Model):
     PRIORITIES = (
         (5, 'Нормальный'),
-        (10, 'Высокий')
+        (10, 'Высокий'),
     )
 
     title = models.CharField('Заголовок', max_length=128)
@@ -90,7 +96,7 @@ class Notification(models.Model):
         'Изображение',
         upload_to='informing/notification/',
         blank=True,
-        null=True
+        null=True,
     )
     priority = models.PositiveIntegerField('Приоритет', choices=PRIORITIES, default=5)
     topics = models.ManyToManyField(Topic, verbose_name='Топики')
@@ -99,3 +105,6 @@ class Notification(models.Model):
     class Meta:
         verbose_name = 'Уведомление'
         verbose_name_plural = 'Уведомления'
+
+    def __str__(self) -> str:
+        return self.title

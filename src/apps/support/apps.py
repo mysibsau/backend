@@ -6,7 +6,7 @@ class SupportConfig(AppConfig):
     verbose_name = 'Помощь'
 
     def ready(self) -> None:
-        from . import models
+        from apps.support import models
         from apps.notifications.services.notifications_proscessor import Listener
 
         Listener(model=models.FAQ)

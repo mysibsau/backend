@@ -1,9 +1,7 @@
-from django.db.models.base import ModelBase
 from django.db.models.signals import post_save
-from typing import List
 from constance import config
 from requests import post as post_request
-from ..models import Notifications
+from apps.notifications.models import Notifications
 
 
 class NotificationProcessor:

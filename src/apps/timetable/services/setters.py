@@ -32,13 +32,15 @@ def load_all_groups_from_pallada() -> None:
         Записывает в БД новые группы
     '''
     logger.info('Парсинг групп запущен')
-    for id_, name, delete in get_groups():
+    for id_, name, delete, institute in get_groups():
         if delete:
             _, deleted = Group.objects.filter(name=name, id_pallada=id_).delete()
             if deleted:
                 logger.info(f'Удалена группа {name}')
             continue
-        _, created = Group.objects.get_or_create(name=name, id_pallada=id_)
+        group, created = Group.objects.get_or_create(name=name, id_pallada=id_)
+        group.institute = institute
+        group.save()
         if created:
             logger.info(f'Добавлена группа {name}')
     logger.info('Парсинг групп завершен')
@@ -53,16 +55,16 @@ def load_timtable_group_with_parsers(group: Group):
 
             teacher, _ = Teacher.objects.get_or_create(
                 name=line['teachers'][i][1],
-                id_pallada=line['teachers'][i][0]
+                id_pallada=line['teachers'][i][0],
             )
 
             lesson, _ = Lesson.objects.get_or_create(
-                name_ru=line['name_subjects'][i]
+                name_ru=line['name_subjects'][i],
             )
 
             place, _ = Place.objects.get_or_create(
                 name=line['location_in_university'][i],
-                address=line['location_in_city'][i]
+                address=line['location_in_city'][i],
             )
 
             Timetable.objects.create(
@@ -74,7 +76,7 @@ def load_timtable_group_with_parsers(group: Group):
                 place=place,
                 week=line['week'],
                 day=line['day'],
-                time=line['time']
+                time=line['time'],
             )
         group.date_update = timezone.localtime()
         group.save()
@@ -88,7 +90,7 @@ def load_timetable() -> None:
     groups = Group.objects.all().order_by('-date_update')
     try:
         api = API('timetable', config.PALLADA_USER, config.PALLADA_PASSWORD)
-    except:
+    except TimeoutError:
         logger.error('Не удалось запустит API')
         return
 

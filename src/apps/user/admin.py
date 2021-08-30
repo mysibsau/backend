@@ -4,5 +4,4 @@ from apps.user import models
 
 @admin.register(models.User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('token', 'group', 'average', 'last_entry', 'banned')
-    readonly_fields = ('group', 'average', 'creation_date', 'last_entry')
+    list_display = ('fio', 'group')

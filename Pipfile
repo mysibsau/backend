@@ -25,6 +25,7 @@ requests-toolbelt = "*"
 lxml = "*"
 cssselect = "*"
 user-agents = "*"
+whitenoise = "*"
 
 [dev-packages]
 flake8 = "*"
@@ -36,6 +37,10 @@ flake8-commas = "*"
 flake8-eradicate = "*"
 flake8-variables-names = "*"
 django-debug-toolbar = "*"
+pytest = "*"
+reorder-python-imports = "*"
+pyupgrade = "*"
+pytest-django = "*"
 
 [requires]
 python_version = "3.8"

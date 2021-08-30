@@ -1,6 +1,6 @@
 import requests
 from constance import config
-from apps.informing.api.serializers import NotificationsSerializer
+from api.v2.informing.serializers import NotificationsSerializer
 from json import loads
 
 
@@ -15,7 +15,7 @@ def send_notification(notification, context):
     for json in NotificationsSerializer(notification, context):
         response = requests.post("https://fcm.googleapis.com/fcm/send", headers=headers, json=json)
         result.append(
-            str(loads(response.text).get('message_id', 0))
+            str(loads(response.text).get('message_id', 0)),
         )
 
     return result

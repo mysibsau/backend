@@ -5,6 +5,7 @@ class Group(models.Model):
     name = models.TextField(verbose_name='Название')
     id_pallada = models.IntegerField(verbose_name='ID в палладе')
     date_update = models.DateTimeField('Дата обновления', editable=False, blank=True, null=True)
+    institute = models.CharField('Институт', max_length=256, null=True)
 
     def __str__(self):
         return self.name
@@ -68,7 +69,7 @@ class Timetable(models.Model):
     TYPES = (
         (1, 'Лекция'),
         (2, 'Лабораторная работа'),
-        (3, 'Практика')
+        (3, 'Практика'),
     )
 
     WEEKS = (
@@ -103,7 +104,6 @@ class Timetable(models.Model):
     day = models.IntegerField(choices=DAYS, verbose_name='День')
     time = models.TextField(verbose_name='Время')
     date = models.DateField(verbose_name='Дата проведения занятия', null=True)
-
 
     def __str__(self):
         return str(self.group)

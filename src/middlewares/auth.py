@@ -1,5 +1,4 @@
-from django.http import HttpResponse, JsonResponse
-from rest_framework.response import Response
+from django.http import JsonResponse
 
 from apps.user.models import User
 
@@ -24,9 +23,9 @@ def auth_header(get_response):
             return JsonResponse({'error': 'user not found'}, status=405)
         if user.banned:
             return JsonResponse({'error': 'you are banned'}, status=405)
-        
+
         request.student = user
-    
+
         return get_response(request)
 
     return middleware

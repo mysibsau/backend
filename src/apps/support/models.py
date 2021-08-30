@@ -28,7 +28,7 @@ class FAQ(Notifications, models.Model):
     question = models.TextField('Вопрос')
     answer = models.TextField('Ответ', blank=True, null=True)
     views = models.PositiveIntegerField('Просмотры', editable=False, default=0)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, default=User.get_default_id, on_delete=models.SET_DEFAULT, null=True)
     theme = models.ForeignKey(Theme, on_delete=models.SET_DEFAULT, default=Theme.get_default_id, verbose_name='Тема')
     is_public = models.BooleanField('Публичный', default=False)
     create_data = models.DateTimeField('Дата создания', auto_now_add=True)

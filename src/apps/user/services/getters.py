@@ -1,5 +1,4 @@
 from api_pallada import API
-from apps.user.services import utils
 from typing import Optional
 
 
@@ -21,6 +20,8 @@ def get_marks(api: API) -> list:
             'mark': discipline['grade'].strip(),
             'type': discipline['test_type'].strip(),
         }
+        # Артем просил, чтоб прилетало не false, как это возвращает паллада, а null
+        item['coursework'] = item['coursework'] if item['coursework'] else None
         term = discipline['term'].strip()
         if term in tmp_result:
             tmp_result[term].append(item)
@@ -41,7 +42,7 @@ def get_attestation(api) -> list:
     tmp = api.search_read(
         'portfolio_science.grade_attistation_view',
         [[['nzkn', '=', api.login]]],
-        {'fields': ['dis', 'forma', 'att1', 'att2', 'att3', 'att']}
+        {'fields': ['dis', 'forma', 'att1', 'att2', 'att3', 'att']},
     )
 
     for att in tmp:
@@ -99,21 +100,3 @@ def get_fio_group_and_average(api: API) -> tuple:
         average = 0
 
     return tmp[0]['ID_student'], tmp[0]['display_name'], average
-
-
-def get_data(api: API) -> dict:
-    gradebook = get_gradebook(api)
-    gradebook = gradebook if gradebook else api.login
-
-    fio, group, average = get_fio_group_and_average(api)
-    token = utils.make_token(api.login, api.uid)
-
-    utils.update_or_create_user(token, group, average)
-
-    return {
-        'token': token,
-        'FIO': fio,
-        'averga': average,
-        'group': group,
-        'zachotka': gradebook,
-    }
