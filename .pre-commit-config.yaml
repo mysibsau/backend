@@ -1,3 +1,4 @@
+repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: "v2.5.0"
   hooks:
@@ -13,7 +14,7 @@
       language: system
       types: [python]
       args: [
-          "--ignore=E501,DJ01,W503",
+          "--ignore=E501,DJ01,W503,VNE003",
           "--max-line-length=120",
           "--per-file-ignores=tests/*.py:S101"
       ]
