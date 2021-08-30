@@ -25,6 +25,18 @@ services:
             python manage.py collectstatic --noinput &&
             gunicorn --bind 0.0.0.0:8000 --timeout 600 --log-level debug --reload --max-requests 100 --workers 4 core.wsgi:application"
 
+    prometheus:
+        image: prom/prometheus
+        container_name: prometheus
+        volumes:
+            - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
+        command: 
+            - '--config.file=/etc/prometheus/prometheus.yml'
+
+    grafana:
+        image: grafana/grafana
+        container_name: grafana
+
     nginx:
         container_name: nginx
         image: nginx:1.21.1-alpine
@@ -38,3 +50,5 @@ services:
             - 443:80
         depends_on:
             - app
+            - grafana
+            - prometheus
