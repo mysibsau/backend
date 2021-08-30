@@ -26,7 +26,6 @@ lxml = "*"
 cssselect = "*"
 user-agents = "*"
 whitenoise = "*"
-django-hosts = "*"
 
 [dev-packages]
 flake8 = "*"
@@ -38,6 +37,9 @@ flake8-commas = "*"
 flake8-eradicate = "*"
 flake8-variables-names = "*"
 django-debug-toolbar = "*"
+pytest = "*"
+reorder-python-imports = "*"
+pyupgrade = "*"
 
 [requires]
 python_version = "3.8"
