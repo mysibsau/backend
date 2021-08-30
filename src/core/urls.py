@@ -33,7 +33,7 @@ schema_view_v2 = get_schema_view(
     ),
     public=True,
     permission_classes=(permissions.IsAdminUser,),
-    patterns=[path('v2/', include(('api.v1.urls', 'v2'), namespace='v2'))],
+    patterns=[path('v2/', include(('api.v2.urls', 'v2'), namespace='v2'))],
 )
 
 schema_view_v3 = get_schema_view(
