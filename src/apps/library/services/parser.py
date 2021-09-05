@@ -54,7 +54,14 @@ def get_name_book(root: html.HtmlElement, num: int) -> str:
 
 def get_place_and_count(root: html.HtmlElement, num: int) -> tuple:
     """Получение места хранения книги и их количество"""
-    url_part = root.cssselect("div.bo_tabs")[num].xpath('./ul/li[2]/a')[0].get('href')
+    book_holders = root.cssselect("div.bo_tabs")[num].xpath('./ul/li[2]/a')
+    if not book_holders:
+        return None, None
+
+    if book_holders[0].text.lower() != 'экземпляры и бронирование':
+        return None, None
+
+    url_part = book_holders[0].get('href')
     content = get_book_holders(url_part)
     if not content:
         return None, None
@@ -82,6 +89,9 @@ def get_physical_books(content: str) -> list:
         author = get_author_name(root, num)
         name = get_name_book(root, num)
         place, count = get_place_and_count(root, num)
+        print(40*"-")
+        print(author, name, place, count)
+        print(40 * "-")
 
         if not all((author, name, place, count)):
             continue
