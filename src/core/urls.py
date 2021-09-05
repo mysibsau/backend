@@ -59,7 +59,6 @@ urlpatterns = [
     path('v3/docs/', schema_view_v3.with_ui('redoc', cache_timeout=0)),
     path('', include('api.v1.timetable.urls')),
     path('', include('apps.pages.api.urls')),
-    path('', include('django_prometheus.urls')),
     path('healthchecks/', include('django_healthchecks.urls')),
 ]
 

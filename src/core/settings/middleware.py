@@ -2,8 +2,6 @@ from django.conf import settings
 
 
 MIDDLEWARE = [
-    'django_prometheus.middleware.PrometheusBeforeMiddleware',
-
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -13,8 +11,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'middlewares.set_language.set_language',
-
-    'django_prometheus.middleware.PrometheusAfterMiddleware',
 ]
 
 if settings.DEBUG:
