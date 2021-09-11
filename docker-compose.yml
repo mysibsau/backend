@@ -1,7 +1,7 @@
 version: "3.8"
 services:
     database:
-        container_name: mysibsau_database
+        container_name: database
         image: postgres:13.4-alpine
         restart: always
         env_file: src/.env
@@ -11,7 +11,7 @@ services:
     app:
         build:
             context: .
-        container_name: mysibsau_backend
+        container_name: app
         env_file: src/.env
         restart: always
         volumes:
@@ -31,11 +31,17 @@ services:
                      --reload
                      --max-requests 100
                      --workers 4 core.wsgi:application"
-        labels:
-            - traefik.http.routers.mysibsau_backend.rule=Host(`mysibsau.ru`, `timetable.mysibsau.ru`)
-            - traefik.http.routers.mysibsau_backend.entrypoints=web
 
-networks:
-    default:
-        name: traefik_mysibsau
-        external: false
+    nginx:
+        container_name: nginx
+        image: nginx:1.21.1-alpine
+        restart: always
+        volumes:
+            - ./configs/nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./volumes/static:/static
+            - ./volumes/media:/media
+        ports:
+            - 80:80
+            - 443:80
+        depends_on:
+            - app
