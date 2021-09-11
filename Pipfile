@@ -25,7 +25,6 @@ requests-toolbelt = "*"
 lxml = "*"
 cssselect = "*"
 user-agents = "*"
-whitenoise = "*"
 
 [dev-packages]
 flake8 = "*"
@@ -43,4 +42,4 @@ pyupgrade = "*"
 pytest-django = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"
