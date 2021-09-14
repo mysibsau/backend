@@ -26,7 +26,7 @@ class UserViewSet(GenericViewSet):
             'token': token.key,
             'FIO': user.fio,
             'averga': user.average,
-            'group': user.group.name,
+            'group': user.group.name if user.group else '-',
             'zachotka': user.username,
         })
 
