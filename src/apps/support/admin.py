@@ -31,6 +31,14 @@ class FAQAdmin(TabbedTranslationAdmin):
     list_display = ('id', 'question', 'theme', 'answer', 'views', 'create_data', 'is_public')
     list_filter = [BlankAnswerFilter]
 
+    def save_model(self, request, obj, form, change):
+        update_fields = []
+        for key, value in form.cleaned_data.items():
+            if value != form.initial[key]:
+                update_fields.append(key)
+
+        obj.save(update_fields=update_fields)
+
 
 @admin.register(models.Theme)
 class ThemeAdmin(TabbedTranslationAdmin):
