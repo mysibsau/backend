@@ -2,6 +2,7 @@ from django.db.models.signals import post_save
 from constance import config
 from requests import post as post_request
 from apps.notifications.models import Notifications
+from rest_framework.authtoken.models import Token
 
 
 class NotificationProcessor:
@@ -15,11 +16,10 @@ class NotificationProcessor:
 
     def send(self, title: str, text: str, click_action: str) -> None:
         json = self.generate_json(title, text, click_action)
-        print(json)
-        response = post_request("https://fcm.googleapis.com/fcm/send", headers=self.HEADERS, json=json)
-        print(response.text)
+        post_request("https://fcm.googleapis.com/fcm/send", headers=self.HEADERS, json=json)
 
     def generate_json(self, title, text, click_action) -> dict:
+        token, _ = Token.objects.get_or_create(user=self.user)
         return {
             'notification': {
                 'title': title,
@@ -28,7 +28,7 @@ class NotificationProcessor:
             'data': {
                 'click_action': click_action,
             },
-            'to': f'/topics/{self.user.token}',
+            'to': f'/topics/{token}',
         }
 
 
