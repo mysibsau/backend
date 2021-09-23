@@ -10,6 +10,10 @@ from apps.user.services.utils import make_token
 
 
 class OdooBackend(BaseBackend):
+    def get_user_from_db(self, username, password):
+        if user := User.objects.filter(username=username).first():
+            return user if user.check_password(password) else None
+
     def authenticate(self, request, username=None, password=None):
         try:
             api = API('portfolio', username, password)
@@ -17,11 +21,10 @@ class OdooBackend(BaseBackend):
             request.api = api
         except (ProtocolError, TimeoutError):
             # Если паллада лежит, пытаемся достать студента из бд
-            if user := User.objects.filter(username=username).first():
-                return user if user.check_password(password) else None
+            return self.get_user_from_db(username, password)
 
         if not api.uid:
-            return None
+            return self.get_user_from_db(username, password)
 
         fio, group, average = get_fio_group_and_average(api)
 
