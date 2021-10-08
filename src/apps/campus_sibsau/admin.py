@@ -74,3 +74,21 @@ class JoiningEnsembleAdmin(admin.ModelAdmin):
         return export_as_csv(queryset)
 
     export_as_csv.short_description = 'Экспортировать в csv'
+
+
+@admin.register(models.Faculty)
+class FacultyAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'is_main_page')
+    fields = (
+        'name',
+        'logo',
+        'about',
+        'page_vk',
+        'is_main_page'
+    )
+
+    def get_fields(self, request, obj=None):
+        other = models.Faculty.objects.filter(is_main_page=True).first()
+        if other and other != obj:
+            return [i for i in self.fields if i != 'is_main_page']
+        return self.fields
