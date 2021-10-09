@@ -27,7 +27,7 @@ class FacultyViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         return Response(serializer.data)
 
     @action(detail=True, methods=['POST'])
-    def join_to_faculty(self, request, pk=None):
+    def join(self, request, pk=None):
         """
         Отправляет заявку о вступлении председателю *faculty_id* объединения.
         """
