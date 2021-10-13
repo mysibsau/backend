@@ -231,8 +231,8 @@ class Faculty(models.Model):
     about = models.TextField('Описание')
 
     vk_link = models.CharField('Ссылка на вк', max_length=128, blank=True, null=True)
-    contacts = models.TextField('Контакты', blank=True, null=True)
-    instagram_link = models.CharField('Ссылка на инстаграм', max_length=128, blank=True, null=True)
+    contacts = models.URLField('Контакты', blank=True, null=True)
+    instagram_link = models.URLField('Ссылка на инстаграм', max_length=128, blank=True, null=True)
     is_main_page = models.BooleanField('Главная страница', default=False)
 
     page_vk = models.URLField(
