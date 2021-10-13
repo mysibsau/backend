@@ -19,7 +19,7 @@ def send_message(text: str, peer_id: int) -> None:
 
 def get_text_message(data) -> str:
     link = data["vk"]
-    if ('.com' not in link) or (link[0] != '@'):
+    if ('.com' not in link) and (link[0] != '@'):
         link = 'vk.com/' + data["vk"]
     return f'Привет! Меня зовут {data["fio"]}. ' + \
            f'Я учусь в {data["institute"]}, {data["group"]}\n\n' + \
