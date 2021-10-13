@@ -220,3 +220,40 @@ class JoiningEnsemble(models.Model):
 
     def __str__(self) -> str:
         return f'{self.user} -> {self.ensemble}'
+
+
+class Faculty(models.Model):
+    name = models.CharField('Название', max_length=255)
+    logo = models.ImageField(
+        verbose_name='Логотип',
+        upload_to='campus/faculty/logo',
+    )
+    about = models.TextField('Описание')
+
+    vk_link = models.CharField('Ссылка на вк', max_length=128, blank=True, null=True)
+    contacts = models.URLField('Контакты', blank=True, null=True)
+    instagram_link = models.URLField('Ссылка на инстаграм', max_length=128, blank=True, null=True)
+    is_main_page = models.BooleanField('Главная страница', default=False)
+
+    page_vk = models.URLField(
+        verbose_name='Председатель факультета во вконтакте',
+        blank=True,
+        null=True,
+        help_text='''Ссылка обязательно должна быть в формате https://vk.com/id1234.
+                       Если она будет иметь другой формат, то нельзя будет отправлять заявки на вступление''',
+    )
+
+    def save(self, *args, **kwargs):
+        if self.is_main_page:
+            if Faculty.objects.filter(is_main_page=True):
+                self.is_main_page = False
+                self.save()
+        super(Faculty, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Факультет'
+        verbose_name_plural = 'Факультеты'
+        ordering = ['id']
+
+    def __str__(self):
+        return self.name
