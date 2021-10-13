@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, get_object_or_404
 from rest_framework import viewsets, mixins
 from rest_framework.decorators import action
 from drf_yasg.utils import swagger_auto_schema
@@ -17,7 +17,11 @@ class SportClubsAPIView(ListAPIView):
 
 class FacultyViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = models.Faculty.objects.filter(is_main_page=False)
-    serializer_class = serializers.FacultySerializer
+
+    def get_serializer_class(self):
+        if self.action == 'join':
+            return serializers.JoinFacultySerializer
+        return serializers.FacultySerializer
 
     @swagger_auto_schema(responses={200: serializers.FacultySerializer(many=False)})
     @action(detail=False, methods=['GET'])
@@ -31,20 +35,11 @@ class FacultyViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
         """
         Отправляет заявку о вступлении председателю *faculty_id* объединения.
         """
-        body = json.loads(request.body.decode())
-        data = {
-            'fio': body.get('fio'),
-            'institute': body.get('institute'),
-            'group': body.get('group'),
-            'vk': body.get('vk'),
-            'hobby': body.get('hobby'),
-            'reason': body.get('reason'),
-        }
-        if not all(data.values()):
-            return Response({'error': 'Не все поля заполнены'}, 400)
-        url_peer = models.Faculty.objects.filter(pk=pk).first().page_vk
-        if not url_peer or 'id' not in url_peer:
-            return Response({'error': 'Нельзя вступить в данное объединение'}, 405)
-        peer_id = int(url_peer.split('id')[1])
-        join_to_union_vk(data, peer_id)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        page_vk = get_object_or_404(models.Faculty, pk=pk, page_vk__isnull=False, is_main_page=False).page_vk
+        peer_id = int(page_vk.split('id')[1])
+
+        join_to_union_vk(serializer.data, peer_id)
         return Response({'good': 'Ваша заявка отправлена'}, 201)
