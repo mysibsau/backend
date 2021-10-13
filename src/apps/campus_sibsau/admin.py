@@ -78,17 +78,22 @@ class JoiningEnsembleAdmin(admin.ModelAdmin):
 
 @admin.register(models.Faculty)
 class FacultyAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'is_main_page')
+    list_display = ('name', 'is_main_page')
     fields = (
         'name',
         'logo',
         'about',
         'page_vk',
-        'is_main_page'
+    )
+
+    fields_for_only_main_page = (
+        'is_main_page',
+        'vk_link',
+        'instagram_link',
     )
 
     def get_fields(self, request, obj=None):
         other = models.Faculty.objects.filter(is_main_page=True).first()
-        if other and other != obj:
-            return [i for i in self.fields if i != 'is_main_page']
+        if not other or other == obj:
+            return self.fields + self.fields_for_only_main_page
         return self.fields
