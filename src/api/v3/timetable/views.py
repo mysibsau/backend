@@ -13,29 +13,74 @@ from api.v3.timetable import serializers
 from apps.timetable import models
 
 
-class TeacherViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class TeacherViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet, mixins.ListModelMixin):
+
+    def get_queryset(self):
+        self.queryset = models.Teacher.objects.all()
+        if self.action == 'retrieve':
+            self.queryset = models.Timetable.objects.all()
+        if self.action == 'session':
+            self.queryset = models.Session.objects.all()
+        return self.queryset
+
+    @method_decorator(cache_page(60 * 60))
+    def list(self, request):
+        return Response(serializers.TeacherSerializers(self.get_queryset()))
+
+    @method_decorator(cache_page(60 * 60))
+    def retrieve(self, request, pk=None):
+        """
+        Timetable teacher
+
+        Возвращает расписание преподавателя **teacher_id**
+
+        Структура ответа точно такая же, как и в случае с расписание группы.
+        """
+        queryset = self.get_queryset().filter(teacher__id=pk).select_related()
+        if not queryset:
+            return Response(
+                {
+                    "object": "Нет группы",
+                    "even_week": [],
+                    "odd_week": [],
+                    "meta": {
+                        "groups_hash": "d033b",
+                        "teachers_hash": "b430c",
+                        "places_hash": "6462a",
+                        "current_week": 1,
+                    },
+                },
+                200,
+            )
+        data = serializers.TimetableSerializers(queryset, 'teacher')
+        return Response(data)
+
+    @action(detail=True, methods=['GET'])
+    @method_decorator(cache_page(60 * 60))
+    def session(self, request, pk=None):
+        serializer = serializers.SessionSerializer(self.get_queryset().filter(teacher__id=pk), many=True)
+        return Response(serializer.data)
 
     @action(detail=False, methods=['GET'])
-    def session(self, request):
-        pass
-
-    @action(detail=False, methods=['GET'])
+    @method_decorator(cache_page(60 * 60))
     def hash(self, request):
-        Response({'hash': getters.get_teachers_hash()})
+        return Response({'hash': getters.get_teachers_hash()})
 
 
-class GroupViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class GroupViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet, mixins.ListModelMixin):
 
     def get_queryset(self):
         self.queryset = models.Group.objects.all()
         if self.action == 'session':
             self.queryset = models.Session.objects.all()
+        if self.action == 'retrieve':
+            self.queryset = models.Timetable.objects.all()
 
         return self.queryset
 
-    def get_serializer_class(self):
-        if self.action == 'session':
-            return serializers.SessionSerializer
+    @method_decorator(cache_page(60 * 60 * 2))
+    def list(self, request, pk=None):
+        return Response(serializers.GroupSerializers(self.get_queryset()))
 
     @method_decorator(cache_page(60 * 60))
     def retrieve(self, request, pk=None):
@@ -91,7 +136,7 @@ class GroupViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         2. Лабораторная работа;
         3. Практика.
         """
-        timetable_without_date = models.Timetable.objects.filter(
+        timetable_without_date = self.get_queryset().filter(
             group__id=pk,
             date=None,
         ).select_related()
@@ -130,13 +175,8 @@ class GroupViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     @action(detail=True, methods=['GET'])
     @method_decorator(cache_page(60 * 60))
     def session(self, request, pk=None):
-        serializer = self.get_serializer(self.get_queryset().filter(group__id=pk), many=True)
+        serializer = serializers.SessionSerializer(self.get_queryset().filter(group__id=pk), many=True)
         return Response(serializer.data)
-
-    @action(detail=False, methods=['GET'])
-    @method_decorator(cache_page(60 * 60 * 2))
-    def all(self, request, pk=None):
-        return Response(serializers.GroupSerializers(self.get_queryset()))
 
     @action(detail=False, methods=['GET'])
     @method_decorator(cache_page(60 * 60))
@@ -144,7 +184,46 @@ class GroupViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
         return Response({'hash': getters.get_groups_hash()})
 
 
-class PlaceViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class PlaceViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet, mixins.ListModelMixin):
+
+    def get_queryset(self):
+        self.queryset = models.Place.objects.all()
+        if self.action == 'retrieve':
+            self.queryset = models.Timetable.objects.all()
+
+        return self.queryset
+
+    @method_decorator(cache_page(60 * 60))
+    def list(self, request):
+        return Response(serializers.PlaceSerializers(self.get_queryset()))
+
+    @method_decorator(cache_page(60 * 60))
+    def retrieve(self, request, pk=None):
+        """
+        Timetable place
+
+        Возвращает расписание кабинета **place_id**
+
+        Структура ответа точно такая же, как и в случае с расписание группы.
+        """
+        queryset = self.get_queryset().filter(place__id=pk).select_related()
+        if not queryset:
+            return Response(
+                {
+                    "object": "Нет группы",
+                    "even_week": [],
+                    "odd_week": [],
+                    "meta": {
+                        "groups_hash": "d033b",
+                        "teachers_hash": "b430c",
+                        "places_hash": "6462a",
+                        "current_week": 1,
+                    },
+                },
+                200,
+            )
+        data = serializers.TimetableSerializers(queryset, 'place')
+        return Response(data)
 
     @action(detail=False, methods=['GET'])
     @method_decorator(cache_page(60 * 60))
