@@ -111,3 +111,20 @@ class Timetable(models.Model):
     class Meta:
         verbose_name = u'Расписание'
         verbose_name_plural = u'Расписание'
+
+
+class Session(models.Model):
+    """Расписание сессий"""
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name='Группа')
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Преподаватель')
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Предмет')
+    place = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name='Аудитория')
+    time = models.TextField(verbose_name='Время')
+    date = models.DateField(verbose_name='Дата проведения экзамена', null=True)
+
+    def __str__(self):
+        return str(self.group) + str(self.date)
+
+    class Meta:
+        verbose_name = 'Сессия'
+        verbose_name_plural = 'Сессия'
