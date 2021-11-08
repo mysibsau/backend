@@ -88,6 +88,10 @@ def TimetableSerializers(lessons, type_object) -> dict:
 
 
 class SessionSerializer(serializers.ModelSerializer):
+    group = serializers.SlugRelatedField(read_only=True, slug_field='name')
+    teacher = serializers.SlugRelatedField(read_only=True, slug_field='name')
+    lesson = serializers.SlugRelatedField(read_only=True, slug_field='name_ru')
+    place = serializers.SlugRelatedField(read_only=True, slug_field='name')
 
     class Meta:
         model = models.Session
