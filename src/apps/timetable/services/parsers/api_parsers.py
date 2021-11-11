@@ -1,7 +1,84 @@
+import re
+
 from django.db import transaction
 from django.utils import timezone
 
 from apps.timetable import models
+
+
+@transaction.atomic
+def load_session_group_with_api(group: models.Group, api):
+    models.Session.objects.filter(group=group).delete()
+    all_sessions_id = api.read(
+        'info.groups',
+        [group.id_pallada],
+        {
+            'fields': [
+                'session_ids',
+                'cur_year_header'
+            ],
+        },
+    )
+
+    # Получаем текущие года семестра из '2021 - 2022' в [2021, 2022]
+    current_semester_years = list(map(int, re.split(r'\s*-\s*', all_sessions_id[0]['cur_year_header'])))
+    tmp = []
+
+    for i in all_sessions_id:
+        tmp += i['session_ids']
+
+    sessions = api.read(
+        'info.timetable',
+        [tmp],
+        {
+            'fields': [
+                'year',
+                'group',
+                'person_id',
+                'employee_name_init',
+                'lesson',
+                'place',
+                'day_week',
+                'time',
+                'date',
+            ],
+        },
+    )
+
+    for session in sessions:
+        if int(session['year']) not in current_semester_years:
+            continue
+
+        teacher_name = session['person_id']
+        teacher, _ = models.Teacher.objects.get_or_create(
+            name=session['employee_name_init'] if teacher_name else ' ',
+            id_pallada=session['person_id'][0] if teacher_name else -1,
+        )
+
+        lesson, _ = models.Lesson.objects.get_or_create(
+            name_ru=session['lesson'][1],
+        )
+
+        place_name = session['place']
+        if not place_name:
+            continue
+        tmp = place_name.split('"')
+        place_name = f'{tmp[0].strip()}-{tmp[1].strip()}'
+        place, _ = models.Place.objects.get_or_create(
+            name=place_name,
+        )
+
+        models.Session.objects.create(
+            group=group,
+            teacher=teacher,
+            lesson=lesson,
+            place=place,
+            day=int(session['day_week']) - 1,
+            time=re.sub(r"-", "", session['time']),
+            date=None if not session['date'] else session['date'],
+        )
+    group.date_update = timezone.localtime()
+    group.save()
 
 
 @transaction.atomic
