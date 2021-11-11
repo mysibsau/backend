@@ -95,4 +95,4 @@ class SessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Session
-        fields = ('id', 'group', 'teacher', 'lesson', 'place', 'time', 'date')
+        fields = ('id', 'group', 'teacher', 'lesson', 'place', 'time', 'date', 'day')

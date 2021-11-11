@@ -115,12 +115,24 @@ class Timetable(models.Model):
 
 class Session(models.Model):
     """Расписание сессий"""
+
+    DAYS = (
+        (0, 'Понедельник'),
+        (1, 'Вторник'),
+        (2, 'Среда'),
+        (3, 'Четверг'),
+        (4, 'Пятница'),
+        (5, 'Суббота'),
+        (6, 'Воскресенье'),
+    )
+
     group = models.ForeignKey(Group, on_delete=models.CASCADE, verbose_name='Группа')
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='Преподаватель')
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Предмет')
     place = models.ForeignKey(Place, on_delete=models.CASCADE, verbose_name='Аудитория')
     time = models.TextField(verbose_name='Время')
-    date = models.DateField(verbose_name='Дата проведения экзамена', null=True)
+    day = models.IntegerField(choices=DAYS, verbose_name='День', null=True)
+    date = models.DateField(verbose_name='Дата', null=True)
 
     def __str__(self):
         return str(self.group) + str(self.date)
