@@ -20,8 +20,13 @@ def load_session_group_with_api(group: models.Group, api):
         },
     )
 
-    # Получаем текущие года семестра из '2021 - 2022' в [2021, 2022]
-    current_semester_years = list(map(int, re.split(r'\s*-\s*', all_sessions_id[0]['cur_year_header'])))
+    current_semester_years = all_sessions_id[0]['cur_year_header']
+    if current_semester_years:
+        # Получаем текущие года семестра из вида '2021 - 2022' в вид [2021, 2022]
+        current_semester_years = list(map(int, re.split(r'\s*-\s*', current_semester_years)))
+    else:
+        return
+
     tmp = []
 
     for i in all_sessions_id:
