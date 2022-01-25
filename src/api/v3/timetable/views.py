@@ -15,9 +15,16 @@ from apps.timetable import models
 
 class TeacherViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet, mixins.ListModelMixin):
 
+    def get_queryset(self):
+        if self.action == 'retrieve':
+            return models.Timetable.objects.all()
+        if self.action == 'session':
+            return models.Session.objects.all()
+        return models.Teacher.objects.all()
+
     @method_decorator(cache_page(60 * 60))
     def list(self, request):
-        queryset = models.Teacher.objects.all()
+        queryset = self.get_queryset()
         return Response(serializers.TeacherSerializers(queryset))
 
     @method_decorator(cache_page(60 * 60))
@@ -29,7 +36,7 @@ class TeacherViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet, mixins.
 
         Структура ответа точно такая же, как и в случае с расписание группы.
         """
-        queryset = models.Timetable.objects.filter(teacher__id=pk).select_related()
+        queryset = self.get_queryset().filter(teacher__id=pk).select_related()
         if not queryset:
             return Response(
                 {
@@ -51,7 +58,7 @@ class TeacherViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet, mixins.
     @action(detail=True, methods=['GET'])
     @method_decorator(cache_page(60 * 60))
     def session(self, request, pk=None):
-        queryset = models.Session.objects.filter(teacher__id=pk)
+        queryset = self.get_queryset().filter(teacher__id=pk)
         serializer = serializers.SessionSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -63,9 +70,16 @@ class TeacherViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet, mixins.
 
 class GroupViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet, mixins.ListModelMixin):
 
+    def get_queryset(self):
+        if self.action == 'session':
+            return models.Session.objects.all()
+        if self.action == 'retrieve':
+            return models.Timetable.objects.all()
+        return models.Group.objects.all()
+
     @method_decorator(cache_page(60 * 60 * 2))
     def list(self, request, pk=None):
-        queryset = models.Group.objects.all()
+        queryset = self.get_queryset()
         return Response(serializers.GroupSerializers(queryset))
 
     @method_decorator(cache_page(60 * 60))
@@ -161,7 +175,7 @@ class GroupViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet, mixins.Li
     @action(detail=True, methods=['GET'])
     @method_decorator(cache_page(60 * 60))
     def session(self, request, pk=None):
-        queryset = models.Session.objects.filter(group__id=pk)
+        queryset = self.get_queryset().filter(group__id=pk)
         serializer = serializers.SessionSerializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -173,9 +187,14 @@ class GroupViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet, mixins.Li
 
 class PlaceViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet, mixins.ListModelMixin):
 
+    def get_queryset(self):
+        if self.action == 'retrieve':
+            return models.Timetable.objects.all()
+        return models.Place.objects.all()
+
     @method_decorator(cache_page(60 * 60))
     def list(self, request):
-        queryset = models.Place.objects.all()
+        queryset = self.get_queryset()
         return Response(serializers.PlaceSerializers(queryset))
 
     @method_decorator(cache_page(60 * 60))
@@ -187,7 +206,7 @@ class PlaceViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet, mixins.Li
 
         Структура ответа точно такая же, как и в случае с расписание группы.
         """
-        queryset = models.Timetable.objects.filter(place__id=pk).select_related()
+        queryset = self.get_queryset().filter(place__id=pk).select_related()
         if not queryset:
             return Response(
                 {
