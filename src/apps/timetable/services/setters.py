@@ -102,6 +102,7 @@ def load_timetable() -> None:
         else:
             try:
                 api_parsers.load_timtable_group_with_api(group, api)
+                api_parsers.load_session_group_with_api(group, api)
             except (ProtocolError, TimeoutError):
                 logger.error('Паллада легла')
                 return

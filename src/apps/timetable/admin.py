@@ -49,6 +49,11 @@ class TimetableAdmin(admin.ModelAdmin):
         return HttpResponseRedirect("../")
 
 
+@admin.register(models.Session)
+class Session(admin.ModelAdmin):
+    list_display = ('id', 'group', 'teacher', 'lesson', 'place', 'time', 'date')
+
+
 @admin.register(models.Teacher)
 class Teacher(admin.ModelAdmin):
     list_display = ('id', 'name', 'mail', 'id_pallada')
