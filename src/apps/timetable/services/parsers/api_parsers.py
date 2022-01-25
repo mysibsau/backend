@@ -1,3 +1,4 @@
+import logging
 import re
 
 from django.db import transaction
@@ -96,14 +97,20 @@ def load_timtable_group_with_api(group: models.Group, api):
         {
             'fields': [
                 'tt_current_year_first_ids',
+                'tt_current_year_second_ids'
             ],
         },
     )
 
     tmp = []
-
+    now_month = timezone.now().month
     for i in all_timetable_id:
-        tmp += i['tt_current_year_first_ids']
+        # c января (1) по июль (8) - второй семестр
+        # с сентября (9) по январь (1) - первый семестр
+        if 1 <= now_month <= 8:
+            tmp += i['tt_current_year_second_ids']
+        else:
+            tmp += i['tt_current_year_first_ids']
 
     timetables = api.read(
         'info.timetable',
