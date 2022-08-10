@@ -1,0 +1,14 @@
+name: update
+
+on:
+  schedule:
+     - cron:  '0 4 * * 2,6'
+
+jobs:
+  update_timetable:
+    runs-on: ubuntu-latest
+    steps:
+    - name: curl
+      uses: wei/curl@v1
+      with:
+        args: $URL_FOR_UPDATE
