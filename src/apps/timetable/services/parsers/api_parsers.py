@@ -105,9 +105,9 @@ def load_timtable_group_with_api(group: models.Group, api):
     tmp = []
     now_month = timezone.now().month
     for i in all_timetable_id:
-        # c января (1) по июль (8) - второй семестр
-        # с сентября (9) по январь (1) - первый семестр
-        if 1 <= now_month <= 8:
+        # c января (1) по июль (7) - второй семестр
+        # с августа (8) по декабрь (12) - первый семестр
+        if 1 <= now_month <= 7:
             tmp += i['tt_current_year_second_ids']
         else:
             tmp += i['tt_current_year_first_ids']
