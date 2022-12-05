@@ -9,6 +9,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: curl
-      uses: wei/curl@v1
-      with:
-        args: ${{ secrets.URL_FOR_UPDATE }}
+      run: |
+        curl -X GET ${{ secrets.URL_FOR_UPDATE }}
