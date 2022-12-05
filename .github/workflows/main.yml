@@ -1,8 +1,6 @@
 name: update
 
-on:
-  schedule:
-     - cron:  '0 21 * * 2,6'
+on: workflow_dispatch
 
 jobs:
   update_timetable:
