@@ -15,6 +15,10 @@ class User(AbstractUser):
     # TODO: удалить в будущих версиях
     token = models.CharField('Токен', max_length=16, blank=True)
 
+    EMAIL_FIELD = "username"
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["username"]
+
     @classmethod
     def get_default_id(cls) -> int:
         obj, created = cls.objects.get_or_create(username='Default', fio='Пользователь по умолчанию')
