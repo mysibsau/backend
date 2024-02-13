@@ -2,7 +2,7 @@ version: "3.8"
 services:
     database:
         container_name: database
-        image: postgres:13.4-alpine
+        image: postgres:13.14-alpine
         restart: always
         env_file: src/.env
         volumes:
